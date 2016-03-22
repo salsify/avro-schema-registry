@@ -9,6 +9,8 @@
 #
 
 class SchemaVersion < ActiveRecord::Base
+  include ImmutableModel
+
   belongs_to :subject
   belongs_to :schema
 

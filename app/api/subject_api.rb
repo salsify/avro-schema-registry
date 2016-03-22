@@ -53,14 +53,13 @@ class SubjectAPI < Grape::API
     end
     get '/versions/:version_id' do
       schema_version = find_schema_version(params[:name], params[:version_id])
-      case
-      when schema_version
+      if schema_version
         {
           name: schema_version.subject.name,
           version: schema_version.version,
           schema: schema_version.schema.json
         }
-      when Subject.where(name: params[:name]).exists?
+      elsif Subject.where(name: params[:name]).exists?
         version_not_found!
       else
         subject_not_found!
@@ -84,8 +83,7 @@ class SubjectAPI < Grape::API
     post '/' do
       schema_version = SchemaVersion.for_subject_name(params[:name])
                                     .for_schema_json(params[:schema]).first
-      case
-      when schema_version
+      if schema_version
         status 200
         {
           subject: schema_version.subject.name,
@@ -93,7 +91,7 @@ class SubjectAPI < Grape::API
           version: schema_version.version,
           schema: schema_version.schema.json
         }
-      when Subject.where(name: params[:name]).exists?
+      elsif Subject.where(name: params[:name]).exists?
         schema_not_found!
       else
         subject_not_found!

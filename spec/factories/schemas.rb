@@ -22,8 +22,7 @@ FactoryGirl.define do
     end
 
     after(:create) do |schema|
-      version = FactoryGirl.create(:schema_version, schema: schema)
-      schema.versions << version
+      FactoryGirl.create(:schema_version, schema: schema)
     end
   end
 end

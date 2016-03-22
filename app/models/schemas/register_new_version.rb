@@ -51,16 +51,16 @@ module Schemas
     end
 
     def create_new_version
-      version_with_optional_new_subject if version_for_subject_schema(schema.id).nil?
+      create_version_with_optional_new_subject if version_for_subject_schema(schema.id).nil?
     end
 
     def create_new_schema
-      version_with_optional_new_subject do
+      create_version_with_optional_new_subject do
         self.schema = Schema.create!(json: json)
       end
     end
 
-    def version_with_optional_new_subject
+    def create_version_with_optional_new_subject
       latest_version = latest_version_for_subject
 
       if latest_version.nil?

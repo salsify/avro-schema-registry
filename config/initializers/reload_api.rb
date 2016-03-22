@@ -2,7 +2,8 @@
 # https://github.com/ruby-grape/grape#reloading-api-changes-in-development
 
 if Rails.env.development?
-  ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Rules::API'
+  ActiveSupport::Dependencies.explicitly_unloadable_constants << 'SchemaAPI'
+  ActiveSupport::Dependencies.explicitly_unloadable_constants << 'SubjectAPI'
 
   api_files = Dir[Rails.root.join('app', 'api', '**', '*.rb')]
   api_reloader = ActiveSupport::FileUpdateChecker.new(api_files) do
