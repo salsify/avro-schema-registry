@@ -4,13 +4,21 @@ module ImmutableModel
   extend ActiveSupport::Concern
 
   included do
-    before_update :read_only_model!
-    before_destroy :read_only_model!
+    delegate :read_only_model!, to: :class
+    alias_method :delete, :read_only_model!
   end
 
-  private
+  def readonly?
+    persisted?
+  end
 
-  def read_only_model!
-    raise ActiveRecord::ReadOnlyRecord
+  module ClassMethods
+    def delete_all(*)
+      read_only_model!
+    end
+
+    def read_only_model!
+      raise ActiveRecord::ReadOnlyRecord
+    end
   end
 end
