@@ -15,6 +15,11 @@ describe SubjectAPI do
       expect(response).to be_ok
       expect(response.body).to be_json_eql(expected)
     end
+
+    it "is secured by Basic auth" do
+      unauthorized_get('/subjects')
+      expect(status).to eq(401)
+    end
   end
 
   describe "GET /subjects/:name/versions" do
@@ -32,6 +37,11 @@ describe SubjectAPI do
       end
     end
 
+    it "is secured by Basic auth" do
+      unauthorized_get('/subjects/name')
+      expect(status).to eq(401)
+    end
+
     context "when the subject does not exist" do
       let(:name) { 'fnord' }
 
@@ -44,6 +54,11 @@ describe SubjectAPI do
   end
 
   describe "GET /subjects/:name/versions/:version_id" do
+    it "is secured by Basic auth" do
+      unauthorized_get('/subjects/name/versions/1')
+      expect(status).to eq(401)
+    end
+
     context "when the subject and version exists" do
       let!(:other_schema_version) { create(:schema_version) }
       let(:version) { create(:schema_version) }
@@ -100,6 +115,11 @@ describe SubjectAPI do
   end
 
   describe "POST /subjects/:name/versions" do
+    it "is secured by Basic auth" do
+      unauthorized_post('/subjects/name/versions')
+      expect(status).to eq(401)
+    end
+
     context "with an invalid avro schema" do
       let(:subject_name) { 'invalid' }
 
@@ -248,6 +268,11 @@ describe SubjectAPI do
   end
 
   describe "POST /subjects/:name" do
+    it "is secured by Basic auth" do
+      unauthorized_post('/subjects/name')
+      expect(status).to eq(401)
+    end
+
     context "when the schema exists for the subject" do
       let!(:version) { create(:schema_version) }
       let(:subject_name) { version.subject.name }

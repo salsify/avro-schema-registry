@@ -33,5 +33,7 @@ module AvroSchemaRegistry
     # Grape support
     config.paths.add(File.join('app', 'api'), glob: File.join('**', '*.rb'))
     config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
+
+    config.x.app_password = ENV['SCHEMA_REGISTRY_PASSWORD'] || 'avro'
   end
 end

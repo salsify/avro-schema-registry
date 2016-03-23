@@ -2,6 +2,11 @@ require 'rails_helper'
 
 describe SchemaAPI do
   describe "GET /schemas/ids/:id" do
+    it "is secured by Basic auth" do
+      unauthorized_get('/schemas/ids/1')
+      expect(status).to eq(401)
+    end
+
     context "when the schema is found" do
       let(:schema) { create(:schema) }
       let(:expected) do

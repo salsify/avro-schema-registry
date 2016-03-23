@@ -1,7 +1,5 @@
 class SchemaAPI < Grape::API
-  format :json
-
-  helpers ::Helpers::ErrorHelper
+  include BaseAPI
 
   rescue_from ActiveRecord::RecordNotFound do
     schema_not_found!

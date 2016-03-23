@@ -1,7 +1,5 @@
 class SubjectAPI < Grape::API
-  format :json
-
-  helpers ::Helpers::ErrorHelper
+  include BaseAPI
 
   LATEST_VERSION = 'latest'.freeze
 
@@ -13,7 +11,7 @@ class SubjectAPI < Grape::API
     invalid_avro_schema!
   end
 
-  rescue_from :all do |e|
+  rescue_from :all do
     server_error!
   end
 
