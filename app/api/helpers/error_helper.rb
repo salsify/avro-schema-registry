@@ -4,6 +4,11 @@ module Helpers
   # registry may return.
   module ErrorHelper
 
+    # Note: The requirement to dup these constants was fixed in:
+    #   https://github.com/ruby-grape/grape/pull/1336
+    # Once a version of graph is released with this fix, the
+    # dup can be dropped.
+
     def server_error!
       error!(SchemaRegistry::Errors::SERVER_ERROR.dup, 500)
     end
