@@ -4,6 +4,15 @@ describe SubjectAPI do
     { type: :record, fields: [{ name: :i, type: :int }] }.to_json
   end
 
+  context "content type" do
+    # content type is configured at the API level so only one endpoint is
+    # tested here.
+    include_examples "content type", :get do
+      let(:path) { '/subjects' }
+      let(:expected) { [].to_json }
+    end
+  end
+
   describe "GET /subjects" do
     let!(:subjects) { create_list(:subject, 3) }
     let(:expected) do
