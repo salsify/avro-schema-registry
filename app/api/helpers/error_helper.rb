@@ -6,7 +6,7 @@ module Helpers
 
     # Note: The requirement to dup these constants was fixed in:
     #   https://github.com/ruby-grape/grape/pull/1336
-    # Once a version of graph is released with this fix, the
+    # Once a version of grape is released with this fix, the
     # dup can be dropped.
 
     def server_error!
