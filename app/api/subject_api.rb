@@ -33,7 +33,7 @@ class SubjectAPI < Grape::API
   end
 
   params { requires :name, type: String, desc: 'Subject name' }
-  segment ':name' do
+  segment ':name', requirements: { name: /[a-zA-Z_][\w\.]*/ } do
     desc 'Get a list of versions registered under the specified subject.'
     get :versions do
       SchemaVersion.for_subject_name(params[:name])
