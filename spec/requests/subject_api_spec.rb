@@ -32,6 +32,58 @@ describe SubjectAPI do
   end
 
   describe "GET /subjects/:name/versions" do
+
+    context "supported subject names" do
+      # This is only being tested for one representative route under
+      # /subjects/:name
+      shared_examples_for "a supported subject name" do |desc, name|
+        let(:subject) { create(:subject, name: name) }
+        let!(:schema_version) { create(:version, subject: subject) }
+
+        it "supports #{desc}" do
+          get("/subjects/#{subject.name}/versions")
+          expect(response).to be_ok
+          expect(response.body).to eq([schema_version.version].to_json)
+        end
+      end
+
+      shared_examples_for "an unsupported subject name" do |desc, name|
+        it "does not support #{desc}" do
+          expect do
+            get("/subjects/#{name}/versions")
+          end.to raise_error(ActionController::RoutingError)
+        end
+      end
+
+      it_behaves_like 'a supported subject name',
+                      'a name containing a period',
+                      'com.example.foo'
+
+      it_behaves_like 'a supported subject name',
+                      'a name beginning with an underscore',
+                      '_underscore'
+
+      it_behaves_like 'a supported subject name',
+                      'a name containing a digit',
+                      'number5'
+
+      it_behaves_like 'a supported subject name',
+                      'a name containing mixed case',
+                      'UPPER_lower_0123456789'
+
+      it_behaves_like 'an unsupported subject name',
+                      'a name beginning with a digit',
+                      '5alive'
+
+      it_behaves_like 'an unsupported subject name',
+                      'a name containing a hyphen',
+                      'foo-bar'
+
+      it_behaves_like 'an unsupported subject name',
+                      'a name beginning with a period',
+                      '.com'
+    end
+
     context "when the subject exists" do
       let(:subject) { create(:subject) }
       let!(:schema_versions) { Array.new(1) { create(:version, subject: subject) } }
