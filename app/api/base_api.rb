@@ -6,13 +6,15 @@ module BaseAPI
   SCHEMA_REGISTRY_CONTENT_TYPE = 'application/vnd.schemaregistry.json'.freeze
 
   included do
-    default_format :json
-
-    content_type :schema_registry_v1, SCHEMA_REGISTRY_V1_CONTENT_TYPE
     content_type :schema_registry, SCHEMA_REGISTRY_CONTENT_TYPE
+    content_type :schema_registry_v1, SCHEMA_REGISTRY_V1_CONTENT_TYPE
 
-    format :schema_registry_v1
-    formatter :schema_registry_v1, Grape::Formatter::Json
+    %i(schema_registry schema_registry_v1).each do |content_type_sym|
+      parser content_type_sym, Grape::Parser::Json
+      formatter content_type_sym, Grape::Formatter::Json
+    end
+
+    default_format :schema_registry_v1
 
     helpers ::Helpers::ErrorHelper
 

@@ -11,6 +11,24 @@ describe SubjectAPI do
       let(:path) { '/subjects' }
       let(:expected) { [].to_json }
     end
+
+    context "with JSON body" do
+      include_examples "content type", :post do
+        let!(:version) { create(:schema_version) }
+        let(:subject_name) { version.subject.name }
+        let(:expected) do
+          {
+            subject: version.subject.name,
+            id: version.schema_id,
+            version: version.version,
+            schema: version.schema.json
+          }.to_json
+        end
+
+        let(:path) { "/subjects/#{subject_name}" }
+        let(:params) { { schema: version.schema.json } }
+      end
+    end
   end
 
   describe "GET /subjects" do
@@ -267,7 +285,7 @@ describe SubjectAPI do
           end
         end
 
-        it "does stuff" do
+        it "retries once" do
           post("/subjects/#{subject_name}/versions", schema: json)
           expect(response).to be_ok
           expect(response.body).to be_json_eql({ id: @schema.id }.to_json)
