@@ -12,11 +12,16 @@ module RequestHelper
       # Overrides the http method to automatically set the authorization header
       # for HTTP Basic auth
       define_method(method) do |path, parameters = nil, headers_or_env = nil|
-        headers = headers_or_env.try(:dup) || {}
+        headers = headers_or_env.try(:dup) || { 'CONTENT_TYPE' => 'application/json' }
         basic_auth = ActionController::HttpAuthentication::Basic
                        .encode_credentials('ignored', Rails.configuration.x.app_password)
         headers['Authorization'] ||= basic_auth
-        send("unauthorized_#{method}", path, parameters, headers)
+        params = if parameters && method == :post && !parameters.is_a?(String)
+                   parameters.to_json
+                 else
+                   parameters
+                 end
+        send("unauthorized_#{method}", path, params, headers)
       end
     end
   end
