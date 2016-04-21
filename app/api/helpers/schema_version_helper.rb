@@ -5,6 +5,8 @@ module Helpers
 
     LATEST_VERSION = 'latest'.freeze
 
+    private
+
     def with_schema_version(subject_name, version)
       schema_version = find_schema_version(subject_name, version)
 
@@ -16,8 +18,6 @@ module Helpers
         subject_not_found!
       end
     end
-
-    private
 
     def find_schema_version(subject_name, version)
       if version == LATEST_VERSION
