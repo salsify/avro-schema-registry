@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160315151533) do
+ActiveRecord::Schema.define(version: 20160416181422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "configs", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.text     "value",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "configs", ["name"], name: "index_configs_on_name", unique: true, using: :btree
 
   create_table "schema_versions", id: :bigserial, force: :cascade do |t|
     t.integer "version",              default: 1
@@ -34,9 +43,10 @@ ActiveRecord::Schema.define(version: 20160315151533) do
   add_index "schemas", ["fingerprint"], name: "index_schemas_on_fingerprint", unique: true, using: :btree
 
   create_table "subjects", id: :bigserial, force: :cascade do |t|
-    t.text     "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "name",          null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "compatibility"
   end
 
   add_index "subjects", ["name"], name: "index_subjects_on_name", unique: true, using: :btree

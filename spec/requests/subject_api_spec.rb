@@ -241,6 +241,16 @@ describe SubjectAPI do
         expect(response).to be_ok
         expect(response.body).to be_json_eql({ id: version.schema_id }.to_json)
       end
+
+      context "when the new version of the schema is incompatible" do
+        let(:json) { build(:schema).json }
+
+        it "returns an incompatible schema error" do
+          post("/subjects/#{subject.name}/versions", schema: json)
+          expect(status).to eq(409)
+          expect(response.body).to be_json_eql(SchemaRegistry::Errors::INCOMPATIBLE_AVRO_SCHEMA.to_json)
+        end
+      end
     end
 
     context "when the schema is already registered under a different subject" do
@@ -268,10 +278,16 @@ describe SubjectAPI do
       end
 
       context "when the subject exists" do
-        let!(:original_schema_version) { create(:schema_version) }
-        let(:subject_name) { original_schema_version.subject.name }
-        # Note: this schema probably fails compatibility
         let(:json) { version.schema.json }
+        let(:new_subject) { create(:subject) }
+        let(:subject_name) { new_subject.name }
+        let(:new_json) do
+          JSON.parse(json).tap do |avro|
+            avro['fields'] << { name: :new, type: :string }
+          end.to_json
+        end
+        let(:new_schema) { create(:schema, json: new_json) }
+        let!(:new_version) { create(:schema_version, subject: new_subject, schema: new_schema) }
 
         it "returns the id of the schema" do
           post("/subjects/#{subject_name}/versions", schema: json)
@@ -321,7 +337,11 @@ describe SubjectAPI do
       context "registering a new schema for a subject" do
         let(:previous_version) { create(:schema_version) }
         let(:subject_name) { previous_version.subject.name }
-        let(:json) { build(:schema).json }
+        let(:json) do
+          JSON.parse(previous_version.schema.json).tap do |avro|
+            avro['fields'] << { name: :extra, type: :string }
+          end.to_json
+        end
         let(:fingerprint) { Schemas::FingerprintGenerator.call(json) }
 
         before do

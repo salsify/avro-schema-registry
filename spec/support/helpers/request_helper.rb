@@ -16,7 +16,7 @@ module RequestHelper
         basic_auth = ActionController::HttpAuthentication::Basic
                        .encode_credentials('ignored', Rails.configuration.x.app_password)
         headers['Authorization'] ||= basic_auth
-        params = if parameters && method == :post && !parameters.is_a?(String)
+        params = if parameters && !parameters.is_a?(String)
                    parameters.to_json
                  else
                    parameters

@@ -1,4 +1,10 @@
-== README
+# avro-schema-registry
+
+This application is a partial re-implementation of Confluent's [Schema Registry](http://docs.confluent.io/2.0.0/schema-registry/docs/intro.html).
+
+
+
+#### Previous
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
@@ -21,8 +27,3 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
