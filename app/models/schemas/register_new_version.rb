@@ -72,7 +72,7 @@ module Schemas
       else
         # Create new schema version for subject
         SchemaVersion.transaction do
-          SchemaRegistry.compatible!(latest_version.subject.compatibility,
+          SchemaRegistry.compatible!(latest_version.subject.config.try(:compatibility),
                                      latest_version.schema.json,
                                      json)
           yield if block_given?

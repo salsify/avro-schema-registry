@@ -11,19 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160416181422) do
+ActiveRecord::Schema.define(version: 20160416174131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "configs", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.text     "value",      null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "configs", id: :bigserial, force: :cascade do |t|
+    t.string   "compatibility"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "subject_id",    limit: 8
   end
 
-  add_index "configs", ["name"], name: "index_configs_on_name", unique: true, using: :btree
+  add_index "configs", ["subject_id"], name: "index_configs_on_subject_id", unique: true, using: :btree
 
   create_table "schema_versions", id: :bigserial, force: :cascade do |t|
     t.integer "version",              default: 1
@@ -43,10 +43,9 @@ ActiveRecord::Schema.define(version: 20160416181422) do
   add_index "schemas", ["fingerprint"], name: "index_schemas_on_fingerprint", unique: true, using: :btree
 
   create_table "subjects", id: :bigserial, force: :cascade do |t|
-    t.text     "name",          null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.string   "compatibility"
+    t.text     "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "subjects", ["name"], name: "index_subjects_on_name", unique: true, using: :btree

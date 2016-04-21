@@ -1,6 +1,12 @@
 module Compatibility
 
-  VALUES = Set.new(%w(BOTH BACKWARD FORWARD NONE)).deep_freeze
+  module Constants
+    BOTH = 'BOTH'.freeze
+    BACKWARD = 'BACKWARD'.freeze
+    FORWARD = 'FORWARD'.freeze
+    NONE = 'NONE'.freeze
+    VALUES = Set.new([BOTH, BACKWARD, FORWARD, NONE]).freeze
+  end
 
   class InvalidCompatibilityLevelError < StandardError
     def initialize(invalid_level)
@@ -9,18 +15,11 @@ module Compatibility
   end
 
   def self.global
-    Config.compatibility.value
-  end
-
-  def self.update!(value)
-    validate!(value)
-    compatibility = Config.compatibility
-    compatibility.update!(value: value.upcase)
-    compatibility.value
+    Config.global.compatibility
   end
 
   def self.valid?(value)
-    value.nil? || VALUES.include?(value.upcase)
+    value.nil? || Constants::VALUES.include?(value.upcase)
   end
 
   def self.validate!(value)

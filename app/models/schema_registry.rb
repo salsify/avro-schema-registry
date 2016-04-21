@@ -7,13 +7,13 @@ module SchemaRegistry
     old_schema = Schemas::Parse.call(old_json)
     new_schema = Schemas::Parse.call(new_json)
     case direction
-    when 'NONE'
+    when Compatibility::Constants::NONE
       true
-    when 'BACKWARD'
+    when Compatibility::Constants::BACKWARD
       check(old_schema, new_schema)
-    when 'FORWARD'
+    when Compatibility::Constants::FORWARD
       check(new_schema, old_schema)
-    when 'BOTH'
+    when Compatibility::Constants::BOTH
       check(old_schema, new_schema) && check(new_schema, old_schema)
     end
   end
