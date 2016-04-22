@@ -12,7 +12,7 @@
 class Config < ActiveRecord::Base
 
   # This default differs from the Confluent default of BACKWARD
-  DEFAULT_COMPATIBILITY = 'BOTH'.freeze # TODO
+  DEFAULT_COMPATIBILITY = Compatibility::Constants::BOTH
   COMPATIBILITY_NAME = 'compatibility'.freeze
 
   belongs_to :subject
@@ -22,6 +22,16 @@ class Config < ActiveRecord::Base
   def self.global
     find_or_create_by!(id: 0) do |config|
       config.compatibility = DEFAULT_COMPATIBILITY
+    end
+  end
+
+  def update_compatibility!(compatibility)
+    update!(compatibility: compatibility)
+  rescue ActiveRecord::RecordInvalid
+    if errors.key?(:compatibility)
+      raise Compatibility::InvalidCompatibilityLevelError.new(compatibility)
+    else
+      raise
     end
   end
 

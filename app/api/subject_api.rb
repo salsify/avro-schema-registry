@@ -66,7 +66,8 @@ class SubjectAPI < Grape::API
       requires :schema, type: String, desc: 'The Avro schema string'
     end
     post '/' do
-      schema_version = SchemaVersion.for_subject_name(params[:name])
+      schema_version = SchemaVersion.eager_load(:schema, :subject)
+                                    .for_subject_name(params[:name])
                                     .for_schema_json(params[:schema]).first
       if schema_version
         status 200
