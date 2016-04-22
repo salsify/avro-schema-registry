@@ -33,6 +33,15 @@ describe ConfigAPI do
       expect(status).to eq(401)
     end
 
+    context "when the compatibility value is not uppercase" do
+      it "changes the global compatibility level" do
+        put('/config', compatibility: compatibility.downcase)
+        expect(response).to be_ok
+        expect(response.body)
+        expect(Config.global.compatibility).to eq(compatibility)
+      end
+    end
+
     context "when the compatibility level is invalid" do
       let(:compatibility) { 'BACK' }
 
@@ -106,6 +115,15 @@ describe ConfigAPI do
         expect(response).to be_ok
         expect(response.body).to be_json_eql(expected)
         expect(subject.config.reload.compatibility).to eq(compatibility)
+      end
+    end
+
+    context "when the compatibility level is not uppercase" do
+      it "updates the compatibility level on the subject" do
+        put("/config/#{subject.name}", compatibility: compatibility.downcase)
+        expect(response).to be_ok
+        expect(response.body).to be_json_eql(expected)
+        expect(subject.config.compatibility).to eq(compatibility)
       end
     end
 
