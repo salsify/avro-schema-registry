@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160315151533) do
+ActiveRecord::Schema.define(version: 20160416174131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "configs", id: :bigserial, force: :cascade do |t|
+    t.string   "compatibility"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "subject_id",    limit: 8
+  end
+
+  add_index "configs", ["subject_id"], name: "index_configs_on_subject_id", unique: true, using: :btree
 
   create_table "schema_versions", id: :bigserial, force: :cascade do |t|
     t.integer "version",              default: 1

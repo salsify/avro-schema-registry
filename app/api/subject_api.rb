@@ -1,31 +1,23 @@
 class SubjectAPI < Grape::API
   include BaseAPI
 
-  LATEST_VERSION = 'latest'.freeze
-
   rescue_from ActiveRecord::RecordNotFound do
     subject_not_found!
   end
 
-  rescue_from Schemas::FingerprintGenerator::InvalidAvroSchemaError do
+  rescue_from SchemaRegistry::InvalidAvroSchemaError do
     invalid_avro_schema!
+  end
+
+  rescue_from SchemaRegistry::IncompatibleAvroSchemaError do
+    incompatible_avro_schema!
   end
 
   rescue_from :all do
     server_error!
   end
 
-  helpers do
-    def find_schema_version(subject_name, version)
-      if version == LATEST_VERSION
-        SchemaVersion.for_subject_name(subject_name)
-          .latest
-      else
-        SchemaVersion.where(version: version)
-          .for_subject_name(subject_name)
-      end.first
-    end
-  end
+  helpers ::Helpers::SchemaVersionHelper
 
   desc 'Get a list of registered subjects'
   get '/' do
@@ -33,7 +25,7 @@ class SubjectAPI < Grape::API
   end
 
   params { requires :name, type: String, desc: 'Subject name' }
-  segment ':name', requirements: { name: /[a-zA-Z_][\w\.]*/ } do
+  segment ':name', requirements: { name: Subject::NAME_REGEXP } do
     desc 'Get a list of versions registered under the specified subject.'
     get :versions do
       SchemaVersion.for_subject_name(params[:name])
@@ -50,17 +42,12 @@ class SubjectAPI < Grape::API
                desc: 'version of the schema registered under the subject'
     end
     get '/versions/:version_id' do
-      schema_version = find_schema_version(params[:name], params[:version_id])
-      if schema_version
+      with_schema_version(params[:name], params[:version_id]) do |schema_version|
         {
           name: schema_version.subject.name,
           version: schema_version.version,
           schema: schema_version.schema.json
         }
-      elsif Subject.where(name: params[:name]).exists?
-        version_not_found!
-      else
-        subject_not_found!
       end
     end
 

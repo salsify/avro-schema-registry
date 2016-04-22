@@ -25,8 +25,16 @@ module Helpers
       error!(SchemaRegistry::Errors::VERSION_NOT_FOUND.dup, 404)
     end
 
+    def incompatible_avro_schema!
+      error!(SchemaRegistry::Errors::INCOMPATIBLE_AVRO_SCHEMA.dup, 409)
+    end
+
     def invalid_avro_schema!
       error!(SchemaRegistry::Errors::INVALID_AVRO_SCHEMA.dup, 422)
+    end
+
+    def invalid_compatibility_level!
+      error!(SchemaRegistry::Errors::INVALID_COMPATIBILITY_LEVEL.dup, 422)
     end
   end
 end

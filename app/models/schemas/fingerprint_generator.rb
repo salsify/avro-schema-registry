@@ -3,12 +3,8 @@ module Schemas
   # Avro JSON schema
   module FingerprintGenerator
 
-    InvalidAvroSchemaError = Class.new(StandardError)
-
     def self.call(json)
-      Avro::Schema.parse(json).sha256_fingerprint.to_s(16)
-    rescue
-      raise InvalidAvroSchemaError
+      Schemas::Parse.call(json).sha256_fingerprint.to_s(16)
     end
   end
 end
