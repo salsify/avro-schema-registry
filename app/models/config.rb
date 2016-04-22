@@ -23,6 +23,8 @@ class Config < ActiveRecord::Base
     find_by(id: 0) || create!(id: 0, compatibility: DEFAULT_COMPATIBILITY)
   end
 
+  private
+
   def validate_compatibility_level
     unless Compatibility.valid?(compatibility)
       errors.add(:compatibility, "is invalid: #{compatibility}")
