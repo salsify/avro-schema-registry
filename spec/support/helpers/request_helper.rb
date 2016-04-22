@@ -16,11 +16,12 @@ module RequestHelper
         basic_auth = ActionController::HttpAuthentication::Basic
                        .encode_credentials('ignored', Rails.configuration.x.app_password)
         headers['Authorization'] ||= basic_auth
-        params = if parameters && !parameters.is_a?(String)
-                   parameters.to_json
-                 else
-                   parameters
-                 end
+        params =
+          if parameters && !parameters.is_a?(String)
+            parameters.to_json
+          else
+            parameters
+          end
         send("unauthorized_#{method}", path, params, headers)
       end
     end
