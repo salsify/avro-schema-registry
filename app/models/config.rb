@@ -20,7 +20,9 @@ class Config < ActiveRecord::Base
   validate :compatibility, :validate_compatibility_level
 
   def self.global
-    find_by(id: 0) || create!(id: 0, compatibility: DEFAULT_COMPATIBILITY)
+    find_or_create_by!(id: 0) do |config|
+      config.compatibility = DEFAULT_COMPATIBILITY
+    end
   end
 
   private
