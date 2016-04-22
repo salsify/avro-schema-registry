@@ -5,10 +5,6 @@ class ConfigAPI < Grape::API
     invalid_compatibility_level!
   end
 
-  rescue_from ActiveRecord::RecordNotFound do
-    subject_not_found!
-  end
-
   rescue_from :all do
     server_error!
   end
@@ -16,6 +12,8 @@ class ConfigAPI < Grape::API
   helpers do
     def find_subject!(name)
       Subject.eager_load(:config).find_by!(name: name)
+    rescue ActiveRecord::RecordNotFound
+      subject_not_found!
     end
   end
 
