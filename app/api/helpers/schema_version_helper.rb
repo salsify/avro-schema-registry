@@ -20,12 +20,11 @@ module Helpers
     end
 
     def find_schema_version(subject_name, version)
+      relation = SchemaVersion.eager_load(:schema, subject: [:config])
       if version == LATEST_VERSION
-        SchemaVersion.for_subject_name(subject_name)
-          .latest
+        relation.for_subject_name(subject_name).latest
       else
-        SchemaVersion.where(version: version)
-          .for_subject_name(subject_name)
+        relation.where(version: version).for_subject_name(subject_name)
       end.first
     end
 

@@ -20,9 +20,5 @@ FactoryGirl.define do
         ]
       }.to_json
     end
-
-    after(:create) do |schema|
-      FactoryGirl.create(:schema_version, schema: schema)
-    end
   end
 end

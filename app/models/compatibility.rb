@@ -17,12 +17,4 @@ module Compatibility
   def self.global
     Config.global.compatibility
   end
-
-  def self.valid?(value)
-    value.nil? || Constants::VALUES.include?(value.upcase)
-  end
-
-  def self.validate!(value)
-    raise InvalidCompatibilityLevelError.new(value) unless valid?(value)
-  end
 end

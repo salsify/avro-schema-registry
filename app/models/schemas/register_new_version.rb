@@ -51,7 +51,7 @@ module Schemas
     end
 
     def create_new_version
-      create_version_with_optional_new_subject if version_for_subject_schema(schema.id).nil?
+      create_version_with_optional_new_subject unless version_exists_for_subject_schema?(schema.id)
     end
 
     def create_new_schema
@@ -94,12 +94,13 @@ module Schemas
     end
 
     def latest_version_for_subject
-      SchemaVersion.latest_for_subject_name(subject_name).first
+      SchemaVersion.eager_load(:schema, subject: [:config])
+                   .latest_for_subject_name(subject_name).first
     end
 
-    def version_for_subject_schema(schema_id)
+    def version_exists_for_subject_schema?(schema_id)
       SchemaVersion.for_schema(schema_id)
-                   .for_subject_name(subject_name).first
+                   .for_subject_name(subject_name).first.present?
 
     end
   end
