@@ -16,9 +16,10 @@ end
 group :development do
   gem 'annotate'
   gem 'spring'
+  gem 'overcommit'
 end
 
 group :development, :test do
   gem 'factory_girl_rails'
+  gem 'salsify_rubocop', require: false
 end
-
