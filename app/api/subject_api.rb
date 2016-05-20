@@ -33,7 +33,7 @@ class SubjectAPI < Grape::API
         .pluck(:version)
         .tap do |result|
           raise ActiveRecord::RecordNotFound if result.empty?
-         end
+        end
     end
 
     desc 'Get a specific version of the schema registered under this subject'
