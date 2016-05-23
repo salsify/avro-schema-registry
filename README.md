@@ -12,15 +12,15 @@ This application provides the same API as the Confluent
 [Schema Registry](http://docs.confluent.io/2.0.1/schema-registry/docs/api.html).
 
 The service is implemented as a Rails 4.2 application and stores Avro schemas in
-Postgres.
+Postgres. The API is implemented using [Grape](https://github.com/ruby-grape/grape).
 
 ### Why?
 
 The Confluent Schema Registry has been reimplemented because the original
-implementation uses Kafka to store schemas. We view the message that passes
-through Kafka as more ephemeral and want the flexibility to change Kafka hosting
-providers. In the future we may also apply per-subject permissions to the Avro
-schemas that are stored by the registry.
+implementation uses Kafka to store schemas. We view the messages that pass
+through Kafka as more ephemeral and want the flexibility to change how we host Kafka
+In the future we may also apply per-subject permissions to the Avro schemas that
+are stored by the registry.
 
 ## Setup
 
@@ -40,20 +40,21 @@ By default the service runs on port 21000.
 ## Security
 
 The service is secured using HTTP Basic authentication and should be with SSL.
-The default password for the service is 'avro'.
+The default password for the service is 'avro' but can be via the environment
+as `SCHEMA_REGISTRY_PASSWORD`.
 
 ## Usage
 
 For more details on the REST API see the Confluent
 [documentation](http://docs.confluent.io/2.0.1/schema-registry/docs/api.html).
 
-A [client](https://github.com/salsify/salsify_avro#schema-registry-clients)
-(see [SalsifyAvro](https://github.com/salsify/salsify_avro)) can be used to
+A [client](https://github.com/dasch/avro_turf/blob/master/lib/avro_turf/schema_registry.rb)
+(see [AvroTurf](https://github.com/dasch/avro_turf)) can be used to
 communicate with the service:
 
 ```ruby
 url = 'https://anything:avro@registry.example.com'
-client = SalsifyAvro::SchemaRegistryClient.new(url)
+client = AvroTurf::SchemaRegistry.new(url)
 
 # registering a new schema returns an id
 id = client.register('test_subject', avro_json_schema)
@@ -63,7 +64,7 @@ id = client.register('test_subject', avro_json_schema)
 id = client.register('test_subject', avro_json_schema)
 # => 99
 
-# the JSON for an Avro schema cna be fetched by id
+# the JSON for an Avro schema can be fetched by id
 client.fetch(id)
 # => avro_json_schema
 ```
@@ -86,6 +87,11 @@ Tests for the application can be run using:
 ```bash
 bundle exec rspec
 ```
+
+## License
+
+This code is available as open source under the terms of the
+[MIT License](http://opensource.org/licenses/MIT).
 
 ## Contributing
 
