@@ -1,5 +1,9 @@
 # avro-schema-registry
 
+[![Build Status](https://travis-ci.org/salsify/avro-schema-registry.svg?branch=master)][travis]
+
+[travis]: https://travis-ci.org/salsify/avro-schema-registry
+
 A service for storing and retrieving versions of Avro schemas.
 
 Schema versions stored by the service are assigned an id. These ids can be
