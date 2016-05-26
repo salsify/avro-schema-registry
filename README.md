@@ -1,5 +1,7 @@
 # avro-schema-registry
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 [![Build Status](https://travis-ci.org/salsify/avro-schema-registry.svg?branch=master)][travis]
 
 [travis]: https://travis-ci.org/salsify/avro-schema-registry

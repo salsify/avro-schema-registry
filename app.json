@@ -1,0 +1,25 @@
+{
+  "name": "Avro Schema Registry",
+  "description": "Service for storing and retrieving versions of Avro schemas.",
+  "repository": "https://github.com/salsify/avro-schema-registry",
+  "keywords": [
+    "avro",
+    "schema",
+    "registry",
+    "salsify"
+  ],
+  "env": {
+    "SECRET_KEY_BASE": {
+      "description": "Rails secret key",
+      "generator": "secret"
+    },
+    "SCHEMA_REGISTRY_PASSWORD": {
+      "description": "Password for HTTP Basic Authentication",
+      "generator": "secret"
+    }
+  },
+  "addons": ["heroku-postgresql:hobby-dev"],
+  "scripts": {
+    "postdeploy": "bundle exec rake db:migrate"
+  }
+}
