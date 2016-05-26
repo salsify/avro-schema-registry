@@ -1,5 +1,7 @@
 # avro-schema-registry
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 A service for storing and retrieving versions of Avro schemas.
 
 Schema versions stored by the service are assigned an id. These ids can be
