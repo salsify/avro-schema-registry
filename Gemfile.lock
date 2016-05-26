@@ -103,6 +103,7 @@ GEM
     pg (0.18.4)
     powerpack (0.1.1)
     private_attr (1.1.0)
+    puma (3.4.0)
     rack (1.6.4)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -204,6 +205,7 @@ DEPENDENCIES
   overcommit
   pg
   private_attr
+  puma
   rails (= 4.2.6)
   rails-api
   rspec-rails
@@ -211,4 +213,4 @@ DEPENDENCIES
   spring
 
 BUNDLED WITH
-   1.11.2
+   1.12.5

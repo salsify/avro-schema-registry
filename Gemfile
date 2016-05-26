@@ -2,6 +2,7 @@ ruby '2.3.1'
 
 source 'https://rubygems.org'
 
+gem 'puma'
 gem 'rails', '4.2.6'
 gem 'pg'
 gem 'rails-api'
