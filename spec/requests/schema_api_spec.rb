@@ -4,9 +4,8 @@ describe SchemaAPI do
   describe "GET /schemas/ids/:id" do
     let(:schema) { create(:schema) }
 
-    it "is secured by Basic auth" do
-      unauthorized_get('/schemas/ids/1')
-      expect(status).to eq(401)
+    it_behaves_like "a secure endpoint" do
+      let(:action) { unauthorized_get("/schemas/ids/#{schema.id}") }
     end
 
     context "content type" do

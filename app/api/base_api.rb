@@ -1,3 +1,5 @@
+require 'grape/middleware/optional_auth'
+
 # This module provides shared configuration for the Schema Registry API
 module BaseAPI
   extend ActiveSupport::Concern
@@ -18,8 +20,11 @@ module BaseAPI
 
     helpers ::Helpers::ErrorHelper
 
-    http_basic do |_username, password|
-      password == Rails.configuration.x.app_password
-    end
+    use Grape::Middleware::OptionalAuth,
+        type: :http_basic,
+        realm: 'API Authorization',
+        proc: ->(_username, password) do
+          password == Rails.configuration.x.app_password
+        end
   end
 end

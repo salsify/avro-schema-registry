@@ -12,9 +12,8 @@ describe ConfigAPI do
       expect(response.body).to be_json_eql(expected)
     end
 
-    it "is secured by Basic auth" do
-      unauthorized_get('/config')
-      expect(status).to eq(401)
+    it_behaves_like "a secure endpoint" do
+      let(:action) { unauthorized_get('/config') }
     end
   end
 
@@ -28,9 +27,8 @@ describe ConfigAPI do
       expect(Config.global.compatibility).to eq(compatibility)
     end
 
-    it "is secured by Basic auth" do
-      unauthorized_put('/config', compatibility: compatibility)
-      expect(status).to eq(401)
+    it_behaves_like "a secure endpoint" do
+      let(:action) { unauthorized_put('/config', compatibility: compatibility) }
     end
 
     context "when the compatibility value is not uppercase" do
@@ -58,9 +56,8 @@ describe ConfigAPI do
     let(:subject) { create(:subject) }
     let(:compatibility) { Compatibility.global }
 
-    it "is secured by Basic auth" do
-      unauthorized_get("/config/#{subject.name}")
-      expect(status).to eq(401)
+    it_behaves_like "a secure endpoint" do
+      let(:action) { unauthorized_get("/config/#{subject.name}") }
     end
 
     context "when compatibility is set for the subject" do
@@ -127,9 +124,10 @@ describe ConfigAPI do
       end
     end
 
-    it "is secured by Basic auth" do
-      unauthorized_put("/config/#{subject.name}", compatibility: compatibility)
-      expect(status).to eq(401)
+    it_behaves_like "a secure endpoint" do
+      let(:action) do
+        unauthorized_put("/config/#{subject.name}", compatibility: compatibility)
+      end
     end
 
     context "when the subject does not exist" do
