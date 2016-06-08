@@ -43,9 +43,8 @@ describe SubjectAPI do
       expect(response.body).to be_json_eql(expected)
     end
 
-    it "is secured by Basic auth" do
-      unauthorized_get('/subjects')
-      expect(status).to eq(401)
+    it_behaves_like "a secure endpoint" do
+      let(:action) { unauthorized_get('/subjects') }
     end
   end
 
@@ -116,9 +115,9 @@ describe SubjectAPI do
       end
     end
 
-    it "is secured by Basic auth" do
-      unauthorized_get('/subjects/name')
-      expect(status).to eq(401)
+    it_behaves_like "a secure endpoint" do
+      let(:version) { create(:version) }
+      let(:action) { unauthorized_get("/subjects/#{version.subject.name}/versions") }
     end
 
     context "when the subject does not exist" do
@@ -133,9 +132,11 @@ describe SubjectAPI do
   end
 
   describe "GET /subjects/:name/versions/:version_id" do
-    it "is secured by Basic auth" do
-      unauthorized_get('/subjects/name/versions/1')
-      expect(status).to eq(401)
+    it_behaves_like "a secure endpoint" do
+      let(:version) { create(:schema_version) }
+      let(:action) do
+        unauthorized_get("/subjects/#{version.subject.name}/versions/#{version.version}")
+      end
     end
 
     context "when the subject and version exists" do
@@ -194,9 +195,12 @@ describe SubjectAPI do
   end
 
   describe "POST /subjects/:name/versions" do
-    it "is secured by Basic auth" do
-      unauthorized_post('/subjects/name/versions')
-      expect(status).to eq(401)
+    it_behaves_like "a secure endpoint" do
+      let(:version) { create(:version) }
+      let(:action) do
+        unauthorized_post("/subjects/#{version.subject.name}/versions",
+                          schema: version.schema.json)
+      end
     end
 
     context "with an invalid avro schema" do
@@ -367,9 +371,11 @@ describe SubjectAPI do
   end
 
   describe "POST /subjects/:name" do
-    it "is secured by Basic auth" do
-      unauthorized_post('/subjects/name')
-      expect(status).to eq(401)
+    it_behaves_like "a secure endpoint" do
+      let(:version) { create(:version) }
+      let(:action) do
+        unauthorized_post("/subjects/#{version.subject.name}", schema: version.schema.json)
+      end
     end
 
     context "when the schema exists for the subject" do

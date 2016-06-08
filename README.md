@@ -15,7 +15,7 @@ schema with each message.
 ## Overview
 
 This application provides the same API as the Confluent
-[Schema Registry](http://docs.confluent.io/2.0.1/schema-registry/docs/api.html).
+[Schema Registry](http://docs.confluent.io/3.0.0/schema-registry/docs/api.html).
 
 The service is implemented as a Rails 4.2 application and stores Avro schemas in
 Postgres. The API is implemented using [Grape](https://github.com/ruby-grape/grape).
@@ -30,7 +30,7 @@ are stored by the registry.
 
 ## Setup
 
-The application is written using Ruby 2.3. Start the service using the following
+The application is written using Ruby 2.3.1. Start the service using the following
 steps:
 
 ```bash
@@ -45,14 +45,17 @@ By default the service runs on port 21000.
 
 ## Security
 
-The service is secured using HTTP Basic authentication and should be with SSL.
-The default password for the service is 'avro' but can be via the environment
-as `SCHEMA_REGISTRY_PASSWORD`.
+The service is secured using HTTP Basic authentication and should be used with
+SSL. The default password for the service is 'avro' but it can be set via
+the environment as `SCHEMA_REGISTRY_PASSWORD`.
+
+Authentication can be disabled by setting `DISABLE_PASSWORD` to 'true' in the
+environment.
 
 ## Usage
 
 For more details on the REST API see the Confluent
-[documentation](http://docs.confluent.io/2.0.1/schema-registry/docs/api.html).
+[documentation](http://docs.confluent.io/3.0.0/schema-registry/docs/api.html).
 
 A [client](https://github.com/dasch/avro_turf/blob/master/lib/avro_turf/schema_registry.rb)
 (see [AvroTurf](https://github.com/dasch/avro_turf)) can be used to

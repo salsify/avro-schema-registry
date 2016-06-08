@@ -47,9 +47,11 @@ describe CompatibilityAPI do
       end
     end
 
-    it "is secured by Basic auth" do
-      unauthorized_post('/compatibility/subjects/name/versions/1', schema: {})
-      expect(status).to eq(401)
+    it_behaves_like "a secure endpoint" do
+      let(:action) do
+        unauthorized_post("/compatibility/subjects/#{subject_name}/versions/#{version.version}",
+                          schema: schema)
+      end
     end
 
     context "when the schema is invalid" do
