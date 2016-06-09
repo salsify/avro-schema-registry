@@ -3,4 +3,7 @@ Rails.application.routes.draw do
   mount SubjectAPI => '/subjects'
   mount ConfigAPI => '/config'
   mount CompatibilityAPI => '/compatibility'
+
+  get '/', to: 'pages#index'
+  get '/success', to: 'pages#success'
 end

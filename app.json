@@ -8,6 +8,7 @@
     "registry",
     "salsify"
   ],
+  "success_url": "/success",
   "env": {
     "SECRET_KEY_BASE": {
       "description": "Rails secret key",
