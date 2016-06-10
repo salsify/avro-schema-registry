@@ -24,7 +24,7 @@ Postgres. The API is implemented using [Grape](https://github.com/ruby-grape/gra
 
 The Confluent Schema Registry has been reimplemented because the original
 implementation uses Kafka to store schemas. We view the messages that pass
-through Kafka as more ephemeral and want the flexibility to change how we host Kafka
+through Kafka as more ephemeral and want the flexibility to change how we host Kafka.
 In the future we may also apply per-subject permissions to the Avro schemas that
 are stored by the registry.
 
@@ -42,6 +42,14 @@ bin/rails s
 ```
 
 By default the service runs on port 21000.
+
+## Deployment
+
+Salsify hosts a public instance of this application at
+[avro-schema-registry.salsify.com](https://avro-schema-registry.salsify.com) that
+anyone can experiment with, just please don't rely on it for production!
+
+There is also a button above to easily deploy your own copy of the application to Heroku.
 
 ## Security
 
@@ -93,7 +101,7 @@ In the future, a complete implementation of compatibility checking may be added.
 
 Tests for the application can be run using:
 
-```bash
+```
 bundle exec rspec
 ```
 

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+  <title>avro-schema-registry Success!</title>
+  <style type="text/css">
+    body {
+      background-color: #444;
+      color: #FFF;
+      font-family: "proxima-nova", helvetica, verdana, arial, sans-serif;
+      margin: 4%;
+      padding: 16px;
+      font-size: 1.75em;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: "kern" 1;
+      font-kerning: normal;
+    }
+    h1 {
+      margin: 1.5em 0 0;
+    }
+    p {
+      font-weight: lighter;
+      line-height: 120%;
+    }
+    a {
+      color: inherit;
+    }
+    #container {
+      padding:10px;
+    }
+    .content {
+      padding-top:0em;
+    }
+  </style>
+  <script type="text/javascript">
+    function setupPage() {
+      var currentLocation = window.location;
+
+      if (currentLocation.host !== "") {
+        var hostSpan = document.getElementById("current_host");
+        var hostParts = currentLocation.host.split(".");
+        var configLink = document.getElementById("config_link");
+
+        if (hostParts.length > 1 && hostParts[1] === "herokuapp") {
+          configLink.innerHTML = "<a href='https://dashboard.heroku.com/apps/" + hostParts[0] + "' target='_blank'>config</a>";
+        }
+        hostSpan.innerHTML = currentLocation.host;
+      }
+    }
+
+    window.onload = setupPage;
+  </script>
+</head>
+<body>
+  <h1>Congratulations!</h1>
+  <p>
+    <strong>
+      You've successfully deployed the avro-schema-registry!
+    </strong>
+  </p>
+
+  <h2>Next Steps</h2>
+  <ol>
+    <li>Check the Heroku <span id="config_link">config</span> for your app to find the value set for the
+    SCHEMA_REGISTRY_PASSWORD. You'll need this value to make requests.</li>
+
+    <li>Use a client to make some requests:
+      <ul>
+        <li><a href="https://github.com/dasch/avro_turf" target="_blank">avro_turf</a></li>
+        <li><a href="https://github.com/wvanbergen/schema_registry" target="_blank">schema_registry</a></li>
+        <li><a href="https://curl.haxx.se/docs/manpage.html" target="_blank">curl</a>:
+          <p>
+            <code>
+              <div>curl -X POST --data-binary @request.json \</div>
+              <div>&nbsp;&nbsp;-H "Content-Type: application/vnd.schemaregistry.v1+json" \</div>
+              <div>&nbsp;&nbsp;https://username:SCHEMA_REGISTRY_PASSWORD@\</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span id="current_host">avro-schema-registry.example.com</span>/subjects/NAME/versions</div>
+            </code>
+          </p>
+        </li>
+      </ul>
+    </li>
+
+    <li>Learn about the API in the Confluent Schema Registry
+        <a href="http://docs.confluent.io/3.0.0/schema-registry/docs/api.html" target="_blank">documentation</a>.
+    </li>
+
+    <li>See the implementation in the <a href="https://github.com/salsify/avro-schema-registry" target="_blank">avro-schema-registry repo</a>.</li>
+
+    <li>Learn more about why we built it on the Salsify <a href="http://blog.salsify.com/engineering/adventures-in-avro" target="_blank">blog</a>.</li>
+  </ol>
+</body>
+</html>
