@@ -17,9 +17,13 @@
     "SCHEMA_REGISTRY_PASSWORD": {
       "description": "Password for HTTP Basic Authentication",
       "generator": "secret"
+    },
+    "NEW_RELIC_APP_NAME": {
+      "description": "Name for this application in New Relic monitoring",
+      "value": "avro-schema-registry"
     }
   },
-  "addons": ["heroku-postgresql:hobby-dev"],
+  "addons": ["heroku-postgresql:hobby-dev", "newrelic"],
   "scripts": {
     "postdeploy": "bundle exec rake db:migrate"
   }
