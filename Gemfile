@@ -16,6 +16,11 @@ group :test do
   gem 'json_spec'
 end
 
+group :production do
+  gem 'bugsnag'
+  gem 'newrelic_rpm'
+end
+
 group :development do
   gem 'annotate'
   gem 'spring'
