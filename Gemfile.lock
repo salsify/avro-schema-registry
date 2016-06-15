@@ -47,6 +47,7 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
+    bugsnag (4.1.0)
     builder (3.2.2)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
@@ -93,6 +94,7 @@ GEM
     minitest (5.8.4)
     multi_json (1.11.2)
     multi_xml (0.5.5)
+    newrelic_rpm (3.15.2.317)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     overcommit (0.33.0)
@@ -198,10 +200,12 @@ PLATFORMS
 DEPENDENCIES
   annotate
   avro
+  bugsnag
   factory_girl_rails
   grape
   ice_nine
   json_spec
+  newrelic_rpm
   overcommit
   pg
   private_attr
@@ -211,6 +215,9 @@ DEPENDENCIES
   rspec-rails
   salsify_rubocop
   spring
+
+RUBY VERSION
+   ruby 2.3.1p112
 
 BUNDLED WITH
    1.12.5
