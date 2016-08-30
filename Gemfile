@@ -7,7 +7,7 @@ gem 'rails', '4.2.7'
 gem 'pg'
 gem 'rails-api'
 gem 'grape'
-gem 'avro'
+gem 'avro-salsify-fork', '1.9.0.1', require: 'avro'
 gem 'ice_nine', require: 'ice_nine/core_ext/object'
 gem 'private_attr', require: 'private_attr/everywhere'
 
