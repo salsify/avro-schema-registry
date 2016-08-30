@@ -1,0 +1,7 @@
+# avro-schema-registry
+
+## v0.2.0
+- Update to Rails 4.2.7.
+
+## v0.1.0
+- Initial release
