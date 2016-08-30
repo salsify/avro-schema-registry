@@ -1,5 +1,8 @@
 inherit_gem:
   salsify_rubocop: conf/rubocop_rails.yml
 
+RSpec/NamedSubject:
+  Enabled: false
+
 Style/RaiseArgs:
   EnforcedStyle: compact

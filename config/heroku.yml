@@ -1,0 +1,3 @@
+---
+production: schema-registry-prod
+staging: schema-registry-staging
