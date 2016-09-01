@@ -78,6 +78,8 @@ GEM
       rack-mount
       virtus (>= 1.0.0)
     hashie (3.4.3)
+    heroku_rails_deploy (0.1.0)
+      rails
     i18n (0.7.0)
     ice_nine (0.11.2)
     iniparse (1.4.2)
@@ -207,6 +209,7 @@ DEPENDENCIES
   bugsnag
   factory_girl_rails
   grape
+  heroku_rails_deploy
   ice_nine
   json_spec
   newrelic_rpm
