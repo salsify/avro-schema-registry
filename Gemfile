@@ -22,6 +22,7 @@ group :production do
 end
 
 group :development do
+  gem 'heroku_rails_deploy', require: false
   gem 'annotate'
   gem 'spring'
   gem 'overcommit'
