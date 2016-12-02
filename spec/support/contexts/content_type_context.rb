@@ -2,7 +2,7 @@
 # @param :expected [JSON] JSON response
 # @param :path [String] Request path
 # @param :params [Hash, NilClass] Optional params for request
-shared_examples_for 'content type' do |verb|
+shared_examples_for "content type" do |verb|
   let(:_params) { defined?(params) ? params : nil }
 
   it "returns a schema registry v1 response" do

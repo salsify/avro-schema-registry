@@ -72,31 +72,31 @@ describe SubjectAPI do
         end
       end
 
-      it_behaves_like 'a supported subject name',
+      it_behaves_like "a supported subject name",
                       'a name containing a period',
                       'com.example.foo'
 
-      it_behaves_like 'a supported subject name',
+      it_behaves_like "a supported subject name",
                       'a name beginning with an underscore',
                       '_underscore'
 
-      it_behaves_like 'a supported subject name',
+      it_behaves_like "a supported subject name",
                       'a name containing a digit',
                       'number5'
 
-      it_behaves_like 'a supported subject name',
+      it_behaves_like "a supported subject name",
                       'a name containing mixed case',
                       'UPPER_lower_0123456789'
 
-      it_behaves_like 'an unsupported subject name',
+      it_behaves_like "an unsupported subject name",
                       'a name beginning with a digit',
                       '5alive'
 
-      it_behaves_like 'an unsupported subject name',
+      it_behaves_like "an unsupported subject name",
                       'a name containing a hyphen',
                       'foo-bar'
 
-      it_behaves_like 'an unsupported subject name',
+      it_behaves_like "an unsupported subject name",
                       'a name beginning with a period',
                       '.com'
     end
@@ -424,7 +424,7 @@ describe SubjectAPI do
       # Confluent schema registry does not specify anything in this case, for
       # this endpoint, but a 422 makes the most sense to me. Better than a 404.
       it "returns an unprocessable entity error" do
-        post("/subjects/foo", schema: invalid_json)
+        post('/subjects/foo', schema: invalid_json)
         expect(response.status).to eq(422)
         expect(response.body).to eq(SchemaRegistry::Errors::INVALID_AVRO_SCHEMA.to_json)
       end
