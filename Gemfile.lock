@@ -41,7 +41,7 @@ GEM
       rake (>= 0.8.7)
     arel (6.0.3)
     ast (2.3.0)
-    avro-salsify-fork (1.9.0.3.pre2)
+    avro-salsify-fork (1.9.0.3)
       multi_json
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
@@ -208,7 +208,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
-  avro-salsify-fork (= 1.9.0.3.pre2)
+  avro-salsify-fork (= 1.9.0.3)
   bugsnag
   factory_girl_rails
   grape
