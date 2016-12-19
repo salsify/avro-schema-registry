@@ -235,7 +235,7 @@ describe SubjectAPI do
       let(:subject) { version.subject }
       let(:json) do
         JSON.parse(version.schema.json).tap do |h|
-          h['fields'] << { type: :string, name: :additional_field }
+          h['fields'] << { type: :string, name: :additional_field, default: '' }
         end.to_json
       end
 
@@ -287,7 +287,7 @@ describe SubjectAPI do
         let(:subject_name) { new_subject.name }
         let(:new_json) do
           JSON.parse(json).tap do |avro|
-            avro['fields'] << { name: :new, type: :string }
+            avro['fields'] << { name: :new, type: :string, default: '' }
           end.to_json
         end
         let(:new_schema) { create(:schema, json: new_json) }
@@ -343,7 +343,7 @@ describe SubjectAPI do
         let(:subject_name) { previous_version.subject.name }
         let(:json) do
           JSON.parse(previous_version.schema.json).tap do |avro|
-            avro['fields'] << { name: :extra, type: :string }
+            avro['fields'] << { name: :extra, type: :string, default: '' }
           end.to_json
         end
         let(:fingerprint) { Schemas::FingerprintGenerator.call(json) }

@@ -8,7 +8,7 @@ describe SchemaRegistry do
     subject { described_class.compatible?(compatibility, old_json, new_json) }
 
     before do
-      allow(Avro::IO::DatumReader).to receive(:match_schemas).and_call_original
+      allow(Avro::SchemaCompatibility).to receive(:can_read?).and_call_original
     end
 
     context "when compatibility is nil" do
@@ -26,7 +26,7 @@ describe SchemaRegistry do
 
       it "does not perform any check" do
         expect(subject).to eq(true)
-        expect(Avro::IO::DatumReader).not_to have_received(:match_schemas)
+        expect(Avro::SchemaCompatibility).not_to have_received(:can_read?)
       end
     end
 
@@ -35,7 +35,7 @@ describe SchemaRegistry do
 
       it "performs a check with the old schema as the readers schema" do
         subject
-        expect(Avro::IO::DatumReader).to have_received(:match_schemas).with(new_schema, old_schema)
+        expect(Avro::SchemaCompatibility).to have_received(:can_read?).with(new_schema, old_schema)
       end
     end
 
@@ -44,7 +44,7 @@ describe SchemaRegistry do
 
       it "performs a check with the new schema as the readers schema" do
         subject
-        expect(Avro::IO::DatumReader).to have_received(:match_schemas).with(old_schema, new_schema)
+        expect(Avro::SchemaCompatibility).to have_received(:can_read?).with(old_schema, new_schema)
       end
     end
 
@@ -53,8 +53,8 @@ describe SchemaRegistry do
 
       it "performs a check with each schema as the readers schema" do
         subject
-        expect(Avro::IO::DatumReader).to have_received(:match_schemas).with(new_schema, old_schema)
-        expect(Avro::IO::DatumReader).to have_received(:match_schemas).with(old_schema, new_schema)
+        expect(Avro::SchemaCompatibility).to have_received(:can_read?).with(new_schema, old_schema)
+        expect(Avro::SchemaCompatibility).to have_received(:can_read?).with(old_schema, new_schema)
       end
     end
   end

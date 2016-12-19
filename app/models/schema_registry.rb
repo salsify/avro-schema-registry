@@ -24,12 +24,15 @@ module SchemaRegistry
     end
   end
 
-  # This implements a very basic check of schema compatibility.
-  # To implement the complete compatibility check something like this needs to
-  # be ported to to the ruby gem:
-  # https://github.com/apache/avro/blob/master/lang/java/avro/src/main/java/org/apache/avro/io/parsing/ResolvingGrammarGenerator.java
+  # If a version/fork of avro that defines Avro::SchemaCompability is
+  # present, use the full compatibility check, otherwise fall back to
+  # match_schemas.
   def self.check(readers_schema, writers_schema)
-    Avro::IO::DatumReader.match_schemas(writers_schema, readers_schema)
+    if defined?(Avro::SchemaCompatibility)
+      Avro::SchemaCompatibility.can_read?(writers_schema, readers_schema)
+    else
+      Avro::IO::DatumReader.match_schemas(writers_schema, readers_schema)
+    end
   end
   private_class_method :check
 end
