@@ -15,7 +15,7 @@ schema with each message.
 ## Overview
 
 This application provides the same API as the Confluent
-[Schema Registry](http://docs.confluent.io/3.0.0/schema-registry/docs/api.html).
+[Schema Registry](http://docs.confluent.io/3.1.0/schema-registry/docs/api.html).
 
 The service is implemented as a Rails 4.2 application and stores Avro schemas in
 Postgres. The API is implemented using [Grape](https://github.com/ruby-grape/grape).
@@ -63,7 +63,7 @@ environment.
 ## Usage
 
 For more details on the REST API see the Confluent
-[documentation](http://docs.confluent.io/3.0.0/schema-registry/docs/api.html).
+[documentation](http://docs.confluent.io/3.1.0/schema-registry/docs/api.html).
 
 A [client](https://github.com/dasch/avro_turf/blob/master/lib/avro_turf/schema_registry.rb)
 (see [AvroTurf](https://github.com/dasch/avro_turf)) can be used to
@@ -85,17 +85,6 @@ id = client.register('test_subject', avro_json_schema)
 client.fetch(id)
 # => avro_json_schema
 ```
-
-### Compatibility
-
-Support for compatibility checking is incomplete. The full Confluent Schema
-Registry API is supported but compatibility checks are based on
-[Avro::IO::DatumReader.match_schemas](https://github.com/apache/avro/blob/branch-1.8/lang/ruby/lib/avro/io.rb#L222)
-from the [avro gem](https://github.com/apache/avro/tree/branch-1.8/lang/ruby).
-
-This is a basic check that ensures the top-level Avro type and name match.
-
-In the future, a complete implementation of compatibility checking may be added.
 
 ## Tests
 

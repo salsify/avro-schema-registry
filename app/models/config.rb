@@ -12,7 +12,7 @@
 class Config < ActiveRecord::Base
 
   # This default differs from the Confluent default of BACKWARD
-  DEFAULT_COMPATIBILITY = Compatibility::Constants::BOTH
+  DEFAULT_COMPATIBILITY = Compatibility::Constants::FULL_TRANSITIVE
   COMPATIBILITY_NAME = 'compatibility'.freeze
 
   belongs_to :subject
@@ -23,7 +23,7 @@ class Config < ActiveRecord::Base
             allow_nil: true
 
   def compatibility=(value)
-    super(value.upcase)
+    super(value.try(:upcase))
   end
 
   def self.global

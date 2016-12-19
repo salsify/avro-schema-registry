@@ -11,9 +11,7 @@ describe CompatibilityAPI do
     let(:compatibility) { nil }
 
     it "tests compatibility of the schema with the version of the subject's schema" do
-      allow(SchemaRegistry).to receive(:compatible?).with(compatibility,
-                                                          version.schema.json,
-                                                          schema).and_return(true)
+      allow(SchemaRegistry).to receive(:compatible?).with(schema, version: version).and_return(true)
       post("/compatibility/subjects/#{subject_name}/versions/#{version.version}", schema: schema)
       expect(response).to be_ok
       expect(response.body).to be_json_eql({ is_compatible: true }.to_json)
@@ -25,9 +23,7 @@ describe CompatibilityAPI do
       before { version.subject.create_config!(compatibility: compatibility) }
 
       it "tests compatibility of the schema with the version of the subject's schema" do
-        allow(SchemaRegistry).to receive(:compatible?).with(compatibility,
-                                                            version.schema.json,
-                                                            schema).and_return(true)
+        allow(SchemaRegistry).to receive(:compatible?).with(schema, version: version).and_return(true)
         post("/compatibility/subjects/#{subject_name}/versions/#{version.version}", schema: schema)
         expect(response).to be_ok
         expect(response.body).to be_json_eql({ is_compatible: true }.to_json)
@@ -38,9 +34,7 @@ describe CompatibilityAPI do
       let(:second_version) { create(:schema_version, subject: version.subject, version: 2) }
 
       it "tests compatibility of the schema with the latest version of the subject's schema" do
-        allow(SchemaRegistry).to receive(:compatible?).with(compatibility,
-                                                            second_version.schema.json,
-                                                            schema).and_return(true)
+        allow(SchemaRegistry).to receive(:compatible?).with(schema, version: second_version).and_return(true)
         post("/compatibility/subjects/#{subject_name}/versions/latest", schema: schema)
         expect(response).to be_ok
         expect(response.body).to be_json_eql({ is_compatible: true }.to_json)
