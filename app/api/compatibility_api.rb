@@ -22,9 +22,7 @@ class CompatibilityAPI < Grape::API
   post '/subjects/:subject/versions/:version_id', requirements: { subject: Subject::NAME_REGEXP } do
     with_schema_version(params[:subject], params[:version_id]) do |schema_version|
       status 200
-      { is_compatible: SchemaRegistry.compatible?(schema_version.subject.config.try(:compatibility),
-                                                  schema_version.schema.json,
-                                                  params[:schema]) }
+      { is_compatible: SchemaRegistry.compatible?(params[:schema], version: schema_version) }
     end
   end
 end

@@ -14,6 +14,7 @@ gem 'private_attr', require: 'private_attr/everywhere'
 group :test do
   gem 'rspec-rails'
   gem 'json_spec'
+  gem 'simplecov'
 end
 
 group :production do
