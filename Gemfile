@@ -25,6 +25,9 @@ group :development do
   gem 'heroku_rails_deploy', require: false
   gem 'annotate'
   gem 'spring'
+  gem 'spring-commands-rspec'
+  gem 'spring-commands-rubocop'
+  gem 'spring-watcher-listen'
   gem 'overcommit'
 end
 
