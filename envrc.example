@@ -1,0 +1,5 @@
+# Store unmodified PATH
+export ORIG_PATH="$PATH"
+
+# Prepend project bin directory to path to use wrapper scripts
+PATH_add bin
