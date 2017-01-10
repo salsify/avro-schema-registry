@@ -34,7 +34,7 @@ class ConfigAPI < Grape::API
   params do
     requires :subject, type: String, desc: 'Subject name'
   end
-  get '/:subject', requirements: { name: Subject::NAME_REGEXP } do
+  get '/:subject', requirements: { subject: Subject::NAME_REGEXP } do
     subject = find_subject!(params[:subject])
     { compatibility: subject.config.try(:compatibility) }
   end
@@ -44,7 +44,7 @@ class ConfigAPI < Grape::API
     requires :subject, type: String, desc: 'Subject name'
     requires :compatibility, type: String
   end
-  put '/:subject', requirements: { name: Subject::NAME_REGEXP } do
+  put '/:subject', requirements: { subject: Subject::NAME_REGEXP } do
     subject = find_subject!(params[:subject])
     subject.create_config! unless subject.config
     subject.config.update_compatibility!(params[:compatibility])

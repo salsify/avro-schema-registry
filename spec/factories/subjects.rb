@@ -10,10 +10,10 @@
 
 FactoryGirl.define do
   factory :subject, aliases: [:value_subject] do
-    sequence(:name) { |n| "subject_#{n}_value" }
+    sequence(:name) { |n| "com.example.test.subject_#{n}_value" }
 
     factory :key_subject do
-      sequence(:name) { |n| "subject_#{n}_key" }
+      sequence(:name) { |n| "com.example.test.subject_#{n}_key" }
     end
   end
 
