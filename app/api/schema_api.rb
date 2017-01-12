@@ -15,6 +15,7 @@ class SchemaAPI < Grape::API
   end
   get '/ids/:id' do
     schema = ::Schema.find(params[:id])
+    header('Cache-Control', 'public, max-age=2592000') # TODO: constants!
     { schema: schema.json }
   end
 end

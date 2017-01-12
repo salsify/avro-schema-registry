@@ -58,6 +58,7 @@ class SubjectAPI < Grape::API
     post '/versions' do
       schema = Schemas::RegisterNewVersion.call(params[:name], params[:schema])
       status 200
+      # TODO header('Cache-Control', 'public, max-age=2592000')
       { id: schema.id }
     end
 
