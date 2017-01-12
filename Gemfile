@@ -22,7 +22,7 @@ group :production do
 end
 
 group :development do
-  gem 'heroku_rails_deploy', require: false
+  gem 'heroku_rails_deploy', '>= 0.2.2', require: false
   gem 'annotate'
   gem 'spring'
   gem 'spring-commands-rspec'
