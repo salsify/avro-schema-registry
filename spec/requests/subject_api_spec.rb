@@ -229,6 +229,10 @@ describe SubjectAPI do
           expect(response).to be_ok
           expect(response.body).to be_json_eql(expected)
         end
+
+        it_behaves_like "a cached endpoint" do
+          let(:action) { get("/subjects/#{version.subject.name}/fingerprints/#{schema.fingerprint}") }
+        end
       end
 
       context "error cases" do

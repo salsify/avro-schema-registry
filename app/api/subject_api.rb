@@ -18,6 +18,7 @@ class SubjectAPI < Grape::API
   end
 
   helpers ::Helpers::SchemaVersionHelper
+  helpers ::Helpers::CacheHelper
 
   desc 'Get a list of registered subjects'
   get '/' do
@@ -67,7 +68,7 @@ class SubjectAPI < Grape::API
                                     .for_schema_fingerprint(fingerprint).first
 
       if schema_version
-        status 200
+        cache_response!
         { id: schema_version.schema_id }
       else
         schema_not_found!

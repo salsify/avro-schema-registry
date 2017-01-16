@@ -27,6 +27,10 @@ describe SchemaAPI do
         expect(response).to be_ok
         expect(response.body).to be_json_eql(expected)
       end
+
+      it_behaves_like "a cached endpoint" do
+        let(:action) { get("/schemas/ids/#{schema.id}") }
+      end
     end
 
     context "when the schema is not found" do
