@@ -21,3 +21,10 @@ shared_examples_for "a cached endpoint" do
     end
   end
 end
+
+shared_examples_for "an error that cannot be cached" do
+  it "does not allow the response to be cached" do
+    action
+    expect(response.headers['Cache-Control']).to eq('no-cache')
+  end
+end

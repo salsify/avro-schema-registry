@@ -243,12 +243,15 @@ describe SubjectAPI do
               message: 'Schema not found'
             }.to_json
           end
+          let(:action) { get("/subjects/#{version.subject.name}/fingerprints/#{other_fingerprint}") }
 
           it "returns a not found response" do
-            get("/subjects/#{version.subject.name}/fingerprints/#{other_fingerprint}")
+            action
             expect(response).to be_not_found
             expect(response.body).to be_json_eql(expected)
           end
+
+          it_behaves_like "an error that cannot be cached"
         end
 
         context "when the schema exists for a different subject" do
@@ -258,12 +261,15 @@ describe SubjectAPI do
               message: 'Schema not found'
             }.to_json
           end
+          let(:action) { get("/subjects/#{version.subject.name}/fingerprints/#{existing_fingerprint}") }
 
           it "returns a not found response" do
-            get("/subjects/#{version.subject.name}/fingerprints/#{existing_fingerprint}")
+            action
             expect(response).to be_not_found
             expect(response.body).to be_json_eql(expected)
           end
+
+          it_behaves_like "an error that cannot be cached"
         end
       end
     end

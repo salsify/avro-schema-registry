@@ -41,12 +41,15 @@ describe SchemaAPI do
           message: 'Schema not found'
         }.to_json
       end
+      let(:action) { get("/schemas/ids/#{schema_id}") }
 
       it "returns a not found response" do
-        get("/schemas/ids/#{schema_id}")
+        action
         expect(response).to be_not_found
         expect(response.body).to be_json_eql(expected)
       end
+
+      it_behaves_like "an error that cannot be cached"
     end
   end
 end
