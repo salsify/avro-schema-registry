@@ -194,6 +194,89 @@ describe SubjectAPI do
     end
   end
 
+  describe "GET /subjects/:name/fingerprints/:fingerprint" do
+    let(:version) { create(:schema_version) }
+    let(:schema) { version.schema }
+    let(:other_schema) { build(:schema) }
+    let(:other_version) { create(:schema_version) }
+    let(:fingerprint) { schema.fingerprint }
+    let(:other_fingerprint) do
+      Avro::Schema.parse(other_schema.json).sha256_fingerprint.to_s(16)
+    end
+    let(:existing_fingerprint) { other_version.schema.fingerprint }
+
+    it_behaves_like "a secure endpoint" do
+      let(:action) { unauthorized_get("/subjects/#{version.subject.name}/fingerprints/#{schema.fingerprint}") }
+    end
+
+    context "content type" do
+      include_examples "content type", :get do
+        let(:path) { "/subjects/#{version.subject.name}/fingerprints/#{schema.fingerprint}" }
+        let(:expected) do
+          { id: schema.id }.to_json
+        end
+      end
+    end
+
+    shared_examples_for "identifying a schema by fingerprint" do
+      context "when the schema is found" do
+        let(:expected) do
+          { id: schema.id }.to_json
+        end
+
+        it "returns the schema" do
+          get("/subjects/#{version.subject.name}/fingerprints/#{schema.fingerprint}")
+          expect(response).to be_ok
+          expect(response.body).to be_json_eql(expected)
+        end
+      end
+
+      context "error cases" do
+        context "when the schema is not found" do
+          let(:expected) do
+            {
+              error_code: 40403,
+              message: 'Schema not found'
+            }.to_json
+          end
+
+          it "returns a not found response" do
+            get("/subjects/#{version.subject.name}/fingerprints/#{other_fingerprint}")
+            expect(response).to be_not_found
+            expect(response.body).to be_json_eql(expected)
+          end
+        end
+
+        context "when the schema exists for a different subject" do
+          let(:expected) do
+            {
+              error_code: 40403,
+              message: 'Schema not found'
+            }.to_json
+          end
+
+          it "returns a not found response" do
+            get("/subjects/#{version.subject.name}/fingerprints/#{existing_fingerprint}")
+            expect(response).to be_not_found
+            expect(response.body).to be_json_eql(expected)
+          end
+        end
+      end
+    end
+
+    context "using a string fingerprint" do
+      it_behaves_like "identifying a schema by fingerprint"
+    end
+
+    context "using an integer fingerprint" do
+      let(:fingerprint) { super().to_i(16) }
+      let(:other_fingerprint) { super().to_i(16) }
+      let(:existing_fingerprint) { super().to_i(16) }
+
+      it_behaves_like "identifying a schema by fingerprint"
+    end
+  end
+
   describe "POST /subjects/:name/versions" do
     it_behaves_like "a secure endpoint" do
       let(:version) { create(:version) }

@@ -51,6 +51,29 @@ class SubjectAPI < Grape::API
       end
     end
 
+    desc 'Get the id of a specific version of the schema registered under a subject'
+    params do
+      requires :fingerprint, types: [String, Integer], desc: 'SHA256 fingerprint'
+    end
+    get '/fingerprints/:fingerprint' do
+      fingerprint = if params[:fingerprint].is_a?(Integer)
+                      params[:fingerprint].to_s(16)
+                    else
+                      params[:fingerprint]
+                    end
+
+      schema_version = SchemaVersion.select(:schema_id)
+                                    .for_subject_name(params[:name])
+                                    .for_schema_fingerprint(fingerprint).first
+
+      if schema_version
+        status 200
+        { id: schema_version.schema_id }
+      else
+        schema_not_found!
+      end
+    end
+
     desc 'Register a new schema under the specified subject'
     params do
       requires :schema, type: String, desc: 'The Avro schema string'
