@@ -43,25 +43,25 @@ Get the id of the schema registered for the subject by fingerprint. The
 fingerprint may either be the hex string or the integer value produced by the
 [SHA256 fingerprint](http://avro.apache.org/docs/1.8.1/spec.html#Schema+Fingerprints).
 
-*Parameters:*
-- *subject* (_string_) - Name of the subject that the schema is registered under
-- *fingerprint* (_string_ or _integer_) - SHA256 fingerprint for the schema
+**Parameters:**
+- **subject** (_string_) - Name of the subject that the schema is registered under
+- **fingerprint** (_string_ or _integer_) - SHA256 fingerprint for the schema
 
-*Response JSON Object:*
-- *id* (_int_) - Globally unique identifier of the schema
+**Response JSON Object:**
+- **id** (_int_) - Globally unique identifier of the schema
 
-*Status Codes:*
+**Status Codes:**
 - 404 Not Found - Error Code 40403 - Schema not found
 - 500 Internal Server Error - Error code 50001 - Error in the backend datastore
 
-*Example Request:*
+**Example Request:**
 ```
 GET /subjects/test/fingerprints/90479eea876f5d6c8482b5b9e3e865ff1c0931c1bfe0adb44c41d628fd20989c HTTP/1.1
 Host: schemaregistry.example.com
 Accept: application/vnd.schemaregistry.v1+json, application/vnd.schemaregistry+json, application/json
 ```
 
-*Example response:*
+**Example response:**
 ```
 HTTP/1.1 200 OK
 Content-Type: application/vnd.schemaregistry.v1+json
