@@ -38,6 +38,6 @@ module AvroSchemaRegistry
     config.x.app_password = ENV['SCHEMA_REGISTRY_PASSWORD'] || 'avro'
 
     config.x.allow_response_caching = ENV['ALLOW_RESPONSE_CACHING'] == 'true'
-    config.x.cache_max_age = (ENV['CACHE_MAX_AGE'] || 2592000).to_i
+    config.x.cache_max_age = (ENV['CACHE_MAX_AGE'] || 30.days).to_i
   end
 end
