@@ -18,6 +18,7 @@ class SubjectAPI < Grape::API
   end
 
   helpers ::Helpers::SchemaVersionHelper
+  helpers ::Helpers::CacheHelper
 
   desc 'Get a list of registered subjects'
   get '/' do
@@ -48,6 +49,29 @@ class SubjectAPI < Grape::API
           version: schema_version.version,
           schema: schema_version.schema.json
         }
+      end
+    end
+
+    desc 'Get the id of a specific version of the schema registered under a subject'
+    params do
+      requires :fingerprint, types: [String, Integer], desc: 'SHA256 fingerprint'
+    end
+    get '/fingerprints/:fingerprint' do
+      fingerprint = if params[:fingerprint].is_a?(Integer)
+                      params[:fingerprint].to_s(16)
+                    else
+                      params[:fingerprint]
+                    end
+
+      schema_version = SchemaVersion.select(:schema_id)
+                                    .for_subject_name(params[:name])
+                                    .for_schema_fingerprint(fingerprint).first
+
+      if schema_version
+        cache_response!
+        { id: schema_version.schema_id }
+      else
+        schema_not_found!
       end
     end
 

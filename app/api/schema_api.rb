@@ -9,12 +9,15 @@ class SchemaAPI < Grape::API
     server_error!
   end
 
+  helpers ::Helpers::CacheHelper
+
   desc 'Get the schema string identified by the input id'
   params do
     requires :id, type: Integer, desc: 'Schema ID'
   end
   get '/ids/:id' do
     schema = ::Schema.find(params[:id])
+    cache_response!
     { schema: schema.json }
   end
 end
