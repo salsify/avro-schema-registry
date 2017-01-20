@@ -71,7 +71,7 @@ Content-Type: application/vnd.schemaregistry.v1+json
 
 ## Setup
 
-The application is written using Ruby 2.3.1. Start the service using the following
+The application is written using Ruby 2.3.3. Start the service using the following
 steps:
 
 ```bash
