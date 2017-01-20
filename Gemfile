@@ -2,18 +2,18 @@ ruby '2.3.1'
 
 source 'https://rubygems.org'
 
+gem 'avro-salsify-fork', '1.9.0.3', require: 'avro'
+gem 'grape'
+gem 'ice_nine', require: 'ice_nine/core_ext/object'
+gem 'pg'
+gem 'private_attr', require: 'private_attr/everywhere'
 gem 'puma'
 gem 'rails', '4.2.7'
-gem 'pg'
 gem 'rails-api'
-gem 'grape'
-gem 'avro-salsify-fork', '1.9.0.3', require: 'avro'
-gem 'ice_nine', require: 'ice_nine/core_ext/object'
-gem 'private_attr', require: 'private_attr/everywhere'
 
 group :test do
-  gem 'rspec-rails'
   gem 'json_spec'
+  gem 'rspec-rails'
   gem 'simplecov'
 end
 
@@ -22,13 +22,13 @@ group :production do
 end
 
 group :development do
-  gem 'heroku_rails_deploy', '>= 0.2.2', require: false
   gem 'annotate'
+  gem 'heroku_rails_deploy', '>= 0.2.2', require: false
+  gem 'overcommit'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'spring-commands-rubocop'
   gem 'spring-watcher-listen'
-  gem 'overcommit'
 end
 
 group :development, :production do
