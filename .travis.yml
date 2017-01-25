@@ -1,10 +1,14 @@
+dist: trusty
 language: ruby
 rvm:
   - 2.3.3
 services:
   - postgresql
 addons:
-  postgresql: "9.4"
+  postgresql: "9.6"
+before_install:
+  # Workaround for https://github.com/sickill/rainbow/issues/48
+  - gem update --system
 before_script:
   - psql -c 'create database "avro-schema-registry_test";' -U postgres
 script:
