@@ -8,7 +8,7 @@
 #  updated_at :datetime         not null
 #
 
-class Subject < ActiveRecord::Base
+class Subject < ApplicationRecord
   include ImmutableModel
 
   NAME_REGEXP = /[a-zA-Z_][\w\.]*/

@@ -21,19 +21,19 @@ describe ConfigAPI do
     let(:compatibility) { 'FORWARD' }
 
     it "changes the global compatibility level" do
-      put('/config', compatibility: compatibility)
+      put('/config', params: { compatibility: compatibility })
       expect(response).to be_ok
       expect(response.body)
       expect(Config.global.compatibility).to eq(compatibility)
     end
 
     it_behaves_like "a secure endpoint" do
-      let(:action) { unauthorized_put('/config', compatibility: compatibility) }
+      let(:action) { unauthorized_put('/config', params: { compatibility: compatibility }) }
     end
 
     context "when the compatibility value is not uppercase" do
       it "changes the global compatibility level" do
-        put('/config', compatibility: compatibility.downcase)
+        put('/config', params: { compatibility: compatibility.downcase })
         expect(response).to be_ok
         expect(response.body)
         expect(Config.global.compatibility).to eq(compatibility)
@@ -44,7 +44,7 @@ describe ConfigAPI do
       let(:compatibility) { 'BACK' }
 
       it "returns an unprocessable entity error" do
-        put('/config', compatibility: compatibility)
+        put('/config', params: { compatibility: compatibility })
         expect(status).to eq(422)
         expect(response.body)
           .to be_json_eql(SchemaRegistry::Errors::INVALID_COMPATIBILITY_LEVEL.to_json)
@@ -96,7 +96,7 @@ describe ConfigAPI do
     let(:compatibility) { 'BACKWARD' }
 
     it "updates the compatibility level on the subject" do
-      put("/config/#{subject.name}", compatibility: compatibility)
+      put("/config/#{subject.name}", params: { compatibility: compatibility })
       expect(response).to be_ok
       expect(response.body).to be_json_eql(expected)
       expect(subject.config.compatibility).to eq(compatibility)
@@ -108,7 +108,7 @@ describe ConfigAPI do
       before { subject.create_config!(compatibility: original_compatibility) }
 
       it "updates the compatibility level on the subject" do
-        put("/config/#{subject.name}", compatibility: compatibility)
+        put("/config/#{subject.name}", params: { compatibility: compatibility })
         expect(response).to be_ok
         expect(response.body).to be_json_eql(expected)
         expect(subject.config.reload.compatibility).to eq(compatibility)
@@ -117,7 +117,7 @@ describe ConfigAPI do
 
     context "when the compatibility level is not uppercase" do
       it "updates the compatibility level on the subject" do
-        put("/config/#{subject.name}", compatibility: compatibility.downcase)
+        put("/config/#{subject.name}", params: { compatibility: compatibility.downcase })
         expect(response).to be_ok
         expect(response.body).to be_json_eql(expected)
         expect(subject.config.compatibility).to eq(compatibility)
@@ -126,7 +126,7 @@ describe ConfigAPI do
 
     it_behaves_like "a secure endpoint" do
       let(:action) do
-        unauthorized_put("/config/#{subject.name}", compatibility: compatibility)
+        unauthorized_put("/config/#{subject.name}", params: { compatibility: compatibility })
       end
     end
 
@@ -134,7 +134,7 @@ describe ConfigAPI do
       let(:name) { 'example.does_not_exist' }
 
       it "returns a not found error" do
-        put("/config/#{name}", compatibility: compatibility)
+        put("/config/#{name}", params: { compatibility: compatibility })
         expect(response).to be_not_found
         expect(response.body).to be_json_eql(SchemaRegistry::Errors::SUBJECT_NOT_FOUND.to_json)
       end
@@ -144,7 +144,7 @@ describe ConfigAPI do
       let(:compatibility) { 'FOO' }
 
       it "returns an unprocessable entity error" do
-        put("/config/#{subject.name}", compatibility: compatibility)
+        put("/config/#{subject.name}", params: { compatibility: compatibility })
         expect(status).to eq(422)
         expect(response.body)
           .to be_json_eql(SchemaRegistry::Errors::INVALID_COMPATIBILITY_LEVEL.to_json)

@@ -9,7 +9,7 @@
 #  subject_id    :integer
 #
 
-class Config < ActiveRecord::Base
+class Config < ApplicationRecord
 
   # This default differs from the Confluent default of BACKWARD
   DEFAULT_COMPATIBILITY = Compatibility::Constants::FULL_TRANSITIVE

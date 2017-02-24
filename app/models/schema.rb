@@ -9,7 +9,7 @@
 #  updated_at  :datetime         not null
 #
 
-class Schema < ActiveRecord::Base
+class Schema < ApplicationRecord
   include ImmutableModel
 
   before_save :generate_fingerprint

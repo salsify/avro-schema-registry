@@ -2,17 +2,17 @@ ruby '2.3.3'
 
 source 'https://rubygems.org'
 
-gem 'avro-salsify-fork', '1.9.0.3', require: 'avro'
+gem 'avro-salsify-fork', '1.9.0.5', require: 'avro'
 gem 'grape'
 gem 'ice_nine', require: 'ice_nine/core_ext/object'
 gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
 gem 'puma'
-gem 'rails', '4.2.7'
-gem 'rails-api'
+gem 'rails', '5.0.1'
 
 group :test do
   gem 'json_spec'
+  gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'simplecov'
 end

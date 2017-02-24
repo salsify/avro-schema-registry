@@ -17,7 +17,7 @@ schema with each message.
 This application provides the same API as the Confluent
 [Schema Registry](http://docs.confluent.io/3.1.0/schema-registry/docs/api.html).
 
-The service is implemented as a Rails 4.2 application and stores Avro schemas in
+The service is implemented as a Rails 5.0 application and stores Avro schemas in
 Postgres. The API is implemented using [Grape](https://github.com/ruby-grape/grape).
 
 ### Why?
