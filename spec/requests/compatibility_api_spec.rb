@@ -12,7 +12,7 @@ describe CompatibilityAPI do
 
     it "tests compatibility of the schema with the version of the subject's schema" do
       allow(SchemaRegistry).to receive(:compatible?).with(schema, version: version).and_return(true)
-      post("/compatibility/subjects/#{subject_name}/versions/#{version.version}", schema: schema)
+      post("/compatibility/subjects/#{subject_name}/versions/#{version.version}", params: { schema: schema })
       expect(response).to be_ok
       expect(response.body).to be_json_eql({ is_compatible: true }.to_json)
     end
@@ -24,7 +24,7 @@ describe CompatibilityAPI do
 
       it "tests compatibility of the schema with the version of the subject's schema" do
         allow(SchemaRegistry).to receive(:compatible?).with(schema, version: version).and_return(true)
-        post("/compatibility/subjects/#{subject_name}/versions/#{version.version}", schema: schema)
+        post("/compatibility/subjects/#{subject_name}/versions/#{version.version}", params: { schema: schema })
         expect(response).to be_ok
         expect(response.body).to be_json_eql({ is_compatible: true }.to_json)
       end
@@ -35,7 +35,7 @@ describe CompatibilityAPI do
 
       it "tests compatibility of the schema with the latest version of the subject's schema" do
         allow(SchemaRegistry).to receive(:compatible?).with(schema, version: second_version).and_return(true)
-        post("/compatibility/subjects/#{subject_name}/versions/latest", schema: schema)
+        post("/compatibility/subjects/#{subject_name}/versions/latest", params: { schema: schema })
         expect(response).to be_ok
         expect(response.body).to be_json_eql({ is_compatible: true }.to_json)
       end
@@ -44,7 +44,7 @@ describe CompatibilityAPI do
     it_behaves_like "a secure endpoint" do
       let(:action) do
         unauthorized_post("/compatibility/subjects/#{subject_name}/versions/#{version.version}",
-                          schema: schema)
+                          params: { schema: schema })
       end
     end
 
@@ -55,7 +55,7 @@ describe CompatibilityAPI do
       end
 
       it "returns an invalid schema error" do
-        post("/compatibility/subjects/#{subject_name}/versions/latest", schema: schema)
+        post("/compatibility/subjects/#{subject_name}/versions/latest", params: { schema: schema })
         expect(status).to eq(422)
         expect(response.body).to be_json_eql(SchemaRegistry::Errors::INVALID_AVRO_SCHEMA.to_json)
       end
@@ -63,7 +63,7 @@ describe CompatibilityAPI do
 
     context "when the subject is not found" do
       it "returns a subject not found error" do
-        post('/compatibility/subjects/example.not_found/versions/latest', schema: schema)
+        post('/compatibility/subjects/example.not_found/versions/latest', params: { schema: schema })
         expect(response).to be_not_found
         expect(response.body).to be_json_eql(SchemaRegistry::Errors::SUBJECT_NOT_FOUND.to_json)
       end
@@ -71,7 +71,7 @@ describe CompatibilityAPI do
 
     context "when the version is not found" do
       it "returns a version not found error" do
-        post("/compatibility/subjects/#{subject_name}/versions/2", schema: schema)
+        post("/compatibility/subjects/#{subject_name}/versions/2", params: { schema: schema })
         expect(response).to be_not_found
         expect(response.body).to be_json_eql(SchemaRegistry::Errors::VERSION_NOT_FOUND.to_json)
       end

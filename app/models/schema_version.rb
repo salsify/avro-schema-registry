@@ -8,7 +8,7 @@
 #  schema_id  :integer          not null
 #
 
-class SchemaVersion < ActiveRecord::Base
+class SchemaVersion < ApplicationRecord
   include ImmutableModel
 
   belongs_to :subject

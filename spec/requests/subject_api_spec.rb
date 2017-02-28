@@ -292,7 +292,7 @@ describe SubjectAPI do
       let(:version) { create(:version) }
       let(:action) do
         unauthorized_post("/subjects/#{version.subject.name}/versions",
-                          schema: version.schema.json)
+                          params: { schema: version.schema.json })
       end
     end
 
@@ -300,7 +300,7 @@ describe SubjectAPI do
       let(:subject_name) { 'invalid' }
 
       it "returns an unprocessable entity error" do
-        post("/subjects/#{subject_name}/versions", schema: invalid_json)
+        post("/subjects/#{subject_name}/versions", params: { schema: invalid_json })
         expect(response.status).to eq(422)
         expect(response.body).to be_json_eql(SchemaRegistry::Errors::INVALID_AVRO_SCHEMA.to_json)
       end
@@ -311,14 +311,14 @@ describe SubjectAPI do
       let(:subject) { version.subject }
 
       it "returns the id of the schema" do
-        post("/subjects/#{subject.name}/versions", schema: version.schema.json)
+        post("/subjects/#{subject.name}/versions", params: { schema: version.schema.json })
         expect(response).to be_ok
         expect(response.body).to be_json_eql({ id: version.schema_id }.to_json)
       end
 
       it "does not create a new version" do
         expect do
-          post("/subjects/#{subject.name}/versions", schema: version.schema.json)
+          post("/subjects/#{subject.name}/versions", params: { schema: version.schema.json })
         end.not_to change(SchemaVersion, :count)
       end
     end
@@ -333,7 +333,7 @@ describe SubjectAPI do
       end
 
       it "returns the id of a new schema" do
-        post("/subjects/#{subject.name}/versions", schema: json)
+        post("/subjects/#{subject.name}/versions", params: { schema: json })
 
         expect(response).to be_ok
         expect(response.body).to be_json_eql({ id: version.schema_id }.to_json)
@@ -343,7 +343,7 @@ describe SubjectAPI do
         let(:json) { build(:schema).json }
 
         it "returns an incompatible schema error" do
-          post("/subjects/#{subject.name}/versions", schema: json)
+          post("/subjects/#{subject.name}/versions", params: { schema: json })
           expect(status).to eq(409)
           expect(response.body).to be_json_eql(SchemaRegistry::Errors::INCOMPATIBLE_AVRO_SCHEMA.to_json)
         end
@@ -358,7 +358,7 @@ describe SubjectAPI do
         let(:subject_name) { 'new_subject' }
 
         it "returns the id of the schema" do
-          post("/subjects/#{subject_name}/versions", schema: version.schema.json)
+          post("/subjects/#{subject_name}/versions", params: { schema: version.schema.json })
           expect(response).to be_ok
           expect(response.body).to be_json_eql({ id: version.schema_id }.to_json)
         end
@@ -366,7 +366,7 @@ describe SubjectAPI do
         it "creates a new subject and version" do
           expect do
             expect do
-              post("/subjects/#{subject_name}/versions", schema: version.schema.json)
+              post("/subjects/#{subject_name}/versions", params: { schema: version.schema.json })
             end.to change(Subject, :count).by(1)
           end.to change(SchemaVersion, :count).by(1)
           expect(Subject.find_by(name: subject_name)).to be_present
@@ -387,14 +387,14 @@ describe SubjectAPI do
         let!(:new_version) { create(:schema_version, subject: new_subject, schema: new_schema) }
 
         it "returns the id of the schema" do
-          post("/subjects/#{subject_name}/versions", schema: json)
+          post("/subjects/#{subject_name}/versions", params: { schema: json })
           expect(response).to be_ok
           expect(response.body).to be_json_eql({ id: version.schema_id }.to_json)
         end
 
         it "creates a new schema version" do
           expect do
-            post("/subjects/#{subject_name}/versions", schema: json)
+            post("/subjects/#{subject_name}/versions", params: { schema: json })
           end.to change(SchemaVersion, :count).by(1)
           new_schema_version = SchemaVersion.latest_for_subject_name(subject_name).first
           expect(new_schema_version.version).to eq(2)
@@ -407,7 +407,7 @@ describe SubjectAPI do
         let(:subject_name) { 'new_subject' }
 
         it "returns the id of a new schema" do
-          post("/subjects/#{subject_name}/versions", schema: json)
+          post("/subjects/#{subject_name}/versions", params: { schema: json })
           expect(response).to be_ok
           version = SchemaVersion.latest_for_subject_name(subject_name).first
           expect(response.body).to be_json_eql({ id: version.schema_id }.to_json)
@@ -417,7 +417,7 @@ describe SubjectAPI do
           expect do
             expect do
               expect do
-                post("/subjects/#{subject_name}/versions", schema: json)
+                post("/subjects/#{subject_name}/versions", params: { schema: json })
               end.to change(Schema, :count).by(1)
             end.to change(Subject, :count).by(1)
           end.to change(SchemaVersion, :count).by(1)
@@ -455,7 +455,7 @@ describe SubjectAPI do
         end
 
         it "retries once" do
-          post("/subjects/#{subject_name}/versions", schema: json)
+          post("/subjects/#{subject_name}/versions", params: { schema: json })
           expect(response).to be_ok
           expect(response.body).to be_json_eql({ id: @schema.id }.to_json)
         end
@@ -467,7 +467,8 @@ describe SubjectAPI do
     it_behaves_like "a secure endpoint" do
       let(:version) { create(:version) }
       let(:action) do
-        unauthorized_post("/subjects/#{version.subject.name}", schema: version.schema.json)
+        unauthorized_post("/subjects/#{version.subject.name}",
+                          params: { schema: version.schema.json })
       end
     end
 
@@ -484,7 +485,7 @@ describe SubjectAPI do
       end
 
       it "returns information about the schema" do
-        post("/subjects/#{subject_name}", schema: version.schema.json)
+        post("/subjects/#{subject_name}", params: { schema: version.schema.json })
         expect(response).to be_ok
         expect(response.body).to be_json_eql(expected)
       end
@@ -495,7 +496,7 @@ describe SubjectAPI do
       let(:json) { build(:schema).json }
 
       it "returns a subject not found error" do
-        post("/subjects/#{subject_name}", schema: json)
+        post("/subjects/#{subject_name}", params: { schema: json })
         expect(response).to be_not_found
         expect(response.body).to be_json_eql(SchemaRegistry::Errors::SUBJECT_NOT_FOUND.to_json)
       end
@@ -507,7 +508,7 @@ describe SubjectAPI do
       let(:json) { build(:schema).json }
 
       it "return a schema not found error" do
-        post("/subjects/#{subject_name}", schema: json)
+        post("/subjects/#{subject_name}", params: { schema: json })
         expect(response).to be_not_found
         expect(response.body).to be_json_eql(SchemaRegistry::Errors::SCHEMA_NOT_FOUND.to_json)
       end
@@ -517,7 +518,7 @@ describe SubjectAPI do
       # Confluent schema registry does not specify anything in this case, for
       # this endpoint, but a 422 makes the most sense to me. Better than a 404.
       it "returns an unprocessable entity error" do
-        post('/subjects/foo', schema: invalid_json)
+        post('/subjects/foo', params: { schema: invalid_json })
         expect(response.status).to eq(422)
         expect(response.body).to eq(SchemaRegistry::Errors::INVALID_AVRO_SCHEMA.to_json)
       end
