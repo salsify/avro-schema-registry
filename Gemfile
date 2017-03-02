@@ -23,6 +23,7 @@ end
 
 group :development do
   gem 'annotate'
+  gem 'avro_turf', require: false
   gem 'heroku_rails_deploy', '>= 0.2.2', require: false
   gem 'overcommit'
   gem 'spring'

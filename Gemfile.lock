@@ -43,8 +43,13 @@ GEM
       rake (>= 10.4, < 12.0)
     arel (7.1.4)
     ast (2.3.0)
+    avro (1.8.1)
+      multi_json
     avro-salsify-fork (1.9.0.5)
       multi_json
+    avro_turf (0.7.2)
+      avro (>= 1.7.7, < 1.9)
+      excon (~> 0.45)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -62,6 +67,7 @@ GEM
     docile (1.1.5)
     equalizer (0.0.11)
     erubis (2.7.0)
+    excon (0.55.0)
     factory_girl (4.8.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.8.0)
@@ -236,6 +242,7 @@ PLATFORMS
 DEPENDENCIES
   annotate
   avro-salsify-fork (= 1.9.0.5)
+  avro_turf
   bugsnag
   factory_girl_rails
   grape
