@@ -101,6 +101,25 @@ the environment as `SCHEMA_REGISTRY_PASSWORD`.
 Authentication can be disabled by setting `DISABLE_PASSWORD` to 'true' in the
 environment.
 
+## Caching
+
+When the environment variable `ALLOW_RESPONSE_CACHING` is set to `true` then the
+service sets headers to allow responses from the following endpoints to be cached:
+
+- `GET /schemas/(int: id)`
+- `GET /subjects/(string: subject)/fingerprints/(:fingerprint)`
+
+By default, responses for these endpoints are allowed to be cached for 30 days.
+This max age can be configured by setting `CACHE_MAX_AGE` to a number of seconds.
+
+To populate a cache of the responses from these endpoints, the application
+contains a rake task that can be run in a development environment to iterate
+through all registered schemas and issue the cacheable requests:
+
+```bash
+rake cache_all_requests registry_url=https://anything:avro@registry.example.com
+```
+
 ## Usage
 
 For more details on the REST API see the Confluent
