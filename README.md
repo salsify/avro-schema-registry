@@ -125,13 +125,16 @@ rake cache_all_requests registry_url=https://anything:avro@registry.example.com
 For more details on the REST API see the Confluent
 [documentation](http://docs.confluent.io/3.1.0/schema-registry/docs/api.html).
 
-A [client](https://github.com/dasch/avro_turf/blob/master/lib/avro_turf/schema_registry.rb)
+A [client](https://github.com/dasch/avro_turf/blob/master/lib/avro_turf/confluent_schema_registry.rb)
 (see [AvroTurf](https://github.com/dasch/avro_turf)) can be used to
 communicate with the service:
 
 ```ruby
+require 'avro_turf'
+require 'avro_turf/confluent_schema_registry'
+
 url = 'https://anything:avro@registry.example.com'
-client = AvroTurf::SchemaRegistry.new(url)
+client = AvroTurf::ConfluentSchemaRegistry.new(url)
 
 # registering a new schema returns an id
 id = client.register('test_subject', avro_json_schema)
