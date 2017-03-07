@@ -1,5 +1,5 @@
 require 'avro_turf'
-require 'avro_turf/schema_registry'
+require 'avro_turf/confluent_schema_registry'
 
 desc 'Make cacheable requests for all existing schemas in the registry'
 task cache_all_requests: [:environment] do
@@ -7,7 +7,7 @@ task cache_all_requests: [:environment] do
 
   logger = Logger.new($stdout)
   logger.level = Logger::ERROR
-  client = AvroTurf::SchemaRegistry.new(ENV['registry_url'], logger: logger)
+  client = AvroTurf::ConfluentSchemaRegistry.new(ENV['registry_url'], logger: logger)
 
   client.subjects.each do |subject|
 

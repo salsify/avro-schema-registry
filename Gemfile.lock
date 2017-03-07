@@ -47,7 +47,7 @@ GEM
       multi_json
     avro-salsify-fork (1.9.0.5)
       multi_json
-    avro_turf (0.7.2)
+    avro_turf (0.8.0)
       avro (>= 1.7.7, < 1.9)
       excon (~> 0.45)
     axiom-types (0.1.1)
@@ -242,7 +242,7 @@ PLATFORMS
 DEPENDENCIES
   annotate
   avro-salsify-fork (= 1.9.0.5)
-  avro_turf
+  avro_turf (>= 0.8.0)
   bugsnag
   factory_girl_rails
   grape
