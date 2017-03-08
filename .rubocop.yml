@@ -1,8 +1,5 @@
 inherit_gem:
-  salsify_rubocop: conf/rubocop_rails.yml
-
-Rails/HttpPositionalArguments:
-  Enabled: true
+  salsify_rubocop: conf/rubocop_rails50.yml
 
 RSpec/NamedSubject:
   Enabled: false
