@@ -1,5 +1,11 @@
 # avro-schema-registry
 
+## v0.5.0
+- Fix Config API for subjects.
+- Add endpoint to get schema id by fingerprint.
+- Upgrade to Rails 5.0.
+- Add rake task to issue cacheable requests for all schemas.
+
 ## v0.4.0
 - Use `avro-salsify-fork` v1.9.0.3.
 - Implement full schema compatibility check and transitive options from
