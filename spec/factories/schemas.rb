@@ -2,11 +2,12 @@
 #
 # Table name: schemas
 #
-#  id          :integer          not null, primary key
-#  fingerprint :string           not null
-#  json        :text             not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id           :integer          not null, primary key
+#  fingerprint  :string           not null
+#  json         :text             not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  fingerprint2 :string
 #
 
 FactoryGirl.define do
@@ -16,7 +17,7 @@ FactoryGirl.define do
         type: :record,
         name: "rec#{n}",
         fields: [
-          { name: "field#{n}", type: :string }
+          { name: "field#{n}", type: :string, default: '' }
         ]
       }.to_json
     end

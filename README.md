@@ -12,6 +12,27 @@ Schema versions stored by the service are assigned an id. These ids can be
 embedded in messages published to Kafka avoiding the need to send the full
 schema with each message.
 
+## Upgrading to v0.6.0
+
+There is a compatibility break when upgrading to v0.6.0 due to the way that
+fingerprints are generated. Prior to v0.6.0 fingerprints were generated based
+on the Parsing Canonical Form for Avro schemas. This does not take into account
+attributes such as `default` that are used during schema resolution and for
+compatibility checking. The new fingerprint is based on [avro-resolution_canonical_form](https://github.com/salsify/avro-resolution_canonical_form).
+
+To upgrade:
+# Set `FINGERPRINT_VERSION=1` and `DISABLE_SCHEMA_REGISTRATION=true` in the
+  environment for the application.
+# Deploy v0.6.0 and run migrations to create and populate the new `fingerprint2`
+  column.
+# If NOT using the fingerprint endpoint move to the final step.
+# Set `FINGERPRINT_VERSION=all`, unset `DISABLE_SCHEMA_REGISTRATION`, and restart the application.
+# Update all clients to use the v2 fingerprint.
+# Set `FINGERPRINT_VERSION=2` and unset `DISABLE_SCHEMA_REGISTRATION` (if still set) and
+  restart the application.
+
+At some point in the future the original `fingerprint` column will be removed.
+
 ## Overview
 
 This application provides the same API as the Confluent

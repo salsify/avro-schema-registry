@@ -57,8 +57,8 @@ class SubjectAPI < Grape::API
       requires :fingerprint, types: [String, Integer], desc: 'SHA256 fingerprint'
     end
     get '/fingerprints/:fingerprint' do
-      fingerprint = if params[:fingerprint].is_a?(Integer)
-                      params[:fingerprint].to_s(16)
+      fingerprint = if /^[0-9]+$/ =~ params[:fingerprint]
+                      params[:fingerprint].to_i.to_s(16)
                     else
                       params[:fingerprint]
                     end
@@ -80,6 +80,10 @@ class SubjectAPI < Grape::API
       requires :schema, type: String, desc: 'The Avro schema string'
     end
     post '/versions' do
+      if Rails.configuration.x.disable_schema_registration
+        error!({ message: 'Schema registration is disabled' }, 503)
+      end
+
       schema = Schemas::RegisterNewVersion.call(params[:name], params[:schema])
       status 200
       { id: schema.id }
