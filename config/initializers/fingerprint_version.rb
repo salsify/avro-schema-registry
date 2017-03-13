@@ -1,0 +1,1 @@
+Schemas::FingerprintGenerator.valid_fingerprint_version!

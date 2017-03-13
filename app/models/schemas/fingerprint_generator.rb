@@ -3,8 +3,16 @@ module Schemas
   # Avro JSON schema
   module FingerprintGenerator
 
-    V1_VERSIONS = %w(1 all).freeze
-    V2_VERSIONS = %w(2 all).freeze
+    VALID_FINGERPRINT_VERSIONS = Set.new(%w(1 2 all)).deep_freeze
+
+    V1_VERSIONS = Set.new(%w(1 all)).deep_freeze
+    V2_VERSIONS = Set.new(%w(2 all)).deep_freeze
+
+    def self.valid_fingerprint_version!
+      unless VALID_FINGERPRINT_VERSIONS.include?(Rails.configuration.x.fingerprint_version)
+        raise "Invalid fingerprint version: #{Rails.configuration.x.fingerprint_version.inspect}"
+      end
+    end
 
     def self.generate_v1(json)
       Schemas::Parse.call(json).sha256_fingerprint.to_s(16)

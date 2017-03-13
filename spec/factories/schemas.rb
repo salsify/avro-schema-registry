@@ -22,4 +22,16 @@ FactoryGirl.define do
       }.to_json
     end
   end
+
+  factory :schema_without_default, class: Schema do
+    sequence(:json) do |n|
+      {
+        type: :record,
+        name: "rec#{n}",
+        fields: [
+          { name: "field#{n}", type: :int }
+        ]
+      }.to_json
+    end
+  end
 end
