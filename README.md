@@ -22,7 +22,7 @@ compatibility checking. The new fingerprint is based on [avro-resolution_canonic
 
 To upgrade:
 # Set `FINGERPRINT_VERSION=1` and `DISABLE_SCHEMA_REGISTRATION=true` in the
-  environment for the application.
+  environment for the application, and restart the application.
 # Deploy v0.6.0 and run migrations to create and populate the new `fingerprint2`
   column.
 # If NOT using the fingerprint endpoint move to the final step.
