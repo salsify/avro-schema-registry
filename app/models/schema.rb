@@ -18,6 +18,27 @@ class Schema < ApplicationRecord
   has_many :versions, class_name: 'SchemaVersion'
   has_many :subjects, through: :versions
 
+  scope :with_json, ->(json) do
+    with_fingerprints(Schemas::FingerprintGenerator.include_v1? ? Schemas::FingerprintGenerator.generate_v1(json) : nil,
+                      Schemas::FingerprintGenerator.include_v2? ? Schemas::FingerprintGenerator.generate_v2(json) : nil)
+  end
+
+  scope :with_fingerprint, ->(fingerprint) do
+    with_fingerprints(fingerprint)
+  end
+
+  scope :with_fingerprints, -> (fingerprint, fingerprint2 = nil) do
+    fingerprint2 ||= fingerprint
+    case Rails.configuration.x.fingerprint_version
+    when '1'
+      where('schemas.fingerprint = ?', fingerprint)
+    when '2'
+      where('schemas.fingerprint2 = ?', fingerprint2)
+    else
+      where('schemas.fingerprint = ? OR schemas.fingerprint2 = ?', fingerprint, fingerprint2)
+    end
+  end
+
   def self.existing_schema(json)
     if Schemas::FingerprintGenerator.include_v2?
       schema = find_by(fingerprint2: Schemas::FingerprintGenerator.generate_v2(json))
