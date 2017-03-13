@@ -211,7 +211,7 @@ describe SubjectAPI do
 
     context "content type" do
       include_examples "content type", :get do
-        let(:path) { "/subjects/#{version.subject.name}/fingerprints/#{schema.fingerprint}" }
+        let(:path) { "/subjects/#{version.subject.name}/fingerprints/#{fingerprint}" }
         let(:expected) do
           { id: schema.id }.to_json
         end
@@ -225,13 +225,13 @@ describe SubjectAPI do
         end
 
         it "returns the schema" do
-          get("/subjects/#{version.subject.name}/fingerprints/#{schema.fingerprint}")
+          get("/subjects/#{version.subject.name}/fingerprints/#{fingerprint}")
           expect(response).to be_ok
-          expect(response.body).to be_json_eql(expected)
+          expect(response.body).to be_json_eql(expected).including(:id)
         end
 
         it_behaves_like "a cached endpoint" do
-          let(:action) { get("/subjects/#{version.subject.name}/fingerprints/#{schema.fingerprint}") }
+          let(:action) { get("/subjects/#{version.subject.name}/fingerprints/#{fingerprint}") }
         end
       end
 
@@ -274,16 +274,72 @@ describe SubjectAPI do
       end
     end
 
-    context "using a string fingerprint" do
-      it_behaves_like "identifying a schema by fingerprint"
+    context "when the fingerprint version is '1'" do
+      before do
+        allow(Rails.configuration.x).to receive(:fingerprint_version).and_return('1')
+      end
+
+      context "using a string fingerprint" do
+        it_behaves_like "identifying a schema by fingerprint"
+
+        context "using a v2 fingerprint" do
+          let(:fingerprint) { Schemas::FingerprintGenerator.generate_v2(schema.json) }
+
+          it "does not return the schema" do
+            get("/subjects/#{version.subject.name}/fingerprints/#{fingerprint}")
+            expect(response).to be_not_found
+          end
+        end
+      end
+
+      context "using an integer fingerprint" do
+        let(:fingerprint) { super().to_i(16) }
+        let(:other_fingerprint) { super().to_i(16) }
+        let(:existing_fingerprint) { super().to_i(16) }
+
+        it_behaves_like "identifying a schema by fingerprint"
+      end
     end
 
-    context "using an integer fingerprint" do
-      let(:fingerprint) { super().to_i(16) }
-      let(:other_fingerprint) { super().to_i(16) }
-      let(:existing_fingerprint) { super().to_i(16) }
+    context "when the fingerprint version is '2'" do
+      before do
+        allow(Rails.configuration.x).to receive(:fingerprint_version).and_return('2')
+      end
+
+      context "using a v1 fingerprint" do
+        it "does not return the schema" do
+          get("/subjects/#{version.subject.name}/fingerprints/#{fingerprint}")
+          expect(response).to be_not_found
+        end
+      end
+
+      context "using a v2 fingerprint" do
+        let(:fingerprint) { schema.fingerprint2 }
+        let(:other_fingerprint) do
+          Avro::Schema.parse(other_schema.json).sha256_resolution_fingerprint.to_s(16)
+        end
+        let(:existing_fingerprint) { other_version.schema.fingerprint2 }
+
+        it_behaves_like "identifying a schema by fingerprint"
+      end
+    end
+
+    context "when the fingerprint version is 'all'" do
+      before do
+        allow(Rails.configuration.x).to receive(:fingerprint_version).and_return('all')
+      end
 
       it_behaves_like "identifying a schema by fingerprint"
+
+      context "using a v2 fingerprint" do
+        let(:fingerprint) { schema.fingerprint2 }
+        let(:other_fingerprint) do
+          Avro::Schema.parse(other_schema.json).sha256_resolution_fingerprint.to_s(16)
+        end
+        let(:existing_fingerprint) { other_version.schema.fingerprint2 }
+
+        it_behaves_like "identifying a schema by fingerprint"
+      end
     end
   end
 
@@ -306,6 +362,21 @@ describe SubjectAPI do
       end
     end
 
+    context "when DISABLE_SCHEMA_REGISTRATION is set to 'true'" do
+      let(:json) { build(:schema).json }
+      let(:subject_name) { 'new_subject' }
+
+      before do
+        allow(Rails.configuration.x).to receive(:disable_schema_registration).and_return(true)
+      end
+
+      it "returns an error" do
+        post("/subjects/#{subject_name}/versions", params: { schema: json })
+        expect(response.status).to eq(503)
+        expect(response.body).to be_json_eql({ message: 'Schema registration is disabled' }.to_json)
+      end
+    end
+
     context "when the schema is already registered under the subject" do
       let!(:version) { create(:schema_version) }
       let(:subject) { version.subject }
@@ -313,7 +384,7 @@ describe SubjectAPI do
       it "returns the id of the schema" do
         post("/subjects/#{subject.name}/versions", params: { schema: version.schema.json })
         expect(response).to be_ok
-        expect(response.body).to be_json_eql({ id: version.schema_id }.to_json)
+        expect(response.body).to be_json_eql({ id: version.schema_id }.to_json).including(:id)
       end
 
       it "does not create a new version" do
@@ -333,10 +404,40 @@ describe SubjectAPI do
       end
 
       it "returns the id of a new schema" do
-        post("/subjects/#{subject.name}/versions", params: { schema: json })
+        expect do
+          expect do
+            post("/subjects/#{subject.name}/versions", params: { schema: json })
+          end.to change(Schema, :count).by(1)
+        end.to change(SchemaVersion, :count).by(1)
 
         expect(response).to be_ok
-        expect(response.body).to be_json_eql({ id: version.schema_id }.to_json)
+        expect(JSON.parse(response.body)['id']).not_to eq(version.schema.id)
+      end
+
+      context "when the new version of the schema adds a default" do
+        let(:schema) { create(:schema_without_default) }
+        let!(:version) { create(:schema_version, schema_id: schema.id) }
+        let(:json) do
+          JSON.parse(schema.json).tap do |h|
+            h['fields'].first.merge!(default: 0)
+          end.to_json
+        end
+
+        before do
+          # only fingerprint version '2' recognizes a default as a change
+          allow(Rails.configuration.x).to receive(:fingerprint_version).and_return('2')
+        end
+
+        it "returns the id of a new schema" do
+          expect do
+            expect do
+              post("/subjects/#{subject.name}/versions", params: { schema: json })
+            end.to change(Schema, :count).by(1)
+          end.to change(SchemaVersion, :count).by(1)
+
+          expect(response).to be_ok
+          expect(JSON.parse(response.body)['id']).not_to eq(schema.id)
+        end
       end
 
       context "when the new version of the schema is incompatible" do
@@ -360,7 +461,7 @@ describe SubjectAPI do
         it "returns the id of the schema" do
           post("/subjects/#{subject_name}/versions", params: { schema: version.schema.json })
           expect(response).to be_ok
-          expect(response.body).to be_json_eql({ id: version.schema_id }.to_json)
+          expect(response.body).to be_json_eql({ id: version.schema_id }.to_json).including(:id)
         end
 
         it "creates a new subject and version" do
@@ -389,7 +490,7 @@ describe SubjectAPI do
         it "returns the id of the schema" do
           post("/subjects/#{subject_name}/versions", params: { schema: json })
           expect(response).to be_ok
-          expect(response.body).to be_json_eql({ id: version.schema_id }.to_json)
+          expect(response.body).to be_json_eql({ id: version.schema_id }.to_json).including(:id)
         end
 
         it "creates a new schema version" do
@@ -410,7 +511,7 @@ describe SubjectAPI do
           post("/subjects/#{subject_name}/versions", params: { schema: json })
           expect(response).to be_ok
           version = SchemaVersion.latest_for_subject_name(subject_name).first
-          expect(response.body).to be_json_eql({ id: version.schema_id }.to_json)
+          expect(response.body).to be_json_eql({ id: version.schema_id }.to_json).including(:id)
         end
 
         it "creates a new subject, schema, and schema version" do
@@ -431,19 +532,24 @@ describe SubjectAPI do
     end
 
     context "retry" do
+      before do
+        # after migrations on version fingerprint2 has a unique constraint
+        allow(Rails.configuration.x).to receive(:fingerprint_version).and_return('2')
+      end
+
       context "registering a new schema for a subject" do
-        let(:previous_version) { create(:schema_version) }
+        let!(:previous_version) { create(:schema_version) }
         let(:subject_name) { previous_version.subject.name }
         let(:json) do
           JSON.parse(previous_version.schema.json).tap do |avro|
             avro['fields'] << { name: :extra, type: :string, default: '' }
           end.to_json
         end
-        let(:fingerprint) { Schemas::FingerprintGenerator.call(json) }
+        let(:fingerprint) { Schemas::FingerprintGenerator.generate_v2(json) }
 
         before do
           first_time = true
-          allow(Schema).to receive(:find_by).with(fingerprint: fingerprint) do
+          allow(Schema).to receive(:find_by).with(fingerprint2: fingerprint) do
             if first_time
               @schema = Schema.create!(json: json)
               first_time = false
@@ -455,9 +561,12 @@ describe SubjectAPI do
         end
 
         it "retries once" do
-          post("/subjects/#{subject_name}/versions", params: { schema: json })
+          expect do
+            post("/subjects/#{subject_name}/versions", params: { schema: json })
+          end.to change(Schema, :count).by(1)
+
           expect(response).to be_ok
-          expect(response.body).to be_json_eql({ id: @schema.id }.to_json)
+          expect(response.body).to be_json_eql({ id: @schema.id }.to_json).including(:id)
         end
       end
     end
@@ -472,46 +581,67 @@ describe SubjectAPI do
       end
     end
 
-    context "when the schema exists for the subject" do
-      let!(:version) { create(:schema_version) }
-      let(:subject_name) { version.subject.name }
-      let(:expected) do
-        {
-          subject: version.subject.name,
-          id: version.schema_id,
-          version: version.version,
-          schema: version.schema.json
-        }.to_json
+    shared_examples_for "checking for schema existence" do
+      before do
+        allow(Rails.configuration.x).to receive(:fingerprint_version).and_return(fingerprint_version)
       end
 
-      it "returns information about the schema" do
-        post("/subjects/#{subject_name}", params: { schema: version.schema.json })
-        expect(response).to be_ok
-        expect(response.body).to be_json_eql(expected)
+      context "when the schema exists for the subject" do
+        let!(:version) { create(:schema_version) }
+        let(:subject_name) { version.subject.name }
+        let(:expected) do
+          {
+            subject: version.subject.name,
+            id: version.schema_id,
+            version: version.version,
+            schema: version.schema.json
+          }.to_json
+        end
+
+        it "returns information about the schema" do
+          post("/subjects/#{subject_name}", params: { schema: version.schema.json })
+          expect(response).to be_ok
+          expect(response.body).to be_json_eql(expected)
+        end
+      end
+
+      context "when the subject does not exist" do
+        let(:subject_name) { 'fnord' }
+        let(:json) { build(:schema).json }
+
+        it "returns a subject not found error" do
+          post("/subjects/#{subject_name}", params: { schema: json })
+          expect(response).to be_not_found
+          expect(response.body).to be_json_eql(SchemaRegistry::Errors::SUBJECT_NOT_FOUND.to_json)
+        end
+      end
+
+      context "when the schema does not exist for the subject" do
+        let!(:version) { create(:schema_version) }
+        let(:subject_name) { version.subject.name }
+        let(:json) { build(:schema).json }
+
+        it "return a schema not found error" do
+          post("/subjects/#{subject_name}", params: { schema: json })
+          expect(response).to be_not_found
+          expect(response.body).to be_json_eql(SchemaRegistry::Errors::SCHEMA_NOT_FOUND.to_json)
+        end
       end
     end
 
-    context "when the subject does not exist" do
-      let(:subject_name) { 'fnord' }
-      let(:json) { build(:schema).json }
-
-      it "returns a subject not found error" do
-        post("/subjects/#{subject_name}", params: { schema: json })
-        expect(response).to be_not_found
-        expect(response.body).to be_json_eql(SchemaRegistry::Errors::SUBJECT_NOT_FOUND.to_json)
-      end
+    context "when fingerprint_version is '1'" do
+      let(:fingerprint_version) { '1' }
+      it_behaves_like "checking for schema existence"
     end
 
-    context "when the schema does not exist for the subject" do
-      let!(:version) { create(:schema_version) }
-      let(:subject_name) { version.subject.name }
-      let(:json) { build(:schema).json }
+    context "when fingerprint_version is '2'" do
+      let(:fingerprint_version) { '2' }
+      it_behaves_like "checking for schema existence"
+    end
 
-      it "return a schema not found error" do
-        post("/subjects/#{subject_name}", params: { schema: json })
-        expect(response).to be_not_found
-        expect(response.body).to be_json_eql(SchemaRegistry::Errors::SCHEMA_NOT_FOUND.to_json)
-      end
+    context "when fingerprint_version is 'all'" do
+      let(:fingerprint_version) { '2' }
+      it_behaves_like "checking for schema existence"
     end
 
     context "when the schema is invalid" do

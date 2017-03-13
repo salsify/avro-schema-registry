@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160416174131) do
+ActiveRecord::Schema.define(version: 20170310200653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,11 +31,13 @@ ActiveRecord::Schema.define(version: 20160416174131) do
   end
 
   create_table "schemas", id: :bigserial, force: :cascade do |t|
-    t.string   "fingerprint", null: false
-    t.text     "json",        null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["fingerprint"], name: "index_schemas_on_fingerprint", unique: true, using: :btree
+    t.string   "fingerprint",  null: false
+    t.text     "json",         null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "fingerprint2"
+    t.index ["fingerprint"], name: "index_schemas_on_fingerprint", using: :btree
+    t.index ["fingerprint2"], name: "index_schemas_on_fingerprint2", unique: true, using: :btree
   end
 
   create_table "subjects", id: :bigserial, force: :cascade do |t|

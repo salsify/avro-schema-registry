@@ -3,7 +3,7 @@
 # Table name: schema_versions
 #
 #  id         :integer          not null, primary key
-#  version    :integer          default("1")
+#  version    :integer          default(1)
 #  subject_id :integer          not null
 #  schema_id  :integer          not null
 #
@@ -22,8 +22,6 @@ class SchemaVersion < ApplicationRecord
         ->(subject_name) { for_subject_name(subject_name).latest }
   scope :for_schema,
         ->(schema_id) { where(schema_id: schema_id) }
-  scope :for_schema_fingerprint,
-        ->(fingerprint) { joins(:schema).where('schemas.fingerprint = ?', fingerprint) }
-  scope :for_schema_json,
-        ->(json) { for_schema_fingerprint(Schemas::FingerprintGenerator.call(json)) }
+  scope :for_schema_fingerprint, ->(fingerprint) { joins(:schema).merge(Schema.with_fingerprint(fingerprint)) }
+  scope :for_schema_json, ->(json) { joins(:schema).merge(Schema.with_json(json)) }
 end
