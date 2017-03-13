@@ -18,7 +18,7 @@ class Schema < ApplicationRecord
   has_many :versions, class_name: 'SchemaVersion'
   has_many :subjects, through: :versions
 
-  scope :with_fingerprints, -> (fingerprint, fingerprint2 = nil) do
+  scope :with_fingerprints, ->(fingerprint, fingerprint2 = nil) do
     fingerprint2 ||= fingerprint
     case Rails.configuration.x.fingerprint_version
     when '1'
