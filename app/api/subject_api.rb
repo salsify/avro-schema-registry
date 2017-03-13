@@ -1,6 +1,8 @@
 class SubjectAPI < Grape::API
   include BaseAPI
 
+  INTEGER_FINGERPRINT_REGEXP = /^[0-9]+$/
+
   rescue_from ActiveRecord::RecordNotFound do
     subject_not_found!
   end
@@ -57,7 +59,7 @@ class SubjectAPI < Grape::API
       requires :fingerprint, types: [String, Integer], desc: 'SHA256 fingerprint'
     end
     get '/fingerprints/:fingerprint' do
-      fingerprint = if /^[0-9]+$/ =~ params[:fingerprint]
+      fingerprint = if INTEGER_FINGERPRINT_REGEXP =~ params[:fingerprint]
                       params[:fingerprint].to_i.to_s(16)
                     else
                       params[:fingerprint]

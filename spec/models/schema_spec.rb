@@ -7,7 +7,7 @@ describe Schema do
     let(:schema) { build(:schema) }
 
     before do
-      schema.save
+      schema.save!
     end
 
     context "when fingerprint_version is '1'" do
@@ -55,9 +55,9 @@ describe Schema do
     before do
       # rubocop:disable Rails/SkipsModelValidations
       schema1.update_columns(fingerprint: fingerprint_v1,
-                                fingerprint2: Schemas::FingerprintGenerator.generate_v2(schema1.json))
+                             fingerprint2: Schemas::FingerprintGenerator.generate_v2(schema1.json))
       schema2.update_columns(fingerprint: Schemas::FingerprintGenerator.generate_v1(schema2.json),
-                               fingerprint2: fingerprint_v2)
+                             fingerprint2: fingerprint_v2)
       # rubocop:enable Rails/SkipsModelValidations
     end
 
