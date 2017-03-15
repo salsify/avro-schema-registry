@@ -36,12 +36,8 @@ module Schemas
 
     private
 
-    def fingerprint
-      @fingerprint ||= Schemas::FingerprintGenerator.call(json)
-    end
-
     def register_new_version
-      self.schema = Schema.find_by(fingerprint: fingerprint)
+      self.schema = Schema.existing_schema(json)
 
       if schema
         create_new_version

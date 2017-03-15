@@ -1,5 +1,10 @@
 # avro-schema-registry
 
+## v0.6.0
+- Introduce fingerprint2 based on `avro-resolution_canonical_form`.
+  This is a compatibility breaking change and requires a sequence of upgrade steps.
+- Fix fingerprint endpoint when using an integer fingerprint.
+
 ## v0.5.0
 - Fix Config API for subjects.
 - Add endpoint to get schema id by fingerprint.
