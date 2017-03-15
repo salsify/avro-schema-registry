@@ -1,5 +1,8 @@
 # avro-schema-registry
 
+## v0.6.1
+- Only define rake task to cache requests in the development environment.
+
 ## v0.6.0
 - Introduce fingerprint2 based on `avro-resolution_canonical_form`.
   This is a compatibility breaking change and requires a sequence of upgrade steps.
