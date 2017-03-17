@@ -1,5 +1,8 @@
 # avro-schema-registry
 
+## v0.6.2
+- Update `cache_all_requests` task to use the resolution fingerprint.
+
 ## v0.6.1
 - Only define rake task to cache requests in the development environment.
 

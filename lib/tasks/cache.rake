@@ -16,7 +16,7 @@ if Rails.env.development?
       client.subject_versions(subject).each do |version|
         subject_version = client.subject_version(subject, version)
         schema_object = Avro::Schema.parse(subject_version['schema'])
-        fingerprint = schema_object.sha256_fingerprint.to_s(16)
+        fingerprint = schema_object.sha256_resolution_fingerprint.to_s(16)
 
         puts ".. Checking fingerprint #{fingerprint} for version #{subject_version['version']}"
         id = client.send(:get, "/subjects/#{subject}/fingerprints/#{fingerprint}")['id']
