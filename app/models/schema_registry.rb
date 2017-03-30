@@ -4,8 +4,8 @@ module SchemaRegistry
 
   extend self
 
-  def compatible?(new_json, version:)
-    compatibility = version.subject.config.try(:compatibility) || Compatibility.global
+  def compatible?(new_json, version:, compatibility: nil)
+    compatibility ||= version.subject.config.try(:compatibility) || Compatibility.global
 
     if Compatibility::Constants::TRANSITIVE_VALUES.include?(compatibility)
       check_all_versions(compatibility, new_json, version.subject)

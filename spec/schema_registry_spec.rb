@@ -4,6 +4,7 @@ describe SchemaRegistry do
   let(:new_json) { build(:schema).json }
   let(:old_schema) { Avro::Schema.parse(version.schema.json) }
   let(:new_schema) { Avro::Schema.parse(new_json) }
+  let(:compatibility) { 'FULL_TRANSITIVE' }
 
   before do
     create(:config, subject_id: version.subject_id, compatibility: compatibility) if compatibility
@@ -14,6 +15,11 @@ describe SchemaRegistry do
 
     before do
       allow(Avro::SchemaCompatibility).to receive(:can_read?).and_call_original
+    end
+
+    it "allows compatibility to be specified" do
+      described_class.compatible?(new_json, version: version, compatibility: 'BACKWARD')
+      expect(Avro::SchemaCompatibility).to have_received(:can_read?).with(new_schema, old_schema)
     end
 
     context "when compatibility is nil" do

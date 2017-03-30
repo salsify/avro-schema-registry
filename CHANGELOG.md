@@ -1,5 +1,8 @@
 # avro-schema-registry
 
+## v0.7.0
+- Allow the compatibility level to be specified in the Compatibility API.
+
 ## v0.6.2
 - Update `cache_all_requests` task to use the resolution fingerprint.
 

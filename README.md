@@ -50,11 +50,15 @@ through Kafka as more ephemeral and want the flexibility to change how we host K
 In the future we may also apply per-subject permissions to the Avro schemas that
 are stored by the registry.
 
-### Extensions
+## Extensions
 
-In addition to the Confluent Schema Registry API, this application provides an
-endpoint that can be used to determine by fingerprint if a schema is already
-registered for a subject.
+In addition to the Confluent Schema Registry API, this application provides some
+extensions.
+
+### Schema ID by Fingerprint
+
+There is an endpoint that can be used to determine by
+fingerprint if a schema is already registered for a subject.
 
 This endpoint provides a success response that can be cached indefinitely since
 the id for a schema will not change once it is registered for a subject.
@@ -89,6 +93,27 @@ HTTP/1.1 200 OK
 Content-Type: application/vnd.schemaregistry.v1+json
 
 {"id":1}
+```
+
+### Test Compatibility with a Specified Level
+
+The Compatibility API is extended to support a `with_compatibility` parameter
+that controls the level used for the compatibility check against the specified
+schema version.
+
+When `with_compatibility` is specified, it overrides any configuration for the
+subject and the global configuration.
+
+**Example Request:**
+```
+POST /subjects/test/versions/latest HTTP/1.1
+Host: schemaregistry.example.com
+Accept: application/vnd.schemaregistry.v1+json, application/vnd.schemaregistry+json, application/json
+
+{
+  "schema": "{ ... }",
+  "with_compatibility": "BACKWARD"
+}
 ```
 
 ## Setup
