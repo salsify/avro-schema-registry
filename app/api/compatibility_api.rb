@@ -27,7 +27,7 @@ class CompatibilityAPI < Grape::API
              desc: 'Version of the schema registered under the subject'
     requires :schema, type: String, desc: 'New Avro schema to compare against'
     optional :with_compatibility, type: String, desc: 'The compatibility level to test',
-             values: Compatibility::Constants::VALUES.to_a
+             values: Compatibility::Constants::VALUES
   end
   post '/subjects/:subject/versions/:version_id', requirements: { subject: Subject::NAME_REGEXP } do
     with_schema_version(params[:subject], params[:version_id]) do |schema_version|

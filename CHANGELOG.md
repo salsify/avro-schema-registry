@@ -1,5 +1,9 @@
 # avro-schema-registry
 
+## v0.8.0
+- Allow the compatibility level to use while registering a schema to be specified,
+  and a compatibility level to set for the subject after registration.
+
 ## v0.7.0
 - Allow the compatibility level to be specified in the Compatibility API.
 
