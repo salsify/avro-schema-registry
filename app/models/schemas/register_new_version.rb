@@ -6,15 +6,12 @@ module Schemas
   # created models.
   # If a unique index error is raised, then the operation is retried once.
   class RegisterNewVersion
+    include Procto.call
 
     attr_reader :subject_name, :json
     attr_accessor :schema
     private_attr_accessor :retried
     private_attr_reader :options
-
-    def self.call(subject_name, json, **options)
-      new(subject_name, json, options).call.schema
-    end
 
     def initialize(subject_name, json, **options)
       @subject_name = subject_name
@@ -26,7 +23,7 @@ module Schemas
     # i.e. the client should not need to retry.
     def call
       register_new_version
-      self
+      schema
     rescue ActiveRecord::RecordNotUnique
       if retried
         raise
