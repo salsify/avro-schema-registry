@@ -116,6 +116,29 @@ Accept: application/vnd.schemaregistry.v1+json, application/vnd.schemaregistry+j
 }
 ```
 
+### Register A New Schema With Specified Compatibility Levels
+
+The Subject API is extended to support a `with_compatibility` parameter that
+controls the level used for the compatibility check when registering a new
+schema for a subject.
+
+An `after_compatibility` parameter is also supported to set a new compatibility
+level for the subject after a new schema version is registered. This option is
+ignored if no new version is created.
+
+**Example Request:**
+```
+POST /subjects/test/versions HTTP/1.1
+Host: schemaregistry.example.com
+Accept: application/vnd.schemaregistry.v1+json, application/vnd.schemaregistry+json, application/json
+
+{
+  "schema": "{ ... }",
+  "with_compatibility": "NONE",
+  "after_compatibility": "BACKwARD"
+}
+```
+
 ## Setup
 
 The application is written using Ruby 2.3.3. Start the service using the following

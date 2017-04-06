@@ -377,6 +377,42 @@ describe SubjectAPI do
       end
     end
 
+    context "when the schema and subject do not exist" do
+      let(:json) { build(:schema).json }
+      let(:subject_name) { 'new_subject' }
+
+      it "returns the id of the new schema", :aggregate_failures do
+        expect do
+          post("/subjects/#{subject_name}/versions", params: { schema: json })
+        end.to change(Schema, :count).by(1)
+        expect(response).to be_ok
+        schema_id = SchemaVersion.latest_for_subject_name(subject_name).first.schema_id
+        expect(response.body).to be_json_eql({ id: schema_id }.to_json).including(:id)
+      end
+
+      it "creates a new subject and version" do
+        expect do
+          expect do
+            post("/subjects/#{subject_name}/versions", params: { schema: json })
+          end.to change(Subject, :count).by(1)
+        end.to change(SchemaVersion, :count).by(1)
+        expect(Subject.find_by(name: subject_name)).to be_present
+        expect(SchemaVersion.latest_for_subject_name(subject_name).first).to be_present
+      end
+
+      context "when the compatibility level to use after registration is specified" do
+        let(:after_compatibility) { 'FULL' }
+
+        it "creates the config for the subject", :aggregate_failures do
+          expect do
+            post("/subjects/#{subject_name}/versions",
+                 params: { schema: json, after_compatibility: after_compatibility })
+          end.to change(Config, :count).by(1)
+          expect(Subject.find_by(name: subject_name).config.compatibility).to eq(after_compatibility)
+        end
+      end
+    end
+
     context "when the schema is already registered under the subject" do
       let!(:version) { create(:schema_version) }
       let(:subject) { version.subject }
@@ -391,6 +427,13 @@ describe SubjectAPI do
         expect do
           post("/subjects/#{subject.name}/versions", params: { schema: version.schema.json })
         end.not_to change(SchemaVersion, :count)
+      end
+
+      it "ignores setting a new compatibility level" do
+        expect do
+          post("/subjects/#{subject.name}/versions",
+               params: { schema: version.schema.json, after_compatibility: 'BACKWARD' })
+        end.not_to change(Config, :count)
       end
     end
 
@@ -447,6 +490,47 @@ describe SubjectAPI do
           post("/subjects/#{subject.name}/versions", params: { schema: json })
           expect(status).to eq(409)
           expect(response.body).to be_json_eql(SchemaRegistry::Errors::INCOMPATIBLE_AVRO_SCHEMA.to_json)
+        end
+
+        context "when the compatibility level to use during registration is specified" do
+          it "returns the id of a new schema" do
+            expect do
+              expect do
+                expect do
+                  post("/subjects/#{subject.name}/versions", params: { schema: json, with_compatibility: 'NONE' })
+                end.to change(Schema, :count).by(1)
+              end.to change(SchemaVersion, :count).by(1)
+            end.not_to change(Config, :count)
+          end
+
+          context "when a compatibility level to use after registration is specified" do
+            let(:after_compatibility) { 'FORWARD' }
+
+            it "returns the id of a new schema and updates the config for the subject", :aggregate_failures do
+              expect do
+                expect do
+                  expect do
+                    post("/subjects/#{subject.name}/versions",
+                         params: { schema: json, with_compatibility: 'NONE', after_compatibility: after_compatibility })
+                  end.to change(Schema, :count).by(1)
+                end.to change(SchemaVersion, :count).by(1)
+              end.to change(Config, :count).by(1)
+
+              expect(Config.find_by(subject_id: subject.id).compatibility).to eq(after_compatibility)
+            end
+
+            context "when config already exists for the subject" do
+              let!(:config) { create(:config, subject_id: subject.id, compatibility: 'FULL') }
+
+              it "updates the config for the subject" do
+                expect do
+                  post("/subjects/#{subject.name}/versions",
+                       params: { schema: json, with_compatibility: 'NONE', after_compatibility: after_compatibility })
+                end.not_to change(Config, :count)
+                expect(config.reload.compatibility).to eq(after_compatibility)
+              end
+            end
+          end
         end
       end
     end

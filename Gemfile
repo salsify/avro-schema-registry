@@ -9,6 +9,7 @@ gem 'grape'
 gem 'ice_nine', require: 'ice_nine/core_ext/object'
 gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
+gem 'procto'
 gem 'puma'
 gem 'rails', '5.0.1'
 

@@ -6,25 +6,24 @@ module Schemas
   # created models.
   # If a unique index error is raised, then the operation is retried once.
   class RegisterNewVersion
+    include Procto.call
 
     attr_reader :subject_name, :json
     attr_accessor :schema
     private_attr_accessor :retried
+    private_attr_reader :options
 
-    def self.call(subject_name, json)
-      new(subject_name, json).call.schema
-    end
-
-    def initialize(subject_name, json)
+    def initialize(subject_name, json, **options)
       @subject_name = subject_name
       @json = json
+      @options = options
     end
 
     # Retry once to make it easier to handle race conditions on the client,
     # i.e. the client should not need to retry.
     def call
       register_new_version
-      self
+      schema
     rescue ActiveRecord::RecordNotUnique
       if retried
         raise
@@ -63,14 +62,18 @@ module Schemas
         # Create new subject and version
         Subject.transaction do
           yield if block_given?
-          new_subject!(schema.id)
+          subject = new_subject!(schema.id)
+          after_compatibility!(subject)
         end
       else
         # Create new schema version for subject
         SchemaVersion.transaction do
-          SchemaRegistry.compatible!(json, version: latest_version)
+          SchemaRegistry.compatible!(json,
+                                     version: latest_version,
+                                     compatibility: options[:with_compatibility])
           yield if block_given?
-          new_schema_version_for_subject!(schema.id, latest_version)
+          schema_version = new_schema_version_for_subject!(schema.id, latest_version)
+          after_compatibility!(schema_version.subject)
         end
       end
     end
@@ -85,6 +88,7 @@ module Schemas
     def new_subject!(schema_id)
       subject = Subject.create!(name: subject_name)
       subject.versions.create!(schema_id: schema_id)
+      subject
     end
 
     def latest_version_for_subject
@@ -96,6 +100,14 @@ module Schemas
       SchemaVersion.for_schema(schema_id)
                    .for_subject_name(subject_name).first.present?
 
+    end
+
+    def after_compatibility!(subject)
+      compatibility = options[:after_compatibility]
+      if compatibility
+        subject.create_config! unless subject.config
+        subject.config.update_compatibility!(compatibility)
+      end
     end
   end
 end

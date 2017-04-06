@@ -80,13 +80,20 @@ class SubjectAPI < Grape::API
     desc 'Register a new schema under the specified subject'
     params do
       requires :schema, type: String, desc: 'The Avro schema string'
+      optional :with_compatibility, type: String,
+               desc: 'The compatibility level to use while registering the schema',
+               values: Compatibility::Constants::VALUES
+      optional :after_compatibility, type: String,
+               desc: 'The compatibility level to set after registering the schema',
+               values: Compatibility::Constants::VALUES
     end
     post '/versions' do
       if Rails.configuration.x.disable_schema_registration
         error!({ message: 'Schema registration is disabled' }, 503)
       end
 
-      schema = Schemas::RegisterNewVersion.call(params[:name], params[:schema])
+      new_schema_options = declared(params).slice(:with_compatibility, :after_compatibility).symbolize_keys
+      schema = Schemas::RegisterNewVersion.call(params[:name], params[:schema], new_schema_options)
       status 200
       { id: schema.id }
     end

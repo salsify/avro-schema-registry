@@ -4,13 +4,14 @@ describe SchemaRegistry do
   let(:new_json) { build(:schema).json }
   let(:old_schema) { Avro::Schema.parse(version.schema.json) }
   let(:new_schema) { Avro::Schema.parse(new_json) }
-  let(:compatibility) { 'FULL_TRANSITIVE' }
 
   before do
     create(:config, subject_id: version.subject_id, compatibility: compatibility) if compatibility
   end
 
   describe ".compatible?" do
+    let(:compatibility) { 'FULL_TRANSITIVE' }
+
     subject(:check) { described_class.compatible?(new_json, version: version) }
 
     before do
@@ -128,16 +129,26 @@ describe SchemaRegistry do
   end
 
   describe ".compatible!" do
-    let(:compatibility) { Compatibility.global }
-
     subject(:check) { described_class.compatible!(new_json, version: version) }
 
     before do
       allow(described_class).to receive(:compatible?)
-        .with(new_json, version: version).and_return(compatible)
+        .with(new_json, version: version, compatibility: compatibility).and_return(compatible)
+    end
+
+    context "when the compatibility level is specified" do
+      let(:compatibility) { 'FORWARD' }
+      let(:compatible) { true }
+
+      it "checks compatibility using the specified level" do
+        expect do
+          described_class.compatible!(new_json, version: version, compatibility: compatibility)
+        end.not_to raise_error
+      end
     end
 
     context "when schemas are compatible" do
+      let(:compatibility) { nil }
       let(:compatible) { true }
 
       it "does not raise an error" do
@@ -146,6 +157,7 @@ describe SchemaRegistry do
     end
 
     context "when schemas are incompatible" do
+      let(:compatibility) { nil }
       let(:compatible) { false }
 
       it "raises IncompatibleAvroSchemaError" do
