@@ -1,8 +1,42 @@
 describe SchemaRegistry do
-  let(:registry_subject) { version.subject }
-  let(:version) { create(:schema_version) }
+  let(:json_hash) do
+    {
+      type: :record,
+      name: :rec,
+      fields: [
+        { name: :field1, type: :string, default: '' },
+        { name: :field2, type: :string }
+      ]
+    }
+  end
+  let(:old_json) { json_hash.to_json }
+  let(:schema) { create(:schema, json: old_json) }
+  let(:version) { create(:schema_version, schema: schema) }
   let(:new_json) { build(:schema).json }
-  let(:old_schema) { Avro::Schema.parse(version.schema.json) }
+  let(:backward_json) do
+    # BACKWARD compatible - can read old schema
+    # It ignores the removed field in the old schema
+    hash = JSON.parse(old_json)
+    hash['fields'].pop
+    hash.to_json
+  end
+  let(:forward_json) do
+    # FORWARD compatible - can be read by old schema
+    # The old schema ignores the new field.
+    hash = JSON.parse(old_json)
+    hash['fields'] << { name: :extra, type: :string }
+    hash.to_json
+  end
+  let(:full_json) do
+    # FULL compatible
+    hash = JSON.parse(old_json)
+    # removed required field with default
+    hash['fields'].shift
+    # add required field with default
+    hash['fields'] << { name: :extra, type: :string, default: '' }
+    hash.to_json
+  end
+  let(:old_schema) { Avro::Schema.parse(old_json) }
   let(:new_schema) { Avro::Schema.parse(new_json) }
 
   before do
@@ -49,6 +83,14 @@ describe SchemaRegistry do
         check
         expect(Avro::SchemaCompatibility).to have_received(:can_read?).with(new_schema, old_schema)
       end
+
+      it "returns false for a forward compatible schema" do
+        expect(described_class.compatible?(forward_json, version: version)).to eq(false)
+      end
+
+      it "returns true for a backward compatible schema" do
+        expect(described_class.compatible?(backward_json, version: version)).to eq(true)
+      end
     end
 
     context "when compatibility is FORWARD" do
@@ -58,6 +100,14 @@ describe SchemaRegistry do
         check
         expect(Avro::SchemaCompatibility).to have_received(:can_read?).with(old_schema, new_schema)
       end
+
+      it "returns true for a forward compatible schema" do
+        expect(described_class.compatible?(forward_json, version: version)).to eq(true)
+      end
+
+      it "returns false for a backward compatible schema" do
+        expect(described_class.compatible?(backward_json, version: version)).to eq(false)
+      end
     end
 
     context "when compatibility is BOTH (deprecated)" do
@@ -65,8 +115,12 @@ describe SchemaRegistry do
 
       it "performs a check with each schema as the readers schema" do
         check
-        expect(Avro::SchemaCompatibility).to have_received(:can_read?).with(new_schema, old_schema)
-        expect(Avro::SchemaCompatibility).to have_received(:can_read?).with(old_schema, new_schema)
+        expect(Avro::SchemaCompatibility).to have_received(:can_read?).with(new_schema, old_schema).once
+        expect(Avro::SchemaCompatibility).to have_received(:can_read?).with(old_schema, new_schema).once
+      end
+
+      it "returns false" do
+        expect(check).to eq(false)
       end
     end
 
@@ -78,9 +132,22 @@ describe SchemaRegistry do
         expect(Avro::SchemaCompatibility).to have_received(:can_read?).with(new_schema, old_schema)
         expect(Avro::SchemaCompatibility).to have_received(:can_read?).with(old_schema, new_schema)
       end
+
+      it "returns false for a forward compatible schema" do
+        expect(described_class.compatible?(forward_json, version: version)).to eq(false)
+      end
+
+      it "returns false for a backward compatible schema" do
+        expect(described_class.compatible?(backward_json, version: version)).to eq(false)
+      end
+
+      it "returns true for a fully compatible schema" do
+        expect(described_class.compatible?(full_json, version: version)).to eq(true)
+      end
     end
 
     context "transitive checks" do
+      let(:registry_subject) { version.subject }
       let!(:second_version) { create(:schema_version, subject: registry_subject, version: 2) }
       let(:second_schema) { Avro::Schema.parse(second_version.schema.json) }
       let(:can_read_args) { [] }
