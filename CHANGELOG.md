@@ -3,6 +3,10 @@
 ## v0.8.1
 - Reverse the definition of BACKWARD and FORWARD compatibility levels.
   Previous releases had these backwards.
+  Note: The compatibility level is NOT changed for existing configs in the
+  database. Current compatibility levels should be reviewed to ensure that the
+  expectation is consistent with the description here:
+  http://docs.confluent.io/3.2.0/avro.html#schema-evolution.
 
 ## v0.8.0
 - Allow the compatibility level to use while registering a schema to be specified,
