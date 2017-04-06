@@ -1,5 +1,9 @@
 # avro-schema-registry
 
+## v0.8.1
+- Reverse the definition of BACKWARD and FORWARD compatibility levels.
+  Previous releases had these backwards.
+
 ## v0.8.0
 - Allow the compatibility level to use while registering a schema to be specified,
   and a compatibility level to set for the subject after registration.

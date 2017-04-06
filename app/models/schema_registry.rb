@@ -41,9 +41,9 @@ module SchemaRegistry
     when Compatibility::Constants::NONE
       true
     when Compatibility::Constants::BACKWARD
-      check(old_schema, new_schema)
-    when Compatibility::Constants::FORWARD
       check(new_schema, old_schema)
+    when Compatibility::Constants::FORWARD
+      check(old_schema, new_schema)
     when Compatibility::Constants::FULL, Compatibility::Constants::BOTH
       check(old_schema, new_schema) && check(new_schema, old_schema)
     end
@@ -55,9 +55,9 @@ module SchemaRegistry
 
     case compatibility
     when Compatibility::Constants::BACKWARD_TRANSITIVE
-      json_schemas.all? { |json| check(Schemas::Parse.call(json), new_schema) }
-    when Compatibility::Constants::FORWARD_TRANSITIVE
       json_schemas.all? { |json| check(new_schema, Schemas::Parse.call(json)) }
+    when Compatibility::Constants::FORWARD_TRANSITIVE
+      json_schemas.all? { |json| check(Schemas::Parse.call(json), new_schema) }
     when Compatibility::Constants::FULL_TRANSITIVE
       json_schemas.all? do |json|
         old_schema = Schemas::Parse.call(json)
