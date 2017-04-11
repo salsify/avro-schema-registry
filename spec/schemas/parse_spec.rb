@@ -1,6 +1,7 @@
 describe Schemas::Parse do
   describe ".call" do
     let(:json) { build(:schema).json }
+
     subject { described_class.call(json) }
 
     it { is_expected.to be_a(Avro::Schema) }

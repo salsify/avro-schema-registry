@@ -45,7 +45,7 @@ describe Schema do
     end
   end
 
-  describe "self.existing_schema" do
+  describe ".existing_schema" do
     let(:schema1) { create(:schema) }
     let(:schema2) { create(:schema) }
     let(:json) { build(:schema).json }

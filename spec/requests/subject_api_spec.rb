@@ -715,16 +715,19 @@ describe SubjectAPI do
 
     context "when fingerprint_version is '1'" do
       let(:fingerprint_version) { '1' }
+
       it_behaves_like "checking for schema existence"
     end
 
     context "when fingerprint_version is '2'" do
       let(:fingerprint_version) { '2' }
+
       it_behaves_like "checking for schema existence"
     end
 
     context "when fingerprint_version is 'all'" do
       let(:fingerprint_version) { '2' }
+
       it_behaves_like "checking for schema existence"
     end
 
