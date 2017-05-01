@@ -88,6 +88,8 @@ class SubjectAPI < Grape::API
                values: Compatibility::Constants::VALUES
     end
     post '/versions' do
+      read_only_mode! if Rails.configuration.x.read_only_mode
+
       if Rails.configuration.x.disable_schema_registration
         error!({ message: 'Schema registration is disabled' }, 503)
       end

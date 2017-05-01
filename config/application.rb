@@ -39,5 +39,7 @@ module AvroSchemaRegistry
 
     config.x.fingerprint_version = (ENV['FINGERPRINT_VERSION'] || '1').downcase
     config.x.disable_schema_registration = ENV['DISABLE_SCHEMA_REGISTRATION'] == 'true'
+
+    config.x.read_only_mode = ENV['READ_ONLY_MODE'] == 'true'
   end
 end

@@ -377,6 +377,21 @@ describe SubjectAPI do
       end
     end
 
+    context "when the app is in read-only mode" do
+      let(:json) { build(:schema).json }
+      let(:subject_name) { 'new_subject' }
+
+      before do
+        allow(Rails.configuration.x).to receive(:read_only_mode).and_return(true)
+      end
+
+      it "returns an error" do
+        post("/subjects/#{subject_name}/versions", params: { schema: json })
+        expect(response.status).to eq(403)
+        expect(response.body).to be_json_eql({ message: 'Running in read-only mode' }.to_json)
+      end
+    end
+
     context "when the schema and subject do not exist" do
       let(:json) { build(:schema).json }
       let(:subject_name) { 'new_subject' }

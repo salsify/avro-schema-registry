@@ -27,6 +27,18 @@ describe ConfigAPI do
       expect(Config.global.compatibility).to eq(compatibility)
     end
 
+    context "when the app is in read-only mode" do
+      before do
+        allow(Rails.configuration.x).to receive(:read_only_mode).and_return(true)
+      end
+
+      it "returns an error" do
+        put('/config', params: { compatibility: compatibility })
+        expect(response.status).to eq(403)
+        expect(response.body).to be_json_eql({ message: 'Running in read-only mode' }.to_json)
+      end
+    end
+
     it_behaves_like "a secure endpoint" do
       let(:action) { unauthorized_put('/config', params: { compatibility: compatibility }) }
     end
@@ -100,6 +112,18 @@ describe ConfigAPI do
       expect(response).to be_ok
       expect(response.body).to be_json_eql(expected)
       expect(subject.config.compatibility).to eq(compatibility)
+    end
+
+    context "when the app is in read-only mode" do
+      before do
+        allow(Rails.configuration.x).to receive(:read_only_mode).and_return(true)
+      end
+
+      it "returns an error" do
+        put("/config/#{subject.name}", params: { compatibility: compatibility })
+        expect(response.status).to eq(403)
+        expect(response.body).to be_json_eql({ message: 'Running in read-only mode' }.to_json)
+      end
     end
 
     context "when the subject already has a compatibility level set" do

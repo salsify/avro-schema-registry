@@ -31,5 +31,9 @@ module Helpers
     def invalid_compatibility_level!
       error!(SchemaRegistry::Errors::INVALID_COMPATIBILITY_LEVEL, 422)
     end
+
+    def read_only_mode!
+      error!(SchemaRegistry::Errors::READ_ONLY_MODE, 403)
+    end
   end
 end
