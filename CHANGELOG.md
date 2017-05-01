@@ -1,5 +1,8 @@
 # avro-schema-registry
 
+## v0.9.0
+- Add read-only mode for the application.
+
 ## v0.8.1
 - Reverse the definition of BACKWARD and FORWARD compatibility levels.
   Previous releases had these backwards.

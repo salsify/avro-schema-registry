@@ -25,6 +25,8 @@ class ConfigAPI < Grape::API
   desc 'Update compatibility requirements globally'
   params { requires :compatibility, type: String }
   put '/' do
+    read_only_mode! if Rails.configuration.x.read_only_mode
+
     config = Config.global
     config.update_compatibility!(params[:compatibility])
     { compatibility: config.compatibility }
@@ -45,6 +47,8 @@ class ConfigAPI < Grape::API
     requires :compatibility, type: String
   end
   put '/:subject', requirements: { subject: Subject::NAME_REGEXP } do
+    read_only_mode! if Rails.configuration.x.read_only_mode
+
     subject = find_subject!(params[:subject])
     subject.create_config! unless subject.config
     subject.config.update_compatibility!(params[:compatibility])

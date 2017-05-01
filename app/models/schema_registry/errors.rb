@@ -10,5 +10,7 @@ module SchemaRegistry
     INVALID_AVRO_SCHEMA = { error_code: 42201, message: 'Invalid Avro schema' }.deep_freeze
     INVALID_COMPATIBILITY_LEVEL = { error_code: 44203, message: 'Invalid compatibility level' }.deep_freeze
     SERVER_ERROR = { error_code: 50001, message: 'Error in the backend datastore' }.deep_freeze
+
+    READ_ONLY_MODE = { message: 'Running in read-only mode' }.deep_freeze
   end
 end
