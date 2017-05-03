@@ -1,3 +1,4 @@
 ---
 production: schema-registry-prod
 staging: schema-registry-staging
+compatibility: schema-registry-compatibility

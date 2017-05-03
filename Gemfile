@@ -27,7 +27,7 @@ end
 group :development do
   gem 'annotate'
   gem 'avro_turf', '>= 0.8.0', require: false
-  gem 'heroku_rails_deploy', '>= 0.2.2', require: false
+  gem 'heroku_rails_deploy', '0.4.0.rc0', require: false
   gem 'overcommit'
   gem 'spring'
   gem 'spring-commands-rspec'

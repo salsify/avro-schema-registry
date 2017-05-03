@@ -1,5 +1,8 @@
 # avro-schema-registry
 
+## v0.9.1
+- Support dual deploys.
+
 ## v0.9.0
 - Add read-only mode for the application.
 
