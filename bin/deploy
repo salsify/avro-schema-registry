@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require_relative '../config/boot'
-require 'heroku_rails_deploy'
+require_relative '../lib/dual_heroku_rails_deploy'
 
 root_dir = File.absolute_path("#{__dir__}/..")
-HerokuRailsDeploy.deploy(root_dir, ARGV)
+DualHerokuRailsDeploy.deploy(root_dir, ARGV)
