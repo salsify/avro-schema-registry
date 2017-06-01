@@ -2,9 +2,9 @@ ruby '2.3.3'
 
 source 'https://rubygems.org'
 
-gem 'avro-salsify-fork', '1.9.0.5', require: 'avro'
+gem 'avro-patches'
 
-gem 'avro-resolution_canonical_form', '0.1.0'
+gem 'avro-resolution_canonical_form', '>= 0.2.0'
 gem 'grape'
 gem 'ice_nine', require: 'ice_nine/core_ext/object'
 gem 'pg'
