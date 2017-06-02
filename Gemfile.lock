@@ -43,12 +43,12 @@ GEM
       rake (>= 10.4, < 12.0)
     arel (7.1.4)
     ast (2.3.0)
-    avro (1.8.1)
+    avro (1.8.2)
       multi_json
-    avro-resolution_canonical_form (0.1.0)
-      avro-salsify-fork (>= 1.9.0.5)
-    avro-salsify-fork (1.9.0.5)
-      multi_json
+    avro-patches (0.1.0)
+      avro (= 1.8.2)
+    avro-resolution_canonical_form (0.2.0)
+      avro-patches
     avro_turf (0.8.0)
       avro (>= 1.7.7, < 1.9)
       excon (~> 0.45)
@@ -89,7 +89,7 @@ GEM
       rack-accept
       virtus (>= 1.0.0)
     hashie (3.5.4)
-    heroku_rails_deploy (0.4.1)
+    heroku_rails_deploy (0.4.3)
       private_attr
       rails
     i18n (0.8.1)
@@ -245,8 +245,8 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
-  avro-resolution_canonical_form (= 0.1.0)
-  avro-salsify-fork (= 1.9.0.5)
+  avro-patches
+  avro-resolution_canonical_form (>= 0.2.0)
   avro_turf (>= 0.8.0)
   bugsnag
   factory_girl_rails

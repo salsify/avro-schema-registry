@@ -1,5 +1,8 @@
 # avro-schema-registry
 
+## v0.10.0
+- Use `avro-patches` instead of `avro-salsify-fork`.
+
 ## v0.9.1
 - Support dual deploys.
 
