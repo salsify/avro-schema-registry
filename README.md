@@ -1,3 +1,13 @@
+## docker
+
+```bash
+docker-compose down;
+docker-compose up -d;
+docker-compose exec web rake db:setup
+```
+    command:
+      - sh ~/.bashrc
+      - gem install bundler && bundle install && bin/rake db:setup &&
 # avro-schema-registry
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
