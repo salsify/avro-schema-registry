@@ -1,0 +1,23 @@
+version: "3"
+services:
+  web:
+    build: .
+    command: ./start.sh
+    #command: ./wait-for-it.sh db:5432 -s --  rake db:setup
+    #command: bundle exec rails s -p 21000 -b '0.0.0.0'
+    #command: bundle exec rails s -p 21000vim
+    volumes:
+      - .:/myapp
+    ports:
+      - "21000:21000"
+    depends_on:
+      - db
+  db:
+    image: sameersbn/postgresql
+    ports:
+      - "5432:5432"
+    environment:
+      - DB_USER=avro-schema-registry
+      - DB_PASS=nopassword
+      - DB_NAME=avro-schema-registry_development,avro-schema-registry_test,avro-schema-registry_production
+      - PG_TRUST_LOCALNET=true
