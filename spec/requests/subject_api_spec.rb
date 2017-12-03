@@ -199,14 +199,18 @@ describe SubjectAPI do
     let(:schema) { version.schema }
     let(:other_schema) { build(:schema) }
     let(:other_version) { create(:schema_version) }
-    let(:fingerprint) { schema.fingerprint }
-    let(:other_fingerprint) do
-      Avro::Schema.parse(other_schema.json).sha256_fingerprint.to_s(16)
+    let(:fingerprint) do
+      Schemas::FingerprintGenerator.generate_v2(schema.json)
     end
-    let(:existing_fingerprint) { other_version.schema.fingerprint }
+    let(:other_fingerprint) do
+      Schemas::FingerprintGenerator.generate_v2(other_schema.json)
+    end
+    let(:existing_fingerprint) do
+      Schemas::FingerprintGenerator.generate_v2(other_version.schema.json)
+    end
 
     it_behaves_like "a secure endpoint" do
-      let(:action) { unauthorized_get("/subjects/#{version.subject.name}/fingerprints/#{schema.fingerprint}") }
+      let(:action) { unauthorized_get("/subjects/#{version.subject.name}/fingerprints/#{fingerprint}") }
     end
 
     context "content type" do
@@ -275,6 +279,12 @@ describe SubjectAPI do
     end
 
     context "when the fingerprint version is '1'" do
+      let(:fingerprint) { schema.fingerprint }
+      let(:other_fingerprint) do
+        Schemas::FingerprintGenerator.generate_v1(other_schema.json)
+      end
+      let(:existing_fingerprint) { other_version.schema.fingerprint }
+
       before do
         allow(Rails.configuration.x).to receive(:fingerprint_version).and_return('1')
       end
@@ -308,7 +318,7 @@ describe SubjectAPI do
 
       context "using a v1 fingerprint" do
         it "does not return the schema" do
-          get("/subjects/#{version.subject.name}/fingerprints/#{fingerprint}")
+          get("/subjects/#{version.subject.name}/fingerprints/#{schema.fingerprint}")
           expect(response).to be_not_found
         end
       end
@@ -316,7 +326,7 @@ describe SubjectAPI do
       context "using a v2 fingerprint" do
         let(:fingerprint) { schema.fingerprint2 }
         let(:other_fingerprint) do
-          Avro::Schema.parse(other_schema.json).sha256_resolution_fingerprint.to_s(16)
+          Schemas::FingerprintGenerator.generate_v2(other_schema.json)
         end
         let(:existing_fingerprint) { other_version.schema.fingerprint2 }
 
@@ -334,7 +344,7 @@ describe SubjectAPI do
       context "using a v2 fingerprint" do
         let(:fingerprint) { schema.fingerprint2 }
         let(:other_fingerprint) do
-          Avro::Schema.parse(other_schema.json).sha256_resolution_fingerprint.to_s(16)
+          Schemas::FingerprintGenerator.generate_v2(other_schema.json)
         end
         let(:existing_fingerprint) { other_version.schema.fingerprint2 }
 

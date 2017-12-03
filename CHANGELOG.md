@@ -1,5 +1,8 @@
 # avro-schema-registry
 
+## v0.11.0
+- Change the default fingerprint version to '2'.
+
 ## v0.10.0
 - Use `avro-patches` instead of `avro-salsify-fork`.
 
