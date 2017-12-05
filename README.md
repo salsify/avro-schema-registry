@@ -12,6 +12,11 @@ Schema versions stored by the service are assigned an id. These ids can be
 embedded in messages published to Kafka avoiding the need to send the full
 schema with each message.
 
+## Upgrading to v0.11.0
+
+v0.11.0 changes the default fingerprint version to 2. Set `FINGERPRINT_VERSION=1`
+before upgrading if you have not migrated to fingerprint version 2.
+
 ## Upgrading to v0.6.0
 
 There is a compatibility break when upgrading to v0.6.0 due to the way that
