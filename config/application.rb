@@ -37,7 +37,7 @@ module AvroSchemaRegistry
     config.x.allow_response_caching = ENV['ALLOW_RESPONSE_CACHING'] == 'true'
     config.x.cache_max_age = (ENV['CACHE_MAX_AGE'] || 30.days).to_i
 
-    config.x.fingerprint_version = (ENV['FINGERPRINT_VERSION'] || '1').downcase
+    config.x.fingerprint_version = (ENV['FINGERPRINT_VERSION'] || '2').downcase
     config.x.disable_schema_registration = ENV['DISABLE_SCHEMA_REGISTRATION'] == 'true'
 
     config.x.read_only_mode = ENV['READ_ONLY_MODE'] == 'true'
