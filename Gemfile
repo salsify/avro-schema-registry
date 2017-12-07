@@ -11,7 +11,7 @@ gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
 gem 'procto'
 gem 'puma'
-gem 'rails', '5.0.1'
+gem 'rails', '5.1.4'
 
 group :test do
   gem 'json_spec'
