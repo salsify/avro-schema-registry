@@ -59,7 +59,7 @@ class SubjectAPI < Grape::API
       requires :fingerprint, types: [String, Integer], desc: 'SHA256 fingerprint'
     end
     get '/fingerprints/:fingerprint' do
-      fingerprint = if INTEGER_FINGERPRINT_REGEXP =~ params[:fingerprint]
+      fingerprint = if INTEGER_FINGERPRINT_REGEXP.match?(params[:fingerprint])
                       params[:fingerprint].to_i.to_s(16)
                     else
                       params[:fingerprint]
