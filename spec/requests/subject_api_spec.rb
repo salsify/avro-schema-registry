@@ -139,6 +139,18 @@ describe SubjectAPI do
       end
     end
 
+    shared_examples_for "a version lookup" do
+      before { get("/subjects/#{subject_name}/versions/#{version_id}") }
+      subject { response }
+
+      it "returns the schema and it's id" do
+        get("/subjects/#{subject_name}/versions/latest")
+        expect(response).to be_ok
+        expect(response.body).to be_json_eql(expected)
+        expect(response.body).to be_json_eql(schema.id).at_path('id')
+      end
+    end
+
     context "when the subject and version exists" do
       let!(:other_schema_version) { create(:schema_version) }
       let(:version) { create(:schema_version) }
@@ -148,22 +160,21 @@ describe SubjectAPI do
         {
           name: subject_name,
           version: version.version,
-          schema: schema.json
+          schema: schema.json,
+          id: schema.id
         }.to_json
       end
 
-      it "returns the schema" do
-        get("/subjects/#{subject_name}/versions/#{version.version}")
-        expect(response).to be_ok
-        expect(response.body).to be_json_eql(expected)
+      context "with a valid version id" do
+        let(:version_id) { version.version }
+
+        it_behaves_like "a version lookup"
       end
 
       context "when the version is specified as 'latest'" do
-        it "returns the schema" do
-          get("/subjects/#{subject_name}/versions/latest")
-          expect(response).to be_ok
-          expect(response.body).to be_json_eql(expected)
-        end
+        let(:version_id) { 'latest' }
+
+        it_behaves_like "a version lookup"
       end
 
       context "when the version is an invalid string" do

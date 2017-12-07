@@ -49,7 +49,8 @@ class SubjectAPI < Grape::API
         {
           name: schema_version.subject.name,
           version: schema_version.version,
-          schema: schema_version.schema.json
+          schema: schema_version.schema.json,
+          id: schema_version.schema.id
         }
       end
     end
