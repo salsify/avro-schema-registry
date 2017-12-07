@@ -45,7 +45,7 @@ GEM
     ast (2.3.0)
     avro (1.8.2)
       multi_json
-    avro-patches (0.1.0)
+    avro-patches (0.3.2)
       avro (= 1.8.2)
     avro-resolution_canonical_form (0.2.0)
       avro-patches
@@ -272,7 +272,7 @@ DEPENDENCIES
   spring-watcher-listen
 
 RUBY VERSION
-   ruby 2.3.3p222
+   ruby 2.4.1p111
 
 BUNDLED WITH
    1.16.0
