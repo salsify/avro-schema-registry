@@ -1,0 +1,28 @@
+version: "3"
+services:
+  db:
+    image: postgres:9.6
+    volumes:
+      - $HOME/postgresql/9.6/data:/var/lib/postgresql/data
+    ports:
+      - "5432"
+  web:
+    build: .
+    command: "bundle exec rails s -p 21004 -b 0.0.0.0"
+    ports:
+      - "21004:21004"
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_USER: postgres
+    volumes:
+      - .:/usr/src/myapp
+      - bundle-volume:/usr/src/bundler
+    links:
+      - db
+volumes:
+  bundle-volume:
+
+networks:
+  default:
+    external:
+      name: ezcater-development-network
