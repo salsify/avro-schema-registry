@@ -56,7 +56,6 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
-    bugsnag (5.2.0)
     builder (3.2.3)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
@@ -76,6 +75,8 @@ GEM
     factory_girl_rails (4.8.0)
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
+    faraday (0.13.1)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.17)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
@@ -116,6 +117,7 @@ GEM
     minitest (5.10.3)
     multi_json (1.12.1)
     multi_xml (0.6.0)
+    multipart-post (2.0.0)
     mustermann (0.4.0)
       tool (~> 0.2)
     mustermann-grape (0.4.0)
@@ -205,6 +207,8 @@ GEM
     salsify_rubocop (0.48.0)
       rubocop (~> 0.48.1)
       rubocop-rspec (~> 1.15.0)
+    sentry-raven (2.7.1)
+      faraday (>= 0.7.6, < 1.0)
     simplecov (0.13.0)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
@@ -249,7 +253,6 @@ DEPENDENCIES
   avro-patches
   avro-resolution_canonical_form (>= 0.2.0)
   avro_turf (>= 0.8.0)
-  bugsnag
   factory_girl_rails
   grape
   heroku_rails_deploy (>= 0.4.1)
@@ -265,6 +268,7 @@ DEPENDENCIES
   rails-controller-testing
   rspec-rails
   salsify_rubocop
+  sentry-raven
   simplecov
   spring
   spring-commands-rspec

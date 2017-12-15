@@ -11,6 +11,7 @@ gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
 gem 'procto'
 gem 'puma'
+gem "sentry-raven"
 gem 'rails', '5.1.4'
 
 group :test do
@@ -18,10 +19,6 @@ group :test do
   gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'simplecov'
-end
-
-group :production do
-  gem 'bugsnag'
 end
 
 group :development do
