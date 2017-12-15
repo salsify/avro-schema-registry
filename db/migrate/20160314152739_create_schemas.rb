@@ -1,4 +1,4 @@
-class CreateSchemas < ActiveRecord::Migration
+class CreateSchemas < ActiveRecord::Migration[5.0]
   def change
     create_table(:schemas, id: :bigserial) do |t|
       t.string :fingerprint, null: false

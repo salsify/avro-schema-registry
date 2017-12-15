@@ -1,4 +1,4 @@
-class CreateConfigs < ActiveRecord::Migration
+class CreateConfigs < ActiveRecord::Migration[5.0]
   def change
     create_table(:configs, id: :bigserial) do |t|
       t.string :compatibility

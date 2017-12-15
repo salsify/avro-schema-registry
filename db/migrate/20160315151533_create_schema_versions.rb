@@ -1,4 +1,4 @@
-class CreateSchemaVersions < ActiveRecord::Migration
+class CreateSchemaVersions < ActiveRecord::Migration[5.0]
   def change
     create_table(:schema_versions, id: :bigserial) do |t|
       t.integer :version, default: 1
