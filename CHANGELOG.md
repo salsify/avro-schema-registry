@@ -1,5 +1,9 @@
 # avro-schema-registry
 
+## v0.12.0 (unreleased)
+- Upgrade to Ruby 2.4.2.
+- Upgrade to Rails 5.1.
+
 ## v0.11.0
 - Change the default fingerprint version to '2'. Set `FINGERPRINT_VERSION=1`
   before upgrading if you have not migrated to fingerprint version 2.
