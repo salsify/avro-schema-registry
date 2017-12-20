@@ -11,8 +11,8 @@ gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
 gem 'procto'
 gem 'puma'
-gem "sentry-raven"
 gem 'rails', '5.1.4'
+gem 'sentry-raven'
 
 group :test do
   gem 'json_spec'
