@@ -16,7 +16,7 @@ jobs:
           POSTGRES_HOST: localhost
           PGHOST: 127.0.0.1
           LC_ALL: C
-      - image: circleci/postgres:9.4
+      - image: circleci/postgres:9.6
         environment:
           POSTGRES_USER: circleci
           POSTGRES_DB: circle_ruby_test
