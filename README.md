@@ -157,7 +157,7 @@ bin/rake db:setup
 bin/rails s
 ```
 
-By default the service runs on port 21000.
+By default the service runs on port 21004.
 
 ## Deployment
 
