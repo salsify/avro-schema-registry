@@ -8,6 +8,8 @@ services:
       - "5432"
   web:
     build: .
+    depends_on:
+      - db
     command: "bundle exec rails s -p 21004 -b 0.0.0.0"
     ports:
       - "21004:21004"
@@ -17,8 +19,6 @@ services:
     volumes:
       - .:/usr/src/myapp
       - bundle-volume:/usr/src/bundler
-    links:
-      - db
 volumes:
   bundle-volume:
 
