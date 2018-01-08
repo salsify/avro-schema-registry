@@ -3,7 +3,7 @@ services:
   db:
     image: postgres:9.6
     volumes:
-      - $HOME/postgresql/9.6/data:/var/lib/postgresql/data
+      - $HOME/postgresql/9.6/data/schema-registry:/var/lib/postgresql/data
     ports:
       - "5432"
   web:
