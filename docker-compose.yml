@@ -4,8 +4,6 @@ services:
     image: postgres:9.6
     volumes:
       - $HOME/postgresql/9.6/data/schema-registry:/var/lib/postgresql/data
-    ports:
-      - "5432"
   web:
     build: .
     depends_on:
