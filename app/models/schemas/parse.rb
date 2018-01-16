@@ -5,7 +5,7 @@ module Schemas
   module Parse
     def self.call(json)
       Avro::Schema.parse(json)
-    rescue
+    rescue StandardError
       raise SchemaRegistry::InvalidAvroSchemaError
     end
   end

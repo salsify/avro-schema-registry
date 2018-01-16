@@ -19,7 +19,7 @@ class Config < ApplicationRecord
 
   validates :compatibility,
             inclusion: { in: Compatibility::Constants::VALUES,
-                         message: 'invalid: %{value}' },
+                         message: 'invalid: %{value}' }, # rubocop:disable Style/FormatStringToken
             allow_nil: true
 
   def compatibility=(value)
