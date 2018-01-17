@@ -1,22 +1,24 @@
 version: "3"
 services:
-  db:
+  schema-registry-db:
     image: postgres:9.6
     volumes:
-      - $HOME/postgresql/9.6/data/schema-registry:/var/lib/postgresql/data
-  web:
+      - $HOME/postgresql/9.6/data/schema-registry:/var/lib/postgresql/data:delegated
+
+  schema-registry-web:
     build: .
     depends_on:
-      - db
+      - schema-registry-db
     command: "bundle exec rails s -p 21004 -b 0.0.0.0"
     ports:
       - "21004:21004"
     environment:
-      POSTGRES_HOST: db
+      POSTGRES_HOST: schema-registry-db
       POSTGRES_USER: postgres
     volumes:
       - .:/usr/src/myapp
-      - bundle-volume:/usr/src/bundler
+      - bundle-volume:/usr/src/bundler:delegated
+
 volumes:
   bundle-volume:
 
