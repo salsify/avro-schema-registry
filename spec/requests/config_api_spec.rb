@@ -23,7 +23,7 @@ describe ConfigAPI do
     it "changes the global compatibility level" do
       put('/config', params: { compatibility: compatibility })
       expect(response).to be_ok
-      expect(response.body)
+      expect(response.body).to be_json_eql({ compatibility: compatibility }.to_json)
       expect(Config.global.compatibility).to eq(compatibility)
     end
 
@@ -47,7 +47,7 @@ describe ConfigAPI do
       it "changes the global compatibility level" do
         put('/config', params: { compatibility: compatibility.downcase })
         expect(response).to be_ok
-        expect(response.body)
+        expect(response.body).to be_json_eql({ compatibility: compatibility }.to_json)
         expect(Config.global.compatibility).to eq(compatibility)
       end
     end

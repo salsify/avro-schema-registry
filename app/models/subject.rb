@@ -13,8 +13,8 @@ class Subject < ApplicationRecord
 
   NAME_REGEXP = /[a-zA-Z_][\w\.]*/
 
-  has_one :config
-  has_many :versions, class_name: 'SchemaVersion'
+  has_one :config # rubocop:disable Rails/HasManyOrHasOneDependent
+  has_many :versions, class_name: 'SchemaVersion', inverse_of: :subject # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :schemas, through: :versions
 
   validates :name, format: { with: NAME_REGEXP }

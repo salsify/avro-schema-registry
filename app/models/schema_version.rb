@@ -11,8 +11,8 @@
 class SchemaVersion < ApplicationRecord
   include ImmutableModel
 
-  belongs_to :subject
-  belongs_to :schema
+  belongs_to :subject, inverse_of: :versions
+  belongs_to :schema, inverse_of: :versions
 
   scope :latest,
         -> { order(version: :desc).limit(1) }
