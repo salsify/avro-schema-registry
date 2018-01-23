@@ -463,6 +463,11 @@ describe SubjectAPI do
     end
 
     context "when a previous version of the schema is registered under the subject" do
+      before do
+        allow(Rails.application.config.x).to receive(:default_compatibility)
+          .and_return(Compatibility::Constants::FULL_TRANSITIVE)
+      end
+
       let!(:version) { create(:schema_version) }
       let(:subject) { version.subject }
       let(:json) do
