@@ -12,7 +12,6 @@
 class Config < ApplicationRecord
 
   # This default differs from the Confluent default of BACKWARD
-  DEFAULT_COMPATIBILITY = Compatibility::Constants::FULL_TRANSITIVE
   COMPATIBILITY_NAME = 'compatibility'.freeze
 
   belongs_to :subject
@@ -28,7 +27,7 @@ class Config < ApplicationRecord
 
   def self.global
     find_or_create_by!(id: 0) do |config|
-      config.compatibility = DEFAULT_COMPATIBILITY
+      config.compatibility = Rails.application.config.x.default_compatibility
     end
   end
 

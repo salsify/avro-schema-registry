@@ -38,5 +38,7 @@ module AvroSchemaRegistry
     config.x.disable_schema_registration = ENV['DISABLE_SCHEMA_REGISTRATION'] == 'true'
 
     config.x.read_only_mode = ENV['READ_ONLY_MODE'] == 'true'
+
+    config.x.default_compatibility = ENV.fetch('DEFAULT_COMPATIBILITY', 'NONE')
   end
 end
