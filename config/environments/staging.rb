@@ -5,4 +5,6 @@ Rails.application.configure do
   # config/environments/production.rb.
 
   config.log_level = :debug
+
+  config.x.default_compatibility = ENV.fetch('DEFAULT_COMPATIBILITY', 'NONE')
 end
