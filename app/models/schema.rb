@@ -15,7 +15,7 @@ class Schema < ApplicationRecord
 
   before_save :generate_fingerprints
 
-  has_many :versions, class_name: 'SchemaVersion'
+  has_many :versions, class_name: 'SchemaVersion', inverse_of: :schema # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :subjects, through: :versions
 
   scope :with_fingerprints, ->(fingerprint, fingerprint2 = nil) do

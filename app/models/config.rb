@@ -12,14 +12,13 @@
 class Config < ApplicationRecord
 
   # This default differs from the Confluent default of BACKWARD
-  DEFAULT_COMPATIBILITY = Compatibility::Constants::FULL_TRANSITIVE
   COMPATIBILITY_NAME = 'compatibility'.freeze
 
   belongs_to :subject
 
   validates :compatibility,
             inclusion: { in: Compatibility::Constants::VALUES,
-                         message: 'invalid: %{value}' },
+                         message: 'invalid: %{value}' }, # rubocop:disable Style/FormatStringToken
             allow_nil: true
 
   def compatibility=(value)
@@ -28,7 +27,7 @@ class Config < ApplicationRecord
 
   def self.global
     find_or_create_by!(id: 0) do |config|
-      config.compatibility = DEFAULT_COMPATIBILITY
+      config.compatibility = Rails.application.config.x.default_compatibility
     end
   end
 
