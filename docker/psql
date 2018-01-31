@@ -1,0 +1,2 @@
+#!/bin/sh
+docker-compose run --rm schema-registry-db psql -h schema-registry-db -U postgres -d avro-schema-registry_development

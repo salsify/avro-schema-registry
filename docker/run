@@ -1,0 +1,9 @@
+#!/bin/sh
+if docker-compose exec -T schema-registry-web echo "Running in existing schema-registry-web container ..." 2>/dev/null
+then
+  run_or_exec="exec"
+else
+  run_or_exec="run --rm"
+fi
+
+docker-compose $run_or_exec schema-registry-web bash -c "$*"

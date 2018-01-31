@@ -1,0 +1,3 @@
+#!/bin/sh
+docker-compose up
+rm -f tmp/pids/server.pid

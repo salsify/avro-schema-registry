@@ -146,11 +146,21 @@ Accept: application/vnd.schemaregistry.v1+json, application/vnd.schemaregistry+j
 
 ## Setup
 
-The application is written using Ruby 2.3.3. Start the service using the following
-steps:
+The application is written using Ruby 2.4.1.
+
+### Running via Docker
+
+1. Ensure that Docker for Mac is installed.
+1. Clone this repo: `git clone git@github.com:ezcater/avro-schema-registry`.
+1. Run `docker/setup`.
+1. Run `docker/start` to start the server on port 21004.
+
+### Running Locally
+
+Start the service using the following steps:
 
 ```bash
-git clone git@github.com:salsify/avro-schema-registry.git
+git clone git@github.com:ezcater/avro-schema-registry.git
 cd avro-schema-registry
 bundle install
 bin/rake db:setup
