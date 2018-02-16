@@ -1,6 +1,6 @@
 # avro-schema-registry
 
-## v0.12.0 (unreleased)
+## v0.12.0
 - Upgrade to Ruby 2.4.2.
 - Upgrade to Rails 5.1.
 - Allow default compatibility level to be set via environment variable and
