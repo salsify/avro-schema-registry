@@ -19,7 +19,10 @@ default: &default
   encoding: unicode
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: 5
+  pool: <%= ENV.fetch('DB_POOL', 5) %>
+  variables:
+    lock_timeout: <%= ENV.fetch('DB_LOCK_TIMEOUT', 0) %>
+    statement_timeout: <%= ENV.fetch('DB_STATEMENT_TIMEOUT', 0) %>
 
 development:
   <<: *default
@@ -80,6 +83,4 @@ test:
 #
 production:
   <<: *default
-  database: avro-schema-registry_production
-  username: avro-schema-registry
-  password: <%= ENV['AVRO-SCHEMA-REGISTRY_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
