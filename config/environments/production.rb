@@ -75,6 +75,10 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  unless config.x.disable_password
+    config.x.app_password = ENV.fetch('SCHEMA_REGISTRY_PASSWORD')
+  end
+
   # This default differs from the Confluent default of BACKWARD
   config.x.default_compatibility = ENV.fetch('DEFAULT_COMPATIBILITY', 'FULL_TRANSITIVE')
 end
