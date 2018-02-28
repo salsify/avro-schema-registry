@@ -1,4 +1,4 @@
-FROM ezcater/ruby:2.4.1-a0a0bf5
+FROM ezcater-production.jfrog.io/ruby:9443b94540
 
 RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main' >> /etc/apt/sources.list.d/postgresql.list
 RUN wget --no-check-certificate -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O- | apt-key add -
