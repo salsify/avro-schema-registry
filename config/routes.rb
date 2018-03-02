@@ -6,4 +6,5 @@ Rails.application.routes.draw do
 
   get '/', to: 'pages#index'
   get '/success', to: 'pages#success'
+  get '/health_check', to: 'health_checks#show'
 end
