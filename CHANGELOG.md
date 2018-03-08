@@ -1,5 +1,8 @@
 # avro-schema-registry
 
+## v0.12.1
+- Upgrade to Puma 3.11.3.
+
 ## v0.12.0
 - Upgrade to Ruby 2.4.2.
 - Upgrade to Rails 5.1.
