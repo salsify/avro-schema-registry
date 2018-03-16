@@ -12,6 +12,30 @@ Schema versions stored by the service are assigned an id. These ids can be
 embedded in messages published to Kafka avoiding the need to send the full
 schema with each message.
 
+## Setup
+
+The application is written using Ruby 2.4.1.
+
+### Local via Docker
+
+1. Ensure that Docker for Mac is installed.
+1. Clone this repo: `git clone git@github.com:ezcater/avro-schema-registry`.
+1. Run `docker/setup`. If this fails with a database does not exist error, just wait a minute and try again.
+1. Run `docker/start` to start the server on port 21004.
+
+### Local Docker-Free
+
+Start the service using the following steps:
+
+```bash
+git clone git@github.com:ezcater/avro-schema-registry.git
+cd avro-schema-registry
+bin/setup
+bin/rails s
+```
+
+By default the service runs on port 21004.
+
 ## Upgrading to v0.11.0
 
 v0.11.0 changes the default fingerprint version to 2. Set `FINGERPRINT_VERSION=1`
@@ -143,31 +167,6 @@ Accept: application/vnd.schemaregistry.v1+json, application/vnd.schemaregistry+j
   "after_compatibility": "BACKwARD"
 }
 ```
-
-## Setup
-
-The application is written using Ruby 2.4.1.
-
-### Running via Docker
-
-1. Ensure that Docker for Mac is installed.
-1. Clone this repo: `git clone git@github.com:ezcater/avro-schema-registry`.
-1. Run `docker/setup`.
-1. Run `docker/start` to start the server on port 21004.
-
-### Running Locally
-
-Start the service using the following steps:
-
-```bash
-git clone git@github.com:ezcater/avro-schema-registry.git
-cd avro-schema-registry
-bundle install
-bin/rake db:setup
-bin/rails s
-```
-
-By default the service runs on port 21004.
 
 ## Deployment
 
