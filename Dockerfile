@@ -13,4 +13,5 @@ RUN bundle install
 
 ADD . /usr/src/myapp
 
-CMD rails server -p $PORT -b 0.0.0.0
+EXPOSE 3000
+CMD rails server -p 3000 -b 0.0.0.0

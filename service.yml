@@ -1,1 +1,43 @@
 name: avro-schema-registry
+image: ezcater-staging.jfrog.io/avro-schema-registry
+dockerfile: Dockerfile
+
+deployables:
+  web:
+    type: web
+    port: 3000
+    command: "bundle exec rails server -p 3000 -b 0.0.0.0"
+    replicas: 2
+    health_check_path: "/health_check"
+    staging:
+      env: 
+        RACK_ENV: staging
+        RAILS_ENV: staging
+      host: "asr.staging-ezcater.com"
+    production:
+      env:
+        RAILS_ENV: production
+        RACK_ENV: production
+      host: "asr.ezcater.com"
+
+tests:
+  primary:
+    - name: avro-schema-registry
+      build: .
+      environment:
+        POSTGRES_HOST: localhost
+        POSTGRES_USER: ezcater
+        PORT: 3000
+  services:
+    - name: postgres
+      image: postgres:9.6.8
+      environment:
+        POSTGRES_USER: ezcater
+        POSTGRES_DB: avro-schema-registry_test
+  steps:
+    - run:
+        test: rubocop
+        command: bundle exec rubocop
+    - run:
+        test: rspec
+        command: bundle exec rspec

@@ -1,7 +1,7 @@
 version: "3"
 services:
   schema-registry-db:
-    image: postgres:9.6
+    image: postgres:9.6.8
     volumes:
       - $HOME/postgresql/9.6/data/schema-registry:/var/lib/postgresql/data:delegated
 
