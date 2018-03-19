@@ -32,6 +32,7 @@ chdir APP_ROOT do
   # end
 
   puts "\n== Preparing database =="
+  system! 'bin/wait_for_postgres schema-registry-db' if File.exist?("/.dockerenv")
   system! 'bin/rails db:setup'
 
   puts "\n== Removing old logs and tempfiles =="

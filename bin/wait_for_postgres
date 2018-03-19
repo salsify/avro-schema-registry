@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+name=$1
+count=0
+while ! pg_isready -h "$name" -p 5432 > /dev/null 2> /dev/null; do
+  echo "Waiting for Postgres"
+  count=$((count + 1))
+  if [ $count -gt 30 ]; then
+    echo "Connecting to Postgres timed out after 30 seconds"
+    exit 1
+  fi
+  sleep 1
+done
+
+>&2 echo "Postgres is up"
+
