@@ -1,5 +1,5 @@
-#!/bin/sh
-docker network create ezcater-development-network
+#!/bin/bash
+. "$(dirname "$0")"/check_network
 docker-compose build || exit 1
 docker-compose run --rm schema-registry-web bin/setup \
   && echo "Setup complete! Run 'docker/start' to start the application server"

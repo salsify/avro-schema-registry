@@ -1,3 +1,4 @@
-#!/bin/sh
-docker-compose up
+#!/bin/bash
+. "$(dirname "$0")"/check_network
+docker-compose up $*
 rm -f tmp/pids/server.pid
