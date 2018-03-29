@@ -18,7 +18,7 @@ services:
       POSTGRES_HOST: schema-registry-db
       POSTGRES_USER: postgres
     volumes:
-      - .:/usr/src/myapp
+      - .:/usr/src/app
       - bundle-volume:/usr/src/bundler:delegated
 
 volumes:
