@@ -170,6 +170,9 @@ Accept: application/vnd.schemaregistry.v1+json, application/vnd.schemaregistry+j
 
 ## Deployment
 
+Run `bin/deploy --environment <staging|production>` to deploy the application staging or production.
+The app will be deployed to both the intended environment and the corresponding compatibility environment.
+
 Salsify hosts a public instance of this application at
 [avro-schema-registry.salsify.com](https://avro-schema-registry.salsify.com) that
 anyone can experiment with, just please don't rely on it for production!
