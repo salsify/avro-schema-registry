@@ -7,6 +7,10 @@ module DualHerokuRailsDeploy
     deploy = HerokuRailsDeploy::Deployer.new(config_file, args)
     deploy.run
 
-    HerokuRailsDefploy::Deployer.new(config_file, %w(-e compatibility)).run
+    if deploy.production?
+      HerokuRailsDeploy::Deployer.new(config_file, %w(-e production-compat)).run
+    else
+      HerokuRailsDeploy::Deployer.new(config_file,  %w(-e staging-compat)).run
+    end
   end
 end
