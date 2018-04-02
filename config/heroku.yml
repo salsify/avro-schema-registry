@@ -1,5 +1,3 @@
 ---
 production: ezcater-asr-production
 production-compat: ezcater-asr-compat-production
-staging: ezcater-asr-staging
-staging-compat: ezcater-asr-compat-staging
