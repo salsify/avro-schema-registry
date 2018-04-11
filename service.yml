@@ -10,12 +10,12 @@ deployables:
     replicas: 2
     health_check_path: "/health_check"
     staging:
-      env: 
+      environment:
         RACK_ENV: staging
         RAILS_ENV: staging
       host: "asr.staging-ezcater.com"
     production:
-      env:
+      environment:
         RAILS_ENV: production
         RACK_ENV: production
       host: "asr.ezcater.com"
