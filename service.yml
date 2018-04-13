@@ -1,5 +1,6 @@
 name: avro-schema-registry
 image: ezcater-staging.jfrog.io/avro-schema-registry
+skip_production_deploy: true
 dockerfile: Dockerfile
 
 deployables:
