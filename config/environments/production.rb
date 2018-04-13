@@ -81,4 +81,6 @@ Rails.application.configure do
 
   # This default differs from the Confluent default of BACKWARD
   config.x.default_compatibility = ENV.fetch('DEFAULT_COMPATIBILITY', 'FULL_TRANSITIVE')
+
+  Raven.tags_context(platform: config.x.dockerized ? 'skyline' : 'heroku')
 end
