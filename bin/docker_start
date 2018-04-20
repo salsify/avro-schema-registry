@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+dockerize -wait tcp://localhost:5432 -timeout 60s
+bundle exec puma -C config/puma.rb
