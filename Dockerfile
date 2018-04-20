@@ -5,6 +5,14 @@ FROM ruby:2.4.2
 RUN mkdir /app
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y wget
+
+# install dockerize
+ENV DOCKERIZE_VERSION v0.6.1
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+
 # Copy the Gemfile as well as the Gemfile.lock and install
 # the RubyGems. This is a separate step so the dependencies
 # will be cached unless changes to one of those two files
@@ -28,7 +36,7 @@ ENV RAILS_ENV=production
 ENV RAILS_LOG_TO_STDOUT=true
 ENV PORT=5000
 
-EXPOSE 5000
+EXPOSE $PORT
 
 # Start puma
-CMD bundle exec puma -C config/puma.rb
+CMD bin/docker_start
