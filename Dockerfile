@@ -36,6 +36,9 @@ ENV RAILS_ENV=production
 ENV RAILS_LOG_TO_STDOUT=true
 ENV PORT=5000
 
+# set to 1 to automatically create DB and run migrations
+ENV AUTOMIGRATE=0
+
 EXPOSE $PORT
 
 # Start puma

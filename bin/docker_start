@@ -5,5 +5,5 @@ require 'uri'
 # check that postgres is up
 pg_uri = URI.parse(ENV['DATABASE_URL'])
 `dockerize -wait tcp://#{pg_uri.host}:#{pg_uri.port || 5432} -timeout 60s`
-`bundle exec rails db:create db:migrate`
+`bash -c 'if [ "$AUTOMIGRATE" == "1" ]; then bundle exec rails db:create db:migrate; fi'`
 `bundle exec puma -C config/puma.rb`
