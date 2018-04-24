@@ -10,16 +10,19 @@ if ENV['AUTO_MIGRATE'] == '1'
   # check that we can connect to Postgres
   connected = false
   exception = nil
+  connection = nil
   60.times do
     begin
       puts "Attempting DB connection at #{pg_uri.host}:#{port} with user #{pg_uri.user}"
       ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
-      ActiveRecord::Base.connection
+      connection = ActiveRecord::Base.connection
       connected = true
       break
     rescue StandardError => e
       exception = e
       sleep(1.second)
+    ensure
+      connection.close unless connection.nil?
     end
   end
   raise exception unless connected
