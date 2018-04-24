@@ -4,27 +4,22 @@ require 'uri'
 require 'active_record'
 
 if ENV['AUTO_MIGRATE'] == '1'
-  # check that postgres is up
   pg_uri = URI.parse(ENV['DATABASE_URL'])
   port = pg_uri.port || 5432
 
-  unless system("dockerize -wait tcp://#{pg_uri.host}:#{port} -timeout 60s")
-    abort("Unable to connect to Postgres host at #{pg_uri.host}:#{port}")
-  end
-
-  # check that postgres user exists
-  user_exists = false
+  # check that we can connect to Postgres
+  connected = false
   60.times do
     begin
-      puts "Waiting for DB user #{pg_uri.user}"
+      puts "Attempting DB connection at #{pg_uri.host}:#{port} with user #{pg_uri.user}"
       ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
-      user_exists = true
+      connected = true
       break
     rescue Exception
       sleep(1.second)
     end
   end
-  abort("Postgres user #{pg_uri.user} does not exist") unless user_exists
+  abort("Unable to connect to Postgres host at #{pg_uri.host}:#{port} with user #{pg_uri.user}") unless connected
 
   # create and migrate DB
   abort('Unable to migrate DB') unless system('bundle exec rails db:create db:migrate')
