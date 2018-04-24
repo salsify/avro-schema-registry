@@ -28,7 +28,7 @@ ENV RAILS_ENV=production
 ENV RAILS_LOG_TO_STDOUT=true
 ENV PORT=5000
 
-EXPOSE 5000
+EXPOSE $PORT
 
 # Start puma
-CMD bundle exec puma -C config/puma.rb
+CMD bin/docker_start

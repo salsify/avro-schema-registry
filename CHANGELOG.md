@@ -1,5 +1,8 @@
 # avro-schema-registry
 
+## v0.13.0
+- Add auto-migrate and waiting for Postgres to the Docker container.
+
 ## v0.12.1
 - Upgrade to Puma 3.11.3.
 

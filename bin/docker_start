@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+require 'uri'
+require 'active_record'
+
+if ENV['AUTO_MIGRATE'] == '1'
+  pg_uri = URI.parse(ENV['DATABASE_URL'])
+  port = pg_uri.port || 5432
+
+  # check that we can connect to Postgres
+  connected = false
+  exception = nil
+  connection = nil
+  60.times do
+    begin
+      puts "Attempting DB connection at #{pg_uri.host}:#{port} with user #{pg_uri.user}"
+      ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+      connection = ActiveRecord::Base.connection
+      connected = true
+      break
+    rescue StandardError => e
+      exception = e
+      sleep(1.second)
+    ensure
+      connection.close unless connection.nil?
+    end
+  end
+  raise exception unless connected
+
+  # create and migrate DB
+  abort('Unable to migrate DB') unless system('bundle exec rails db:create db:migrate')
+end
+
+exec('bundle exec puma -C config/puma.rb')

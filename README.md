@@ -211,6 +211,9 @@ To setup the database the first time you run the app, you can call
 docker exec avro-schema-registry bundle exec rails db:setup
 ```
 
+Alternatively, your can pass `-e AUTO_MIGRATE=1` to your `docker run` command to have the 
+container automatically create and migrate the database schema.
+
 ## Security
 
 The service is secured using HTTP Basic authentication and should be used with
