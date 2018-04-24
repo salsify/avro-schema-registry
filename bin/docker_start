@@ -9,17 +9,20 @@ if ENV['AUTO_MIGRATE'] == '1'
 
   # check that we can connect to Postgres
   connected = false
+  exception = nil
   60.times do
     begin
       puts "Attempting DB connection at #{pg_uri.host}:#{port} with user #{pg_uri.user}"
       ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+      ActiveRecord::Base.connection
       connected = true
       break
-    rescue Exception
+    rescue StandardError => e
+      exception = e
       sleep(1.second)
     end
   end
-  abort("Unable to connect to Postgres host at #{pg_uri.host}:#{port} with user #{pg_uri.user}") unless connected
+  raise exception unless connected
 
   # create and migrate DB
   abort('Unable to migrate DB') unless system('bundle exec rails db:create db:migrate')
