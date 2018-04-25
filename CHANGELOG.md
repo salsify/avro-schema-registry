@@ -1,5 +1,8 @@
 # avro-schema-registry
 
+## v0.13.1
+- Missing database no longer causes `docker_start` script to fail in auto-migrate mode.
+
 ## v0.13.0
 - Add auto-migrate and waiting for Postgres to the Docker container.
 

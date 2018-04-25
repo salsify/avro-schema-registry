@@ -18,6 +18,10 @@ if ENV['AUTO_MIGRATE'] == '1'
       connection = ActiveRecord::Base.connection
       connected = true
       break
+    rescue ActiveRecord::NoDatabaseError
+      # `NoDatabaseError` error is OK, we'll create the DB below
+      connected = true
+      break
     rescue StandardError => e
       exception = e
       sleep(1.second)
