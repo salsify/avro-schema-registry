@@ -24,12 +24,15 @@ if ENV['AUTO_MIGRATE'] == '1'
       break
     rescue StandardError => e
       exception = e
-      sleep(1.second)
+      sleep(2.second)
     ensure
       connection.close unless connection.nil?
     end
   end
   raise exception unless connected
+
+  # the PG driver is slow to release its port binding: https://www.postgresql.org/message-id/30038.1494916166%40sss.pgh.pa.us
+  sleep(2.second)
 
   # create and migrate DB
   abort('Unable to migrate DB') unless system('bundle exec rails db:create db:migrate')
