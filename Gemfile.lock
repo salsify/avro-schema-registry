@@ -45,7 +45,7 @@ GEM
     ast (2.3.0)
     avro (1.8.2)
       multi_json
-    avro-patches (0.3.2)
+    avro-patches (0.3.3)
       avro (= 1.8.2)
     avro-resolution_canonical_form (0.2.0)
       avro-patches
@@ -114,7 +114,7 @@ GEM
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
-    multi_json (1.12.1)
+    multi_json (1.13.1)
     multi_xml (0.6.0)
     mustermann (0.4.0)
       tool (~> 0.2)
