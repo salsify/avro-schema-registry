@@ -120,7 +120,7 @@ GEM
       tool (~> 0.2)
     mustermann-grape (0.4.0)
       mustermann (= 0.4.0)
-    newrelic_rpm (3.18.1.330)
+    newrelic_rpm (5.1.0.344)
     nio4r (2.3.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
