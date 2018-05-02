@@ -90,7 +90,7 @@ GEM
       rack-accept
       virtus (>= 1.0.0)
     hashie (3.5.4)
-    heroku_rails_deploy (0.4.3)
+    heroku_rails_deploy (0.4.5)
       private_attr
       rails
     i18n (1.0.1)
