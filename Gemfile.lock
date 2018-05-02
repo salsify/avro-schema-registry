@@ -63,7 +63,7 @@ GEM
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     concurrent-ruby (1.0.5)
-    crass (1.0.3)
+    crass (1.0.4)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.3)
@@ -90,7 +90,7 @@ GEM
       rack-accept
       virtus (>= 1.0.0)
     hashie (3.5.4)
-    heroku_rails_deploy (0.4.3)
+    heroku_rails_deploy (0.4.5)
       private_attr
       rails
     i18n (1.0.1)
@@ -135,7 +135,7 @@ GEM
     private_attr (1.1.0)
     procto (0.0.3)
     puma (3.11.4)
-    rack (2.0.4)
+    rack (2.0.5)
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-test (1.0.0)
