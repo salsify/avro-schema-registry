@@ -68,6 +68,10 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.3)
     docile (1.3.0)
+    dotenv (2.4.0)
+    dotenv-rails (2.4.0)
+      dotenv (= 2.4.0)
+      railties (>= 3.2, < 6.0)
     equalizer (0.0.11)
     erubi (1.7.1)
     excon (0.55.0)
@@ -252,6 +256,7 @@ DEPENDENCIES
   avro-resolution_canonical_form (>= 0.2.0)
   avro_turf (>= 0.8.0)
   bugsnag
+  dotenv-rails
   factory_girl_rails
   grape
   heroku_rails_deploy (>= 0.4.1)

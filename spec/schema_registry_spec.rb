@@ -193,6 +193,23 @@ describe SchemaRegistry do
         end
       end
     end
+
+    context "server error" do
+      let(:compatibility) { 'BOTH' }
+
+      let(:old_json) do
+        { type: 'record', name: 'event', namespace: 'com.salsify.identity', fields: [{ name: 'attribute', type: { type: 'record', name: 'reference', namespace: 'com.salsify', fields: [{ name: 'id', type: 'string' }, { name: 'type', type: 'string' }, { name: 'external_id', type: %w[null string], default: nil }] } }] }.to_json
+      end
+
+      let(:new_json) do
+        { type: 'record', name: 'event', namespace: 'com.salsify.identity', fields: [{ name: 'attribute', type: ['null', { type: 'record', name: 'reference', namespace: 'com.salsify', fields: [{ name: 'id', type: 'string' }, { name: 'type', type: 'string' }, { name: 'external_id', type: %w[null string], default: nil }] }], default: nil }] }.to_json
+      end
+
+      it "returns false" do
+        expect(check).to eq(false)
+      end
+
+    end
   end
 
   describe ".compatible!" do
