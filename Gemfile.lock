@@ -1,3 +1,11 @@
+GIT
+  remote: git@github.com:salsify/avro-patches.git
+  revision: dcc380f3e2be663b300f7043075f007125914245
+  branch: nested-optional-conversion-error
+  specs:
+    avro-patches (0.3.3)
+      avro (= 1.8.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -45,8 +53,6 @@ GEM
     ast (2.3.0)
     avro (1.8.2)
       multi_json
-    avro-patches (0.3.3)
-      avro (= 1.8.2)
     avro-resolution_canonical_form (0.2.0)
       avro-patches
     avro_turf (0.8.0)
@@ -252,7 +258,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
-  avro-patches
+  avro-patches!
   avro-resolution_canonical_form (>= 0.2.0)
   avro_turf (>= 0.8.0)
   bugsnag
