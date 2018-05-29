@@ -2,7 +2,7 @@ ruby '2.4.2'
 
 source 'https://rubygems.org'
 
-gem 'avro-patches', :git => 'git@github.com:salsify/avro-patches.git', :branch => 'nested-optional-conversion-error'
+gem 'avro-patches'
 
 gem 'avro-resolution_canonical_form', '>= 0.2.0'
 gem 'grape'

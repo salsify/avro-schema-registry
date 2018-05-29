@@ -1,5 +1,8 @@
 # avro-schema-registry
 
+## v0.13.3
+- Upgrade to avro-patches 0.3.4
+
 ## v0.13.2
 - Missing database no longer causes `docker_start` script to fail in auto-migrate mode.
 
