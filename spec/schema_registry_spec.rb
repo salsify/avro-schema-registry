@@ -198,11 +198,51 @@ describe SchemaRegistry do
       let(:compatibility) { 'BOTH' }
 
       let(:old_json) do
-        { type: 'record', name: 'event', fields: [{ name: 'attribute', type: { type: 'record', name: 'reference', fields: [{ name: 'id', type: 'string' }] } }] }.to_json
+        {
+            type: 'record',
+            name: 'event',
+            fields: [
+              {
+                  name: 'attribute',
+                  type: {
+                      type: 'record',
+                      name: 'reference',
+                      fields: [
+                        {
+                              name: 'id',
+                              type: 'string'
+                          }
+                      ]
+                  }
+              }
+            ]
+        }.to_json
       end
 
       let(:new_json) do
-        { type: 'record', name: 'event', fields: [{ name: 'attribute', type: ['null', { type: 'record', name: 'reference', fields: [{ name: 'id', type: 'string' }] }], default: nil }] }.to_json
+        {
+            type: 'record',
+            name: 'event',
+            fields: [
+              {
+                  name: 'attribute',
+                  type: [
+                    'null',
+                    {
+                        type: 'record',
+                        name: 'reference',
+                        fields: [
+                          {
+                                name: 'id',
+                                type: 'string'
+                            }
+                        ]
+                    }
+                  ],
+                  default: nil
+              }
+            ]
+        }.to_json
       end
 
       it "returns false" do
