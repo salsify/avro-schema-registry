@@ -40,6 +40,7 @@ group :development, :production do
 end
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'factory_girl_rails'
   gem 'salsify_rubocop', require: false
 end
