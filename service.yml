@@ -1,5 +1,6 @@
 name: avro-schema-registry
 image: avro-schema-registry
+slack: pb-s-sparkle-motion
 skip_production_deploy: true
 dockerfile: Dockerfile
 
