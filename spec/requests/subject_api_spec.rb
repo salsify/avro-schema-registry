@@ -88,13 +88,17 @@ describe SubjectAPI do
                       'a name containing mixed case',
                       'UPPER_lower_0123456789'
 
+      it_behaves_like "a supported subject name",
+                      'a name containing a hyphen',
+                      'topic-value'
+
       it_behaves_like "an unsupported subject name",
                       'a name beginning with a digit',
                       '5alive'
 
       it_behaves_like "an unsupported subject name",
                       'a name containing a hyphen',
-                      'foo-bar'
+                      '-foobar'
 
       it_behaves_like "an unsupported subject name",
                       'a name beginning with a period',
