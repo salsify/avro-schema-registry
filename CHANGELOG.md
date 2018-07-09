@@ -1,6 +1,6 @@
 # avro-schema-registry
 
-## v0.13.4 (unreleased)
+## v0.13.4
 - Allow hyphens in subject names.
 
 ## v0.13.3
