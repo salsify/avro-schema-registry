@@ -97,7 +97,7 @@ describe SubjectAPI do
                       '5alive'
 
       it_behaves_like "an unsupported subject name",
-                      'a name containing a hyphen',
+                      'a name beginning with a hyphen',
                       '-foobar'
 
       it_behaves_like "an unsupported subject name",
