@@ -1,1 +1,1 @@
-construct()
+ezcaterPipeline("v1.1")
