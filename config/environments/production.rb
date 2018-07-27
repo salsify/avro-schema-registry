@@ -76,7 +76,11 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   unless config.x.disable_password
-    config.x.app_password = ENV.fetch('SCHEMA_REGISTRY_PASSWORD')
+    config.x.app_password = if config.x.read_only_mode
+                              ENV.fetch('COMPAT_SCHEMA_REGISTRY_PASSWORD')
+                            else
+                              ENV.fetch('SCHEMA_REGISTRY_PASSWORD')
+                            end
   end
 
   # This default differs from the Confluent default of BACKWARD
