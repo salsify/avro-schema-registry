@@ -1,0 +1,53 @@
+version: "2"
+checks:
+  file-lines:
+    enabled: false
+  method-lines:
+    enabled: false
+plugins:
+  csslint:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - ruby
+      - javascript
+  fixme:
+    enabled: true
+exclude_patterns:
+- config/
+- db/
+- script/
+- spec/
+- vendor/
+- "**.jpg"
+- "**.png"
+- "**.gif"
+- "**.svg"
+- "**.scss"
+- "**.md"
+- ".rubocop.yml"
+- "Dockerfile"
+- "Capfile"
+- "README.md"
+- "**.erb"
+- "**.jbuilder"
+- "**.rabl"
+- "**.zip"
+- "**.crt"
+- "**.txt"
+- "**.ico"
+- "**.eot"
+- "**.pdf"
+- "**.html"
+- "**.key"
+- "**.docx"
+- "**.fcgi"
+- "**.xml"
+- "**.pem"
+- "**.csr"
+- "**.org"
+- "**.cgi"
+- "**.ru"
+- "**.pptx"
