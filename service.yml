@@ -1,5 +1,5 @@
 name: avro-schema-registry
-slack: pb-s-sparkle-motion
+slack: pb-s-service-car
 
 staging:
   environment:
