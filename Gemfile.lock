@@ -118,7 +118,7 @@ GEM
     mustermann (1.0.3)
     mustermann-grape (1.0.0)
       mustermann (~> 1.0.0)
-    newrelic_rpm (3.18.1.330)
+    newrelic_rpm (5.4.0.347)
     nio4r (2.3.0)
     nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
