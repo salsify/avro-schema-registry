@@ -1,5 +1,5 @@
 name: avro-schema-registry
-slack: pb-s-service-car
+slack: pb-a-avro-schema-reg
 
 staging:
   environment:
