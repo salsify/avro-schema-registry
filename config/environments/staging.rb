@@ -7,4 +7,6 @@ Rails.application.configure do
   config.log_level = :debug
 
   config.x.default_compatibility = ENV.fetch('DEFAULT_COMPATIBILITY', 'NONE')
+
+  config.force_ssl = false
 end
