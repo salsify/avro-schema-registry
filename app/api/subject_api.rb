@@ -60,7 +60,7 @@ class SubjectAPI < Grape::API
       desc 'Get the Avro schema for the specified version of this subject. Only the unescaped schema is returned.'
       get '/schema' do
         with_schema_version(params[:name], params[:version_id]) do |schema_version|
-          ::JSON.parse(schema_version.schema.json)
+          JSON.parse(schema_version.schema.json)
         end
       end
     end
