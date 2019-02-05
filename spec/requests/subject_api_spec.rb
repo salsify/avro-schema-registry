@@ -200,6 +200,63 @@ describe SubjectAPI do
     end
   end
 
+  describe "GET /subjects/:name/versions/:version_id/schema" do
+    it_behaves_like "a secure endpoint" do
+      let(:version) { create(:schema_version) }
+      let(:action) do
+        unauthorized_get("/subjects/#{version.subject.name}/versions/#{version.version}/schema")
+      end
+    end
+
+    context "when the subject and version exists" do
+      let!(:other_schema_version) { create(:schema_version) }
+      let(:version) { create(:schema_version) }
+      let(:subject_name) { version.subject.name }
+      let(:schema) { version.schema }
+      let(:expected) { schema.json }
+
+      it "returns the schema" do
+        get("/subjects/#{subject_name}/versions/#{version.version}/schema")
+        expect(response).to be_ok
+        expect(response.body).to be_json_eql(expected)
+      end
+
+      context "when the version is specified as 'latest'" do
+        it "returns the schema" do
+          get("/subjects/#{subject_name}/versions/latest/schema")
+          expect(response).to be_ok
+          expect(response.body).to be_json_eql(expected)
+        end
+      end
+
+      context "when the version is an invalid string" do
+        it "returns a not found error" do
+          get("/subjects/#{subject_name}/versions/invalid/schema")
+          expect(response).to be_not_found
+          expect(response.body).to be_json_eql(SchemaRegistry::Errors::VERSION_NOT_FOUND.to_json)
+        end
+      end
+    end
+
+    context "when the subject does not exist" do
+      it "returns a not found error" do
+        get('/subjects/fnord/versions/latest/schema')
+        expect(response).to be_not_found
+        expect(response.body).to be_json_eql(SchemaRegistry::Errors::SUBJECT_NOT_FOUND.to_json)
+      end
+    end
+
+    context "when the version does not exist" do
+      let!(:version) { create(:schema_version) }
+
+      it "returns a not found error" do
+        get("/subjects/#{version.subject.name}/versions/2/schema")
+        expect(response).to be_not_found
+        expect(response.body).to be_json_eql(SchemaRegistry::Errors::VERSION_NOT_FOUND.to_json)
+      end
+    end
+  end
+
   describe "GET /subjects/:name/fingerprints/:fingerprint" do
     let(:version) { create(:schema_version) }
     let(:schema) { version.schema }

@@ -41,18 +41,27 @@ class SubjectAPI < Grape::API
         end
     end
 
-    desc 'Get a specific version of the schema registered under this subject'
     params do
       requires :version_id, types: [Integer, String],
                desc: 'version of the schema registered under the subject'
     end
-    get '/versions/:version_id' do
-      with_schema_version(params[:name], params[:version_id]) do |schema_version|
-        {
-          name: schema_version.subject.name,
-          version: schema_version.version,
-          schema: schema_version.schema.json
-        }
+    namespace '/versions/:version_id' do
+      desc 'Get a specific version of the schema registered under this subject'
+      get do
+        with_schema_version(params[:name], params[:version_id]) do |schema_version|
+          {
+            name: schema_version.subject.name,
+            version: schema_version.version,
+            schema: schema_version.schema.json
+          }
+        end
+      end
+
+      desc 'Get the Avro schema for the specified version of this subject. Only the unescaped schema is returned.'
+      get '/schema' do
+        with_schema_version(params[:name], params[:version_id]) do |schema_version|
+          ::JSON.parse(schema_version.schema.json)
+        end
       end
     end
 
