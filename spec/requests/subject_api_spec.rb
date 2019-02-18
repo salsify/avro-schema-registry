@@ -147,10 +147,12 @@ describe SubjectAPI do
       let!(:other_schema_version) { create(:schema_version) }
       let(:version) { create(:schema_version) }
       let(:subject_name) { version.subject.name }
+      let(:id) { version.schema_id }
       let(:schema) { version.schema }
       let(:expected) do
         {
-          name: subject_name,
+          subject: subject_name,
+          id: id,
           version: version.version,
           schema: schema.json
         }.to_json
