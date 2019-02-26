@@ -1,1 +1,1 @@
-ezcaterPipeline("v1.1")
+ezcaterPipeline("v1.2")
