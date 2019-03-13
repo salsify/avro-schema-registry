@@ -1,4 +1,4 @@
-FROM ezcater-production.jfrog.io/ruby:9443b94540
+FROM ezcater-production.jfrog.io/ruby:c2d78542e1
 
 COPY Gemfile Gemfile.lock /usr/src/app/
 RUN bundle install
