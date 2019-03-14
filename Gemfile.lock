@@ -49,7 +49,7 @@ GEM
       avro (= 1.8.2)
     avro-resolution_canonical_form (0.2.0)
       avro-patches
-    avro_turf (0.8.0)
+    avro_turf (0.8.1)
       avro (>= 1.7.7, < 1.9)
       excon (~> 0.45)
     axiom-types (0.1.1)
@@ -75,7 +75,7 @@ GEM
       railties (>= 3.2, < 6.1)
     equalizer (0.0.11)
     erubi (1.8.0)
-    excon (0.55.0)
+    excon (0.62.0)
     factory_girl (4.9.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.9.0)
