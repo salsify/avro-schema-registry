@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 require 'grape/middleware/optional_auth'
 
 # This module provides shared configuration for the Schema Registry API
 module BaseAPI
   extend ActiveSupport::Concern
 
-  SCHEMA_REGISTRY_V1_CONTENT_TYPE = 'application/vnd.schemaregistry.v1+json'.freeze
-  SCHEMA_REGISTRY_CONTENT_TYPE = 'application/vnd.schemaregistry.json'.freeze
-  JSON = 'application/json'.freeze
+  SCHEMA_REGISTRY_V1_CONTENT_TYPE = 'application/vnd.schemaregistry.v1+json'
+  SCHEMA_REGISTRY_CONTENT_TYPE = 'application/vnd.schemaregistry.json'
+  JSON = 'application/json'
 
   included do
     content_type :json, JSON

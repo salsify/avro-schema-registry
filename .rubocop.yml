@@ -1,8 +1,19 @@
 inherit_gem:
   salsify_rubocop: conf/rubocop_rails50.yml
 
+AllCops:
+  TargetRubyVersion: 2.4
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+
 RSpec/NamedSubject:
   Enabled: false
 
 Style/RaiseArgs:
   EnforcedStyle: compact
+
+Metrics/LineLength:
+  Enabled: true
+  Max: 120
+  IgnoreCopDirectives: true

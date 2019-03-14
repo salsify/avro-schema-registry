@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Helpers
 
   # This module defines helpers for the documented errors that the schema

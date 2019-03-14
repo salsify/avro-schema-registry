@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class SubjectAPI < Grape::API
   include BaseAPI
 
-  INTEGER_FINGERPRINT_REGEXP = /^[0-9]+$/
+  INTEGER_FINGERPRINT_REGEXP = /^[0-9]+$/.freeze
 
   rescue_from ActiveRecord::RecordNotFound do
     subject_not_found!
@@ -90,9 +92,7 @@ class SubjectAPI < Grape::API
     post '/versions' do
       read_only_mode! if Rails.configuration.x.read_only_mode
 
-      if Rails.configuration.x.disable_schema_registration
-        error!({ message: 'Schema registration is disabled' }, 503)
-      end
+      error!({ message: 'Schema registration is disabled' }, 503) if Rails.configuration.x.disable_schema_registration
 
       new_schema_options = declared(params).slice(:with_compatibility, :after_compatibility).symbolize_keys
       schema = Schemas::RegisterNewVersion.call(params[:name], params[:schema], new_schema_options)
