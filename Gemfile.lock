@@ -273,7 +273,7 @@ DEPENDENCIES
   spring-watcher-listen
 
 RUBY VERSION
-   ruby 2.4.2p198
+   ruby 2.6.1p33
 
 BUNDLED WITH
-   1.16.1
+   1.17.2
