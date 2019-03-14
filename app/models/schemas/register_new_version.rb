@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Schemas
   # This class is called to register a new version of a schema.
   # If the schema already exists, then the existing model object is returned.

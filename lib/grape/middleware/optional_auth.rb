@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Grape
   module Middleware
     # This middleware allows HTTP Basic/Digest middleware to be bypassed based

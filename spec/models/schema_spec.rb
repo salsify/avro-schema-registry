@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Schema do
   before do
     allow(Rails.configuration.x).to receive(:fingerprint_version).and_return(fingerprint_version)

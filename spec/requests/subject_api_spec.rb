@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe SubjectAPI do
   let(:invalid_json) do
     # invalid due to missing record name

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: configs
@@ -12,13 +14,13 @@
 class Config < ApplicationRecord
 
   # This default differs from the Confluent default of BACKWARD
-  COMPATIBILITY_NAME = 'compatibility'.freeze
+  COMPATIBILITY_NAME = 'compatibility'
 
   belongs_to :subject
 
   validates :compatibility,
             inclusion: { in: Compatibility::Constants::VALUES,
-                         message: 'invalid: %{value}' }, # rubocop:disable Style/FormatStringToken
+                         message: 'invalid: %{value}' },
             allow_nil: true
 
   def compatibility=(value)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -75,9 +77,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  unless config.x.disable_password
-    config.x.app_password = ENV.fetch('SCHEMA_REGISTRY_PASSWORD')
-  end
+  config.x.app_password = ENV.fetch('SCHEMA_REGISTRY_PASSWORD') unless config.x.disable_password
 
   # This default differs from the Confluent default of BACKWARD
   config.x.default_compatibility = ENV.fetch('DEFAULT_COMPATIBILITY', 'FULL_TRANSITIVE')

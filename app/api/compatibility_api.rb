@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CompatibilityAPI < Grape::API
   include BaseAPI
 

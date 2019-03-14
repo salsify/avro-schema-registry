@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe PagesController do
   describe "#index" do
     it "renders the index file" do
