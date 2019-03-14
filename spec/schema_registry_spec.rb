@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe SchemaRegistry do
   let(:json_hash) do
     {

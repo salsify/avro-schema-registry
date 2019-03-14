@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Schemas
   # This module is used to standardize the fingerprint generation for an
   # Avro JSON schema

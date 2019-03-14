@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CompatibilityAPI do
 
   describe "POST /compatibility/subjects/:subject/versions/:version" do

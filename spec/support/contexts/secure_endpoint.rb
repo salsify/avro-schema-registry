@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples_for "a secure endpoint" do
   context "when HTTP Basic password is disabled" do
     before do

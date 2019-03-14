@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Helper to set Basic authentication for requests.
 module RequestHelper
   extend ActiveSupport::Concern
