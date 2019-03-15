@@ -11,7 +11,7 @@
 #  subject_id    :integer
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :config do
     subject
     compatibility { Config::DEFAULT_COMPATIBILITY }

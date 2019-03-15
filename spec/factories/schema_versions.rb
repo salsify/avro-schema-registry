@@ -10,7 +10,7 @@
 #  schema_id  :integer          not null
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :schema_version, aliases: [:version] do
     subject
     schema

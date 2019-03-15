@@ -10,7 +10,7 @@
 #  updated_at :datetime         not null
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :subject, aliases: [:value_subject] do
     sequence(:name) { |n| "com.example.test.subject_#{n}_value" }
 

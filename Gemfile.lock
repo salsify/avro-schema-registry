@@ -76,11 +76,11 @@ GEM
     equalizer (0.0.11)
     erubi (1.8.0)
     excon (0.62.0)
-    factory_girl (4.9.0)
-      activesupport (>= 3.0.0)
-    factory_girl_rails (4.9.0)
-      factory_girl (~> 4.9.0)
-      railties (>= 3.0.0)
+    factory_bot (5.0.2)
+      activesupport (>= 4.2.0)
+    factory_bot_rails (5.0.1)
+      factory_bot (~> 5.0.0)
+      railties (>= 4.2.0)
     ffi (1.9.25)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -253,7 +253,7 @@ DEPENDENCIES
   avro_turf (>= 0.8.0)
   bugsnag
   dotenv-rails
-  factory_girl_rails
+  factory_bot_rails
   grape
   heroku_rails_deploy (>= 0.4.1)
   ice_nine

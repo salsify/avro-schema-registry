@@ -12,7 +12,7 @@
 #  fingerprint2 :string
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :schema do
     sequence(:json) do |n|
       {
