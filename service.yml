@@ -1,5 +1,6 @@
 name: avro-schema-registry
 slack: pb-a-avro-schema-reg
+sandbox_cd_branch: master
 
 staging:
   environment:
