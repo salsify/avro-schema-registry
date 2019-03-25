@@ -36,6 +36,12 @@ deployables:
       host: "asr-compat.ezcater.com"
       environment:
         READ_ONLY_MODE: true
+  dbmigrate:
+    type: job
+    command: bundle exec rake db:migrate
+
+predeploy:
+  - dbmigrate
 
 tests:
   primary:
