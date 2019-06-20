@@ -16,12 +16,15 @@ deployables:
     type: web
     port: 3000
     command: "bundle exec rails server -p 3000 -b 0.0.0.0"
-    replicas: 3
     health_check_path: "/health_check"
     staging:
-      host: "asr.staging-ezcater.com"
+      host: "asr.staging-ezcater.net"
+      replicas: 2
+      environment:
+        DISABLE_PASSWORD: "true"
     production:
       host: "asr.ezcater.com"
+      replicas: 3
   webcompat:
     type: web
     port: 3000
