@@ -42,6 +42,8 @@ deployables:
   dbmigrate:
     type: job
     command: bundle exec rake db:migrate
+    environment:
+      DISABLE_PASSWORD: "true"
 
 predeploy:
   - dbmigrate
