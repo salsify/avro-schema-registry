@@ -41,6 +41,6 @@ module AvroSchemaRegistry
 
     config.x.default_compatibility = ENV.fetch('DEFAULT_COMPATIBILITY', 'NONE')
 
-    config.x.dockerized = File.exist?('/.dockerenv')
+    config.x.dockerized = File.exist?('/proc/1/cgroup') && File.readlines('/proc/1/cgroup').grep(/(docker|kube)/).any?
   end
 end
