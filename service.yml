@@ -23,8 +23,10 @@ deployables:
       environment:
         DISABLE_PASSWORD: "true"
     production:
-      host: "asr.ezcater.com"
+      host: "asr.ezcater.net"
       replicas: 3
+      environment:
+        DISABLE_PASSWORD: "true"
   webcompat:
     type: web
     port: 3000
@@ -34,11 +36,13 @@ deployables:
     staging:
       host: "asr-compat.staging-ezcater.com"
       environment:
-        READ_ONLY_MODE: true
+        READ_ONLY_MODE: "true"
+        DISABLE_PASSWORD: "false"
     production:
       host: "asr-compat.ezcater.com"
       environment:
-        READ_ONLY_MODE: true
+        READ_ONLY_MODE: "true"
+        DISABLE_PASSWORD: "false"
   dbmigrate:
     type: job
     command: bundle exec rake db:migrate
