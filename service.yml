@@ -1,4 +1,5 @@
 name: avro-schema-registry
+class: platform
 slack: pb-a-avro-schema-reg
 pipeline:
   sandbox_cd_branch: master
