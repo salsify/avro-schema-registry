@@ -23,6 +23,8 @@ The application is written using Ruby 2.4.1.
 1. Run `docker/setup`. If this fails with a database does not exist error, just wait a minute and try again.
 1. Run `docker/start` to start the server on port 21004.
 
+Note: You need to be logged into jfrog via docker as detailed [here](https://ezcater.atlassian.net/wiki/spaces/POL/pages/247627778/Artifactory).
+
 ### Local Docker-Free
 
 Start the service using the following steps:
