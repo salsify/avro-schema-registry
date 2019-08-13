@@ -9,6 +9,6 @@ module DualHerokuRailsDeploy
     deploy = HerokuRailsDeploy::Deployer.new(config_file, args)
     deploy.run
 
-    HerokuRailsDeploy::Deployer.new(config_file, %w(-e compatibility)).run if deploy.production?
+    HerokuRailsDeploy::Deployer.new(config_file, ['-e', 'compatibility']).run if deploy.production?
   end
 end

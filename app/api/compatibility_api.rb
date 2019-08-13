@@ -10,7 +10,7 @@ class CompatibilityAPI < Grape::API
   end
 
   rescue_from Grape::Exceptions::ValidationErrors do |e|
-    if e.errors.keys == [%w(with_compatibility)]
+    if e.errors.keys == [['with_compatibility']]
       invalid_compatibility_level!
     else
       error!({ message: e.message }, 422)
