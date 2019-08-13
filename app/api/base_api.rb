@@ -15,7 +15,7 @@ module BaseAPI
     content_type :schema_registry, SCHEMA_REGISTRY_CONTENT_TYPE
     content_type :schema_registry_v1, SCHEMA_REGISTRY_V1_CONTENT_TYPE
 
-    %i(json schema_registry schema_registry_v1).each do |content_type_sym|
+    [:json, :schema_registry, :schema_registry_v1].each do |content_type_sym|
       parser content_type_sym, Grape::Parser::Json
       formatter content_type_sym, Grape::Formatter::Json
     end

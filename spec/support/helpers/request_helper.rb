@@ -4,7 +4,7 @@
 module RequestHelper
   extend ActiveSupport::Concern
 
-  GRAPE_ROUTE_METHODS = %i(get post put head delete patch).freeze
+  GRAPE_ROUTE_METHODS = [:get, :post, :put, :head, :delete, :patch].freeze
 
   included do
     GRAPE_ROUTE_METHODS.each do |method|
