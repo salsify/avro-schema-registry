@@ -1,6 +1,7 @@
 name: avro-schema-registry
 class: platform
 slack: pb-a-avro-schema-reg
+configuration_opt_in_environments: ["dev1", "rainforestqa", "integrations"]
 pipeline:
   sandbox_cd_branch: master
 
