@@ -13,6 +13,7 @@ gem 'procto'
 gem 'puma'
 gem 'rails', '5.1.4'
 gem 'sentry-raven'
+gem 'ezcater_trusted_proxies-rails'
 
 group :test do
   gem 'json_spec'

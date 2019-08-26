@@ -70,6 +70,7 @@ GEM
     equalizer (0.0.11)
     erubi (1.7.0)
     excon (0.55.0)
+    ezcater_trusted_proxies-rails (1.0.0)
     factory_girl (4.8.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.8.0)
@@ -255,6 +256,7 @@ DEPENDENCIES
   avro-patches
   avro-resolution_canonical_form (>= 0.2.0)
   avro_turf (>= 0.8.0)
+  ezcater_trusted_proxies-rails
   factory_girl_rails
   grape
   heroku_rails_deploy (>= 0.4.1)
@@ -281,4 +283,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.16.1
+   1.16.6
