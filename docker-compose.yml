@@ -13,7 +13,7 @@ services:
       - schema-registry-db
     command: "bin/start"
     ports:
-      - "21004:21004"
+      - "127.0.0.1:21004:21004"
     environment:
       POSTGRES_HOST: schema-registry-db
       POSTGRES_USER: postgres
