@@ -53,7 +53,7 @@ GEM
       avro (= 1.9.0)
     avro-resolution_canonical_form (0.2.1)
       avro-patches (< 2.0.0)
-    avro_turf (0.9.0)
+    avro_turf (0.10.0)
       avro (>= 1.7.7, < 1.10)
       excon (~> 0.45)
     axiom-types (0.1.1)
