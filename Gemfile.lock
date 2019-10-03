@@ -47,10 +47,10 @@ GEM
       rake (>= 10.4, < 13.0)
     arel (9.0.0)
     ast (2.4.0)
-    avro (1.9.0)
+    avro (1.9.1)
       multi_json
-    avro-patches (1.0.0)
-      avro (= 1.9.0)
+    avro-patches (1.0.1)
+      avro (>= 1.9.0, <= 1.9.1)
     avro-resolution_canonical_form (0.2.1)
       avro-patches (< 2.0.0)
     avro_turf (0.10.0)
