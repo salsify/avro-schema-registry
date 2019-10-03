@@ -218,7 +218,7 @@ GEM
     salsify_rubocop (0.63.0)
       rubocop (~> 0.62.0)
       rubocop-rspec (~> 1.31.0)
-    simplecov (0.17.0)
+    simplecov (0.17.1)
       docile (~> 1.1)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
