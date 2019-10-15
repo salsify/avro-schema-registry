@@ -52,26 +52,27 @@ deployables:
       DISABLE_PASSWORD: "true"
 
 predeploy:
-  - dbmigrate
+- dbmigrate
 
 tests:
   primary:
-    - name: avro-schema-registry
-      build: .
-      environment:
-        POSTGRES_HOST: localhost
-        POSTGRES_USER: ezcater
-        PORT: 3000
+  - name: avro-schema-registry
+    build: .
+    command: tail -f /dev/null
+    environment:
+      POSTGRES_HOST: localhost
+      POSTGRES_USER: ezcater
+      PORT: 3000
   services:
-    - name: postgres
-      image: postgres:9.6.8
-      environment:
-        POSTGRES_USER: ezcater
-        POSTGRES_DB: avro-schema-registry_test
+  - name: postgres
+    image: postgres:9.6.8
+    environment:
+      POSTGRES_USER: ezcater
+      POSTGRES_DB: avro-schema-registry_test
   steps:
-    - run:
-        test: rubocop
-        command: bundle exec rubocop
-    - run:
-        test: rspec
-        command: bundle exec rspec
+  - run:
+      test: rubocop
+      command: bundle exec rubocop
+  - run:
+      test: rspec
+      command: bundle exec rspec
