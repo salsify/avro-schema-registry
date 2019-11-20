@@ -131,7 +131,7 @@ GEM
       mustermann (~> 1.0.0)
     newrelic_rpm (6.7.0.359)
     nio4r (2.4.0)
-    nokogiri (1.10.4)
+    nokogiri (1.10.5)
       mini_portile2 (~> 2.4.0)
     overcommit (0.51.0)
       childprocess (>= 0.6.3, < 4)
