@@ -65,7 +65,7 @@ tests:
       PORT: 3000
   services:
   - name: postgres
-    image: postgres:9.6.8
+    image: postgres:10.10
     environment:
       POSTGRES_USER: ezcater
       POSTGRES_DB: avro-schema-registry_test
