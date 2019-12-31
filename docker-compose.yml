@@ -4,7 +4,7 @@ services:
     container_name: avroschemaregistry_schema-registry-db_1
     image: postgres:10.10
     volumes:
-      - $HOME/postgresql/9.6/data/schema-registry:/var/lib/postgresql/data:delegated
+      - $HOME/postgresql/10.10/data/schema-registry:/var/lib/postgresql/data:delegated
 
   schema-registry-web:
     container_name: avroschemaregistry_schema-registry-web_1
