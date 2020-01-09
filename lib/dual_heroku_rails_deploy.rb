@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'heroku_rails_deploy/deployer'
 
 module DualHerokuRailsDeploy
@@ -7,8 +9,6 @@ module DualHerokuRailsDeploy
     deploy = HerokuRailsDeploy::Deployer.new(config_file, args)
     deploy.run
 
-    if deploy.production?
-      HerokuRailsDeploy::Deployer.new(config_file, %w(-e production-compat)).run
-    end
+    HerokuRailsDeploy::Deployer.new(config_file, ['-e', 'compatibility']).run if deploy.production?
   end
 end

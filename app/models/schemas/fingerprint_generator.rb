@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 module Schemas
   # This module is used to standardize the fingerprint generation for an
   # Avro JSON schema
   module FingerprintGenerator
 
-    VALID_FINGERPRINT_VERSIONS = Set.new(%w(1 2 all)).deep_freeze
+    VALID_FINGERPRINT_VERSIONS = ['1', '2', 'all'].to_set.deep_freeze
 
-    V1_VERSIONS = Set.new(%w(1 all)).deep_freeze
-    V2_VERSIONS = Set.new(%w(2 all)).deep_freeze
+    V1_VERSIONS = ['1', 'all'].to_set.deep_freeze
+    V2_VERSIONS = ['2', 'all'].to_set.deep_freeze
 
     def self.valid_fingerprint_version!
       unless VALID_FINGERPRINT_VERSIONS.include?(Rails.configuration.x.fingerprint_version)

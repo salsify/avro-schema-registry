@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SchemaRegistry
 
   # This module contains error codes and messages defined by the Confluent

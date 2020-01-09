@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
 
@@ -15,5 +17,5 @@ RSpec.configure do |config|
 
   config.order = :random
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 end

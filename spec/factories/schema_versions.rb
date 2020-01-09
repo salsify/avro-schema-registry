@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: schema_versions
@@ -8,7 +10,7 @@
 #  schema_id  :integer          not null
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :schema_version, aliases: [:version] do
     subject
     schema

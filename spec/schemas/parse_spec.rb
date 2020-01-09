@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Schemas::Parse do
   describe ".call" do
     let(:json) { build(:schema).json }

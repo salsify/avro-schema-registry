@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SchemaAPI < Grape::API
   include BaseAPI
 

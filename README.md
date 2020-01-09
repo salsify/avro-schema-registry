@@ -181,6 +181,53 @@ anyone can experiment with, just please don't rely on it for production!
 
 There is also a button above to easily deploy your own copy of the application to Heroku.
 
+### Docker
+
+A Dockerfile is provided to run the application within a container. To
+build the image, navigate to the root of the repo and run `docker build`:
+
+```bash
+docker build . -t avro-schema-registry
+```
+
+The container is built for the `production` environment, so you'll
+need to pass in a few environment flags to run it:
+
+```bash
+docker run -p 5000:5000 -d \
+  -e DATABASE_URL=postgresql://user:pass@host/dbname \
+  -e FORCE_SSL=false \
+  -e SECRET_KEY_BASE=supersecret \
+  -e SCHEMA_REGISTRY_PASSWORD=avro \
+  avro-schema-registry
+```
+
+If you also want to run PostgreSQL in a container, you can link the two containers:
+
+```bash
+docker run --name avro-postgres -d \
+  -e POSTGRES_PASSWORD=avro \
+  -e POSTGRES_USER=avro \
+  postgres:9.6
+
+docker run --name avro-schema-registry --link avro-postgres:postgres -p 5000:5000 -d \
+  -e DATABASE_URL=postgresql://avro:avro@postgres/avro \
+  -e FORCE_SSL=false \
+  -e SECRET_KEY_BASE=supersecret \
+  -e SCHEMA_REGISTRY_PASSWORD=avro \
+  avro-schema-registry
+```
+
+To setup the database the first time you run the app, you can call
+`rails db:setup` from within the container:
+
+```bash
+docker exec avro-schema-registry bundle exec rails db:setup
+```
+
+Alternatively, your can pass `-e AUTO_MIGRATE=1` to your `docker run` command to have the 
+container automatically create and migrate the database schema.
+
 ## Security
 
 The service is secured using HTTP Basic authentication and should be used with
@@ -255,4 +302,3 @@ This code is available as open source under the terms of the
 
 Bug reports and pull requests are welcome on GitHub at
 https://github.com/salsify/avro-schema-registry.
-

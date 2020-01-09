@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Grape reloading support
 # https://github.com/ruby-grape/grape#reloading-api-changes-in-development
 # Note: adding to explicitly_unloadable_constants caused problems with Spring

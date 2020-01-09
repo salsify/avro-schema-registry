@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HealthChecksController < ApplicationController
   OK_RESPONSE = { status: :OK }.freeze
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: schemas
@@ -55,8 +57,6 @@ class Schema < ApplicationRecord
   def generate_fingerprints
     self.fingerprint = Schemas::FingerprintGenerator.generate_v1(json)
 
-    if Schemas::FingerprintGenerator.include_v2?
-      self.fingerprint2 = Schemas::FingerprintGenerator.generate_v2(json)
-    end
+    self.fingerprint2 = Schemas::FingerprintGenerator.generate_v2(json) if Schemas::FingerprintGenerator.include_v2?
   end
 end

@@ -1,10 +1,29 @@
 # avro-schema-registry
 
-## v0.12.0 (unreleased)
+## v0.13.4
+- Allow hyphens in subject names.
+
+## v0.13.3
+- Upgrade to avro-patches 0.3.4
+
+## v0.13.2
+- Missing database no longer causes `docker_start` script to fail in auto-migrate mode.
+
+## v0.13.1
+- Missing database no longer causes `docker_start` script to fail in auto-migrate mode.
+
+## v0.13.0
+- Add auto-migrate and waiting for Postgres to the Docker container.
+
+## v0.12.1
+- Upgrade to Puma 3.11.3.
+
+## v0.12.0
 - Upgrade to Ruby 2.4.2.
 - Upgrade to Rails 5.1.
 - Allow default compatibility level to be set via environment variable and
   change the default for non-production environments.
+- Include Dockerfile.
 
 ## v0.11.0
 - Change the default fingerprint version to '2'. Set `FINGERPRINT_VERSION=1`

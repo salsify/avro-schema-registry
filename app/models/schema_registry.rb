@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SchemaRegistry
   InvalidAvroSchemaError = Class.new(StandardError)
   IncompatibleAvroSchemaError = Class.new(StandardError)
@@ -15,9 +17,7 @@ module SchemaRegistry
   end
 
   def compatible!(new_json, version:, compatibility: nil)
-    unless compatible?(new_json, version: version, compatibility: compatibility)
-      raise IncompatibleAvroSchemaError
-    end
+    raise IncompatibleAvroSchemaError unless compatible?(new_json, version: version, compatibility: compatibility)
   end
 
   private

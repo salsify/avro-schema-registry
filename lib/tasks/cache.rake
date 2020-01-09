@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if Rails.env.development?
   require 'avro_turf'
   require 'avro_turf/confluent_schema_registry'

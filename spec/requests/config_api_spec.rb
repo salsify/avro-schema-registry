@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe ConfigAPI do
   let(:expected) do
     { compatibility: compatibility }.to_json
