@@ -15,6 +15,7 @@ services:
     ports:
       - "127.0.0.1:21004:21004"
     environment:
+      BUNDLE_EZCATER__JFROG__IO:
       POSTGRES_HOST: schema-registry-db
       POSTGRES_USER: postgres
     volumes:

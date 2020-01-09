@@ -1,10 +1,11 @@
 ruby '2.4.1'
 
-source 'https://rubygems.org'
+source 'https://ezcater.jfrog.io/ezcater/api/gems/ezcater-gem-source'
 
 gem 'avro-patches'
 
 gem 'avro-resolution_canonical_form', '>= 0.2.0'
+gem 'ezcater_apm'
 gem 'grape'
 gem 'ice_nine', require: 'ice_nine/core_ext/object'
 gem 'pg'

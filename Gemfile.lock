@@ -1,5 +1,5 @@
 GEM
-  remote: https://rubygems.org/
+  remote: https://ezcater.jfrog.io/ezcater/api/gems/ezcater-gem-source/
   specs:
     actioncable (5.1.4)
       actionpack (= 5.1.4)
@@ -63,6 +63,8 @@ GEM
       descendants_tracker (~> 0.0.1)
     concurrent-ruby (1.0.5)
     crass (1.0.3)
+    ddtrace (0.31.0)
+      msgpack
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.3)
@@ -70,6 +72,8 @@ GEM
     equalizer (0.0.11)
     erubi (1.7.0)
     excon (0.55.0)
+    ezcater_apm (0.2.1)
+      ddtrace
     factory_girl (4.8.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.8.0)
@@ -115,6 +119,7 @@ GEM
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
+    msgpack (1.3.1)
     multi_json (1.12.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
@@ -255,6 +260,7 @@ DEPENDENCIES
   avro-patches
   avro-resolution_canonical_form (>= 0.2.0)
   avro_turf (>= 0.8.0)
+  ezcater_apm
   factory_girl_rails
   grape
   heroku_rails_deploy (>= 0.4.1)
