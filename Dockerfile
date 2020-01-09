@@ -1,4 +1,4 @@
-FROM ezcater-production.jfrog.io/ruby:2a0246f11f
+FROM ezcater-production.jfrog.io/ruby:2953e42e15
 
 COPY Gemfile Gemfile.lock /usr/src/app/
 
