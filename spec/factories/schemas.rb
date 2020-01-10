@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: schemas
@@ -10,7 +12,7 @@
 #  fingerprint2 :string
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :schema do
     sequence(:json) do |n|
       {

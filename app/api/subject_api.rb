@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class SubjectAPI < Grape::API
   include BaseAPI
 
-  INTEGER_FINGERPRINT_REGEXP = /^[0-9]+$/
+  INTEGER_FINGERPRINT_REGEXP = /^[0-9]+$/.freeze
 
   rescue_from ActiveRecord::RecordNotFound do
     subject_not_found!
@@ -39,18 +41,27 @@ class SubjectAPI < Grape::API
         end
     end
 
-    desc 'Get a specific version of the schema registered under this subject'
     params do
       requires :version_id, types: [Integer, String],
                desc: 'version of the schema registered under the subject'
     end
-    get '/versions/:version_id' do
-      with_schema_version(params[:name], params[:version_id]) do |schema_version|
-        {
-          name: schema_version.subject.name,
-          version: schema_version.version,
-          schema: schema_version.schema.json
-        }
+    namespace '/versions/:version_id' do
+      desc 'Get a specific version of the schema registered under this subject'
+      get do
+        with_schema_version(params[:name], params[:version_id]) do |schema_version|
+          {
+            name: schema_version.subject.name,
+            version: schema_version.version,
+            schema: schema_version.schema.json
+          }
+        end
+      end
+
+      desc 'Get the Avro schema for the specified version of this subject. Only the unescaped schema is returned.'
+      get '/schema' do
+        with_schema_version(params[:name], params[:version_id]) do |schema_version|
+          JSON.parse(schema_version.schema.json)
+        end
       end
     end
 
@@ -90,9 +101,7 @@ class SubjectAPI < Grape::API
     post '/versions' do
       read_only_mode! if Rails.configuration.x.read_only_mode
 
-      if Rails.configuration.x.disable_schema_registration
-        error!({ message: 'Schema registration is disabled' }, 503)
-      end
+      error!({ message: 'Schema registration is disabled' }, 503) if Rails.configuration.x.disable_schema_registration
 
       new_schema_options = declared(params).slice(:with_compatibility, :after_compatibility).symbolize_keys
       schema = Schemas::RegisterNewVersion.call(params[:name], params[:schema], new_schema_options)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe SchemaRegistry do
   let(:json_hash) do
     {
@@ -192,6 +194,63 @@ describe SchemaRegistry do
           expect(can_read_args.fourth).to eq([old_schema, new_schema])
         end
       end
+    end
+
+    context "server error" do
+      let(:compatibility) { 'BOTH' }
+
+      let(:old_json) do
+        {
+            type: 'record',
+            name: 'event',
+            fields: [
+              {
+                  name: 'attribute',
+                  type: {
+                      type: 'record',
+                      name: 'reference',
+                      fields: [
+                        {
+                              name: 'id',
+                              type: 'string'
+                          }
+                      ]
+                  }
+              }
+            ]
+        }.to_json
+      end
+
+      let(:new_json) do
+        {
+            type: 'record',
+            name: 'event',
+            fields: [
+              {
+                  name: 'attribute',
+                  type: [
+                    'null',
+                    {
+                        type: 'record',
+                        name: 'reference',
+                        fields: [
+                          {
+                                name: 'id',
+                                type: 'string'
+                            }
+                        ]
+                    }
+                  ],
+                  default: nil
+              }
+            ]
+        }.to_json
+      end
+
+      it "returns false" do
+        expect(check).to eq(false)
+      end
+
     end
   end
 

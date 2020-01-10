@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Schemas
 
   # This module is used to wrap Avro schema parsing to raise a standard error

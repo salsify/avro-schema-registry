@@ -1,0 +1,12 @@
+.bundle
+.env
+.envrc
+.idea
+.git
+coverage
+log
+tmp
+vendor
+**/node_modules
+**/bower_components
+deployment

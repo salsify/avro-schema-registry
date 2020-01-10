@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Helpers
 
   module SchemaVersionHelper
     include Helpers::ErrorHelper
 
-    LATEST_VERSION = 'latest'.freeze
+    LATEST_VERSION = 'latest'
 
     private
 

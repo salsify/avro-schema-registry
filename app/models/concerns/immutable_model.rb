@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # All of the models in this application are insert only. This concern
 # is used to ensure that they remain immutable.
 module ImmutableModel

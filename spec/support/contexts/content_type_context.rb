@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This shared example expects the following variables to be defined
 # @param :expected [JSON] JSON response
 # @param :path [String] Request path

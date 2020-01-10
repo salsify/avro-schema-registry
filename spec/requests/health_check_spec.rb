@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe "Health Check" do
   describe "GET /health_check" do
     it "returns success" do

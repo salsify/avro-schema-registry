@@ -1,10 +1,13 @@
-ruby '2.4.1'
+# frozen_string_literal: true
+
+ruby '2.6.5'
 
 source 'https://ezcater.jfrog.io/ezcater/api/gems/ezcater-gem-source'
 
 gem 'avro-patches'
 
 gem 'avro-resolution_canonical_form', '>= 0.2.0'
+gem 'bootsnap', require: false
 gem 'ezcater_apm'
 gem 'grape'
 gem 'ice_nine', require: 'ice_nine/core_ext/object'
@@ -12,7 +15,7 @@ gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
 gem 'procto'
 gem 'puma'
-gem 'rails', '5.1.4'
+gem 'rails', '~> 5.2.2'
 gem 'sentry-raven'
 
 group :test do
@@ -38,6 +41,7 @@ group :development, :production do
 end
 
 group :development, :test do
-  gem 'factory_girl_rails'
+  gem 'dotenv-rails'
+  gem 'factory_bot_rails'
   gem 'salsify_rubocop', require: false
 end
