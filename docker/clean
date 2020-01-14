@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if ! [[ $1 =~ ^--destroy-images$ ]]
+then
+  read -p "Do you want to destroy all and images for schema-registry? [y/n] (You can also use the --destroy-images flag) " -n 1 -r
+  echo
+fi
+
+docker-compose down --remove-orphans --volumes
+rm -f tmp/pids/server.pid
+
+if [[ $1 =~ ^--destroy-images$ ]] || [[ $REPLY =~ ^[Yy]$ ]]
+then
+  docker images | grep schema-registry | awk '{ print $3 }' | xargs docker image rm --force
+fi

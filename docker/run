@@ -1,5 +1,4 @@
 #!/bin/bash
-. "$(dirname "$0")"/artifactory_setup
 . "$(dirname "$0")"/check_network
 if docker-compose exec -T schema-registry-web echo "Running in existing schema-registry-web container ..." 2>/dev/null
 then
@@ -8,4 +7,5 @@ else
   run_or_exec="run --rm"
 fi
 
-docker-compose $run_or_exec schema-registry-web bash -c "$*"
+. "$(dirname "$0")"/artifactory_setup
+docker-compose $run_or_exec -e COLUMNS="`tput cols`" -e LINES="`tput lines`" schema-registry-web bash -c "$*"

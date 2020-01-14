@@ -1,6 +1,6 @@
 #!/bin/bash
-. "$(dirname "$0")"/artifactory_setup
 . "$(dirname "$0")"/check_network
+. "$(dirname "$0")"/artifactory_setup
 docker-compose build || exit 1
 docker-compose run --rm schema-registry-web bin/setup \
   && echo "Setup complete! Run 'docker/start' to start the application server"

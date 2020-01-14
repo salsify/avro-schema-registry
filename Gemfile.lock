@@ -83,6 +83,8 @@ GEM
     excon (0.71.0)
     ezcater_apm (0.2.1)
       ddtrace
+    ezcater_docker_shared (1.0.2)
+      rails
     factory_bot (5.1.1)
       activesupport (>= 4.2.0)
     factory_bot_rails (5.1.1)
@@ -271,6 +273,7 @@ DEPENDENCIES
   bootsnap
   dotenv-rails
   ezcater_apm
+  ezcater_docker_shared
   factory_bot_rails
   grape
   heroku_rails_deploy (>= 0.4.1)

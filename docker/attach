@@ -1,0 +1,7 @@
+#!/bin/bash
+# Used locally to connect to a docker container (defaults to the web container)
+container_type=$1 || 'web'
+container_id=$(docker ps | grep schema-registry-$container_type | awk '{print $1}' | head -n 1)
+echo "Connecting to `docker inspect $container_id -f "{{.Name}}"`..."
+echo "To detach from the container press CTRL-p + CTRL-q"
+docker attach $container_id

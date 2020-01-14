@@ -28,6 +28,7 @@ end
 group :development do
   gem 'annotate'
   gem 'avro_turf', '>= 0.8.0', require: false
+  gem 'ezcater_docker_shared', require: false
   gem 'heroku_rails_deploy', '>= 0.4.1', require: false
   gem 'overcommit'
   gem 'spring'
