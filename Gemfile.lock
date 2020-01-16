@@ -83,7 +83,7 @@ GEM
     excon (0.71.0)
     ezcater_apm (0.2.1)
       ddtrace
-    ezcater_docker_shared (1.0.2)
+    ezcater_docker_shared (1.1.0)
       rails
     factory_bot (5.1.1)
       activesupport (>= 4.2.0)
