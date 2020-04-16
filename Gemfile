@@ -37,10 +37,6 @@ group :development do
   gem 'spring-watcher-listen'
 end
 
-group :development, :production do
-  gem 'newrelic_rpm'
-end
-
 group :development, :test do
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
