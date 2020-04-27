@@ -4,12 +4,10 @@ ruby '2.6.3'
 
 source 'https://rubygems.org'
 
-gem 'avro-patches'
-
+gem 'avro', '~> 1.9.1'
 gem 'avro-resolution_canonical_form', '>= 0.2.0'
 gem 'bootsnap', require: false
 gem 'grape'
-gem 'ice_nine', require: 'ice_nine/core_ext/object'
 gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
 gem 'procto'
