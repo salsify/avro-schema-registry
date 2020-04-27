@@ -5,10 +5,10 @@ module Schemas
   # Avro JSON schema
   module FingerprintGenerator
 
-    VALID_FINGERPRINT_VERSIONS = ['1', '2', 'all'].to_set.deep_freeze
+    VALID_FINGERPRINT_VERSIONS = ['1', '2', 'all'].to_set.freeze
 
-    V1_VERSIONS = ['1', 'all'].to_set.deep_freeze
-    V2_VERSIONS = ['2', 'all'].to_set.deep_freeze
+    V1_VERSIONS = ['1', 'all'].to_set.freeze
+    V2_VERSIONS = ['2', 'all'].to_set.freeze
 
     def self.valid_fingerprint_version!
       unless VALID_FINGERPRINT_VERSIONS.include?(Rails.configuration.x.fingerprint_version)
