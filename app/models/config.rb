@@ -20,7 +20,7 @@ class Config < ApplicationRecord
 
   validates :compatibility,
             inclusion: { in: Compatibility::Constants::VALUES,
-                         message: 'invalid: %{value}' },
+                         message: 'invalid: %<value>' },
             allow_nil: true
 
   def compatibility=(value)
