@@ -58,7 +58,7 @@ GEM
       excon (~> 0.45)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
-    bugsnag (6.13.0)
+    bugsnag (6.13.1)
       concurrent-ruby (~> 1.0)
     builder (3.2.4)
     childprocess (3.0.0)
