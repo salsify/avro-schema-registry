@@ -149,7 +149,7 @@ GEM
     powerpack (0.1.2)
     private_attr (1.1.0)
     procto (0.0.3)
-    puma (4.3.1)
+    puma (4.3.5)
       nio4r (~> 2.0)
     rack (2.0.8)
     rack-accept (0.4.5)
