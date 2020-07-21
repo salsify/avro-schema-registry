@@ -4,13 +4,11 @@ ruby '2.6.5'
 
 source 'https://ezcater.jfrog.io/ezcater/api/gems/ezcater-gem-source'
 
-gem 'avro-patches'
-
+gem 'avro'
 gem 'avro-resolution_canonical_form', '>= 0.2.0'
 gem 'bootsnap', require: false
 gem 'ezcater_apm'
 gem 'grape'
-gem 'ice_nine', require: 'ice_nine/core_ext/object'
 gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
 gem 'procto'
