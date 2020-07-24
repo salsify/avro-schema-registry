@@ -1,0 +1,6 @@
+production-readiness.md @ezcater/sre
+
+# devex wants to be notified of changes to Dockerfiles and docker-compose.yaml
+# so we can be sure to integrate them with eztilt, if necessary
+Dockerfile*                   @ezcater/devex
+docker-compose.yml            @ezcater/devex
