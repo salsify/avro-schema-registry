@@ -25,7 +25,7 @@ FactoryBot.define do
     end
   end
 
-  factory :schema_without_default, class: Schema do
+  factory :schema_without_default, class: 'Schema' do
     sequence(:json) do |n|
       {
         type: :record,

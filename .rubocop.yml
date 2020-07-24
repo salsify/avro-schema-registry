@@ -13,7 +13,7 @@ RSpec/NamedSubject:
 Style/RaiseArgs:
   EnforcedStyle: compact
 
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: true
   Max: 120
   IgnoreCopDirectives: true
