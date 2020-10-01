@@ -154,7 +154,7 @@ GEM
     pg (1.2.3)
     private_attr (1.1.0)
     procto (0.0.3)
-    puma (4.3.5)
+    puma (5.0.2)
       nio4r (~> 2.0)
     rack (2.2.3)
     rack-accept (0.4.5)
@@ -297,7 +297,7 @@ DEPENDENCIES
   spring-watcher-listen
 
 RUBY VERSION
-   ruby 2.6.3p62
+   ruby 2.6.6p146
 
 BUNDLED WITH
    1.17.3
