@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ruby '2.6.5'
+ruby '2.6.6'
 
 source 'https://ezcater.jfrog.io/ezcater/api/gems/ezcater-gem-source'
 
@@ -13,7 +13,7 @@ gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
 gem 'procto'
 gem 'puma'
-gem 'rails', '~> 5.2.2'
+gem 'rails', '~> 6.0.3'
 gem 'sentry-raven'
 
 group :test do
