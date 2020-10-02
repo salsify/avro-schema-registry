@@ -4,7 +4,7 @@ ruby '2.6.6'
 
 source 'https://rubygems.org'
 
-gem 'avro', '~> 1.9.1'
+gem 'avro', '~> 1.10.0'
 gem 'avro-resolution_canonical_form', '>= 0.2.0'
 gem 'bootsnap', require: false
 gem 'grape'
