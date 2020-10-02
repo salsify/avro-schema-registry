@@ -6,7 +6,7 @@ describe "Health Check" do
       get health_check_path
 
       health_check_ok_json = { status: :OK }.to_json
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(response.body).to eq(health_check_ok_json)
     end
   end

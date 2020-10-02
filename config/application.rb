@@ -14,6 +14,11 @@ Bundler.require(*Rails.groups)
 
 module AvroSchemaRegistry
   class Application < Rails::Application
+    config.load_defaults 6.0
+
+    # Rollout Rails 6 with the class autoloader first
+    config.autoloader = :classic
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

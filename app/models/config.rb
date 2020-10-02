@@ -16,7 +16,7 @@ class Config < ApplicationRecord
   # This default differs from the Confluent default of BACKWARD
   COMPATIBILITY_NAME = 'compatibility'
 
-  belongs_to :subject
+  belongs_to :subject, optional: true
 
   validates :compatibility,
             inclusion: { in: Compatibility::Constants::VALUES,
