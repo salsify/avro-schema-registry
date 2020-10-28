@@ -168,7 +168,7 @@ GEM
     pg (1.2.3)
     private_attr (1.1.0)
     procto (0.0.3)
-    puma (5.0.2)
+    puma (5.0.4)
       nio4r (~> 2.0)
     rack (2.2.3)
     rack-accept (0.4.5)
