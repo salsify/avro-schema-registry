@@ -13,5 +13,5 @@ threads_count = ENV['MAX_WEB_THREADS'] || 5
 threads threads_count, threads_count
 
 rackup      DefaultRackup
-port        ENV['PORT']     || 21000
+port        ENV['PORT']     || 21004
 environment ENV['RACK_ENV'] || 'development'
