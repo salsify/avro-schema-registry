@@ -1,4 +1,5 @@
 name: avro-schema-registry
+owner: core-platform
 class: platform
 slack: pb-a-avro-schema-reg
 configuration_opt_in_environments: true
