@@ -72,8 +72,25 @@ tests:
       POSTGRES_DB: avro-schema-registry_test
   steps:
   - run:
+      test: download cc-test-reporter
+      command: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+        -o cc-test-reporter
+  - run:
+      test: cc-test-reporter permissions
+      command: chmod +x ./cc-test-reporter
+  - run:
+      test: bundle
+      command: bundle install --with test
+  - run:
       test: rubocop
       command: bundle exec rubocop
   - run:
+      test: cc-before-build
+      command: ./cc-test-reporter before-build
+  - run:
       test: rspec
-      command: bundle exec rspec
+      command: bundle exec rspec --format documentation --format RspecJunitFormatter --out rspec.xml
+  - run:
+      test: cc-after-build
+      command: ./cc-test-reporter after-build -t simplecov --exit-code $? || echo
+        "Skipping Code Climate coverage upload"

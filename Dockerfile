@@ -4,7 +4,7 @@ COPY Gemfile Gemfile.lock /usr/src/app/
 
 ARG BUNDLE_EZCATER__JFROG__IO
 
-RUN bundle install
+RUN bundle install --without test development
 
 ADD . /usr/src/app
 
