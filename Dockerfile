@@ -1,10 +1,10 @@
-FROM ezcater-production.jfrog.io/ruby:3717e0cf2c
+FROM ezcater-production.jfrog.io/ruby:14306729d3
 
 COPY Gemfile Gemfile.lock /usr/src/app/
 
 ARG BUNDLE_EZCATER__JFROG__IO
 
-RUN bundle install --without test development
+RUN bundle config set --local without 'test development' && bundle install
 
 ADD . /usr/src/app
 

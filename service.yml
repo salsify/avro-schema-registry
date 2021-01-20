@@ -79,8 +79,11 @@ tests:
       test: cc-test-reporter permissions
       command: chmod +x ./cc-test-reporter
   - run:
+      test: bundle config
+      command: bundle config unset --local without
+  - run:
       test: bundle
-      command: bundle install --with test
+      command: bundle install
   - run:
       test: rubocop
       command: bundle exec rubocop
