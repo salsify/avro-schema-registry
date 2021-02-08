@@ -6,7 +6,7 @@ RUN mkdir /app
 WORKDIR /app
 
 # Add build dependencies
-RUN apk update && apk add --virtual build-dependencies build-base postgresql-dev
+RUN apk update && apk add --virtual build-dependencies build-base postgresql-dev tzdata
 
 # Copy the Gemfile as well as the Gemfile.lock and install
 # the RubyGems. This is a separate step so the dependencies
@@ -23,8 +23,8 @@ COPY . /app
 # though we're writing the logs to STDOUT).
 RUN mkdir /app/tmp /app/log
 RUN addgroup -S avro && \
-    adduser -S avro -G avro && \
-    chown -R avro:avro /app/tmp /app/log
+    adduser -S avro -G avro -u 1000 -h /app && \
+    chown -R avro:avro /app /app/tmp /app/log
 USER avro
 
 ENV RACK_ENV=production
