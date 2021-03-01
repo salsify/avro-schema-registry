@@ -23,7 +23,7 @@ services:
       POSTGRES_USER: postgres
     volumes:
       - .:/usr/src/app
-      - bundle-volume:/usr/src/bundler:delegated
+      - bundle-volume:/usr/local/bundle:delegated
 
 volumes:
   bundle-volume:
