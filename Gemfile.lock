@@ -163,7 +163,7 @@ GEM
     mustermann-grape (1.0.1)
       mustermann (>= 1.0.0)
     nio4r (2.5.5)
-    nokogiri (1.11.3)
+    nokogiri (1.11.4)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     overcommit (0.57.0)
