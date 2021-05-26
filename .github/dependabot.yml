@@ -1,51 +1,22 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
 version: 2
+updates:
+  - package-ecosystem: "bundler"
+    directory: "/"
+    registries:
+      - rubygems-server-gems-salsify-com
+    schedule:
+      interval: daily
+      time: "10:00"
+    versioning-strategy: lockfile-only
+    open-pull-requests-limit: 5
 registries:
   rubygems-server-gems-salsify-com:
     type: rubygems-server
     url: https://gems.salsify.com
     username: "${{secrets.RUBYGEMS_SERVER_GEMS_SALSIFY_COM_USERNAME}}"
     password: "${{secrets.RUBYGEMS_SERVER_GEMS_SALSIFY_COM_PASSWORD}}"
-
-updates:
-- package-ecosystem: bundler
-  directory: "/"
-  schedule:
-    interval: daily
-    time: "10:00"
-  open-pull-requests-limit: 10
-  versioning-strategy: lockfile-only
-  ignore:
-  - dependency-name: bootsnap
-    versions:
-    - 1.6.0
-    - 1.7.0
-    - 1.7.1
-    - 1.7.2
-    - 1.7.3
-  - dependency-name: newrelic_rpm
-    versions:
-    - 6.15.0
-  - dependency-name: nokogiri
-    versions:
-    - 1.11.1
-    - 1.11.2
-  - dependency-name: rails
-    versions:
-    - 6.0.3.4
-    - 6.0.3.5
-  - dependency-name: puma
-    versions:
-    - 5.2.0
-    - 5.2.1
-  - dependency-name: grape
-    versions:
-    - 1.5.1
-    - 1.5.2
-  - dependency-name: bugsnag
-    versions:
-    - 6.19.0
-  - dependency-name: salsify_rubocop
-    versions:
-    - 1.0.1
-  registries:
-  - rubygems-server-gems-salsify-com
