@@ -7,16 +7,8 @@ version: 2
 updates:
   - package-ecosystem: "bundler"
     directory: "/"
-    registries:
-      - rubygems-server-gems-salsify-com
     schedule:
       interval: daily
       time: "10:00"
     versioning-strategy: lockfile-only
     open-pull-requests-limit: 5
-registries:
-  rubygems-server-gems-salsify-com:
-    type: rubygems-server
-    url: https://gems.salsify.com
-    username: "${{secrets.RUBYGEMS_SERVER_GEMS_SALSIFY_COM_USERNAME}}"
-    password: "${{secrets.RUBYGEMS_SERVER_GEMS_SALSIFY_COM_PASSWORD}}"
