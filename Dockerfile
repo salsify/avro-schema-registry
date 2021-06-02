@@ -13,7 +13,7 @@ RUN apk update && apk add --virtual build-dependencies build-base postgresql-dev
 # will be cached unless changes to one of those two files
 # are made.
 # We don't need development and test dependencies in the production image
-COPY Gemfile ./
+COPY Gemfile Gemfile.lock ./
 RUN gem install bundler --no-document && bundle install --jobs 20 --retry 5 --without development test
 
 COPY . /app
