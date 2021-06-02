@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ruby '2.6.6'
+ruby '2.6.7'
 
 source 'https://rubygems.org'
 
@@ -12,6 +12,7 @@ gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
 gem 'procto'
 gem 'puma'
+gem 'rake', '13.0.1'
 gem 'rails', '~> 6.0.3'
 
 group :test do
