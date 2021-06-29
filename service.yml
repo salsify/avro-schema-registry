@@ -4,7 +4,7 @@ class: platform
 slack: pb-a-avro-schema-reg
 configuration_opt_in_environments: true
 pipeline:
-  sandbox_cd_branch: master
+  sandbox_cd_branch: main
 
 staging:
   environment:
