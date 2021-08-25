@@ -2,7 +2,7 @@ dist: trusty
 language: ruby
 cache: bundler
 rvm:
-  - 2.6.6
+  - 2.6.8
 services:
   - postgresql
 addons:
