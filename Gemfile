@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ruby '2.6.8'
+ruby '2.7.4'
 
 source 'https://ezcater.jfrog.io/ezcater/api/gems/ezcater-gem-source'
 
