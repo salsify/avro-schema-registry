@@ -41,7 +41,7 @@ describe Schema do
     end
 
     context "when fingerprint_version is 'all'" do
-      let(:fingerprint_version) { '2' }
+      let(:fingerprint_version) { 'all' }
 
       it_behaves_like "it sets both fingerprints"
     end

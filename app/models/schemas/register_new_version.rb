@@ -12,6 +12,7 @@ module Schemas
 
     attr_reader :subject_name, :json
     attr_accessor :schema
+
     private_attr_accessor :retried
     private_attr_reader :options
 
