@@ -67,18 +67,18 @@ describe ConfigAPI do
   end
 
   describe "GET /config/:subject" do
-    let(:subject) { create(:subject) }
+    let(:schema_subject) { create(:subject) }
     let(:compatibility) { Compatibility.global }
 
     it_behaves_like "a secure endpoint" do
-      let(:action) { unauthorized_get("/config/#{subject.name}") }
+      let(:action) { unauthorized_get("/config/#{schema_subject.name}") }
     end
 
     context "when compatibility is set for the subject" do
-      before { subject.create_config.update_compatibility!(compatibility) }
+      before { schema_subject.create_config.update_compatibility!(compatibility) }
 
       it "returns the compatibility level for the subject" do
-        get("/config/#{subject.name}")
+        get("/config/#{schema_subject.name}")
         expect(response).to be_ok
         expect(response.body).to be_json_eql(expected)
       end
@@ -88,7 +88,7 @@ describe ConfigAPI do
       let(:compatibility) { nil }
 
       it "returns null" do
-        get("/config/#{subject.name}")
+        get("/config/#{schema_subject.name}")
         expect(response).to be_ok
         expect(response.body).to be_json_eql(expected)
       end
@@ -106,14 +106,14 @@ describe ConfigAPI do
   end
 
   describe "PUT /config/:subject" do
-    let(:subject) { create(:subject) }
+    let(:schema_subject) { create(:subject) }
     let(:compatibility) { 'BACKWARD' }
 
     it "updates the compatibility level on the subject" do
-      put("/config/#{subject.name}", params: { compatibility: compatibility })
+      put("/config/#{schema_subject.name}", params: { compatibility: compatibility })
       expect(response).to be_ok
       expect(response.body).to be_json_eql(expected)
-      expect(subject.config.compatibility).to eq(compatibility)
+      expect(schema_subject.config.compatibility).to eq(compatibility)
     end
 
     context "when the app is in read-only mode" do
@@ -122,7 +122,7 @@ describe ConfigAPI do
       end
 
       it "returns an error" do
-        put("/config/#{subject.name}", params: { compatibility: compatibility })
+        put("/config/#{schema_subject.name}", params: { compatibility: compatibility })
         expect(response.status).to eq(403)
         expect(response.body).to be_json_eql({ message: 'Running in read-only mode' }.to_json)
       end
@@ -131,28 +131,28 @@ describe ConfigAPI do
     context "when the subject already has a compatibility level set" do
       let(:original_compatibility) { 'FORWARD' }
 
-      before { subject.create_config!(compatibility: original_compatibility) }
+      before { schema_subject.create_config!(compatibility: original_compatibility) }
 
       it "updates the compatibility level on the subject" do
-        put("/config/#{subject.name}", params: { compatibility: compatibility })
+        put("/config/#{schema_subject.name}", params: { compatibility: compatibility })
         expect(response).to be_ok
         expect(response.body).to be_json_eql(expected)
-        expect(subject.config.reload.compatibility).to eq(compatibility)
+        expect(schema_subject.config.reload.compatibility).to eq(compatibility)
       end
     end
 
     context "when the compatibility level is not uppercase" do
       it "updates the compatibility level on the subject" do
-        put("/config/#{subject.name}", params: { compatibility: compatibility.downcase })
+        put("/config/#{schema_subject.name}", params: { compatibility: compatibility.downcase })
         expect(response).to be_ok
         expect(response.body).to be_json_eql(expected)
-        expect(subject.config.compatibility).to eq(compatibility)
+        expect(schema_subject.config.compatibility).to eq(compatibility)
       end
     end
 
     it_behaves_like "a secure endpoint" do
       let(:action) do
-        unauthorized_put("/config/#{subject.name}", params: { compatibility: compatibility })
+        unauthorized_put("/config/#{schema_subject.name}", params: { compatibility: compatibility })
       end
     end
 
@@ -170,7 +170,7 @@ describe ConfigAPI do
       let(:compatibility) { 'FOO' }
 
       it "returns an unprocessable entity error" do
-        put("/config/#{subject.name}", params: { compatibility: compatibility })
+        put("/config/#{schema_subject.name}", params: { compatibility: compatibility })
         expect(status).to eq(422)
         expect(response.body)
           .to be_json_eql(SchemaRegistry::Errors::INVALID_COMPATIBILITY_LEVEL.to_json)

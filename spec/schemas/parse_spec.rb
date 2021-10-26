@@ -4,15 +4,17 @@ describe Schemas::Parse do
   describe ".call" do
     let(:json) { build(:schema).json }
 
-    subject { described_class.call(json) }
+    let(:schema) { described_class.call(json) }
 
-    it { is_expected.to be_a(Avro::Schema) }
+    it "returns an Avro::Schema" do
+      expect(schema).to be_a(Avro::Schema)
+    end
 
     context "with an invalid schema" do
       let(:json) { {}.to_json }
 
       it "raises an InvalidAvroSchemaError" do
-        expect { subject }.to raise_error(SchemaRegistry::InvalidAvroSchemaError)
+        expect { schema }.to raise_error(SchemaRegistry::InvalidAvroSchemaError)
       end
     end
   end

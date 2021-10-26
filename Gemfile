@@ -17,8 +17,8 @@ gem 'rails', '~> 6.0.3'
 group :test do
   gem 'json_spec'
   gem 'rails-controller-testing'
-  gem 'rspec-rails'
   gem 'rspec_junit_formatter'
+  gem 'rspec-rails'
   gem 'simplecov'
 end
 
