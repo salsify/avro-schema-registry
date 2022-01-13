@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ruby '2.6.7'
+ruby '2.7.4'
 
 source 'https://rubygems.org'
 
@@ -18,6 +18,7 @@ gem 'rails', '~> 6.0.3'
 group :test do
   gem 'json_spec'
   gem 'rails-controller-testing'
+  gem 'rspec_junit_formatter'
   gem 'rspec-rails'
   gem 'simplecov'
 end

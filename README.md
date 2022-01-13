@@ -2,9 +2,9 @@
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-[![Build Status](https://travis-ci.org/salsify/avro-schema-registry.svg?branch=master)][travis]
+[![Build Status](https://circleci.com/gh/salsify/avro-schema-registry.svg?style=svg)][circleci]
 
-[travis]: https://travis-ci.org/salsify/avro-schema-registry
+[circleci]: https://circleci.com/gh/salsify/avro-schema-registry
 
 A service for storing and retrieving versions of Avro schemas.
 
