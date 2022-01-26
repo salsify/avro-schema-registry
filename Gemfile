@@ -13,7 +13,7 @@ gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
 gem 'procto'
 gem 'puma'
-gem 'rails', '~> 6.0.3'
+gem 'rails', '~> 6.0.3.7'
 gem 'sentry-raven'
 
 group :test do
