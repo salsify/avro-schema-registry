@@ -1,30 +1,32 @@
 # To build run: docker build -t avro-schema-registry .
 
-FROM ruby:2.7.4
+FROM ruby:2.7.4 as builder
 
 RUN mkdir /app
 WORKDIR /app
-
-# Add build dependencies
-RUN apk update && apk add --virtual build-dependencies build-base postgresql-dev tzdata
 
 # Copy the Gemfile as well as the Gemfile.lock and install
 # the RubyGems. This is a separate step so the dependencies
 # will be cached unless changes to one of those two files
 # are made.
-# We don't need development and test dependencies in the production image
 COPY Gemfile Gemfile.lock ./
-RUN gem install bundler --no-document && bundle install --jobs 20 --retry 5 --without development test
+RUN gem install bundler --no-document && bundle install --jobs 20 --retry 5
 
+
+FROM ruby:2.7.4-alpine3.14 as production
+
+COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 COPY . /app
+
+WORKDIR /app
 
 # Run the app as a non-root user. The source code will be read-only,
 # but the process will complain if it can't write to tmp or log (even
 # though we're writing the logs to STDOUT).
 RUN mkdir /app/tmp /app/log
-RUN addgroup -S avro && \
-    adduser -S avro -G avro -u 1000 -h /app && \
-    chown -R avro:avro /app /app/tmp /app/log
+RUN addgroup --system avro && \
+    adduser --system -G avro avro && \
+    chown -R avro:avro /app/tmp /app/log
 USER avro
 
 ENV RACK_ENV=production
