@@ -12,7 +12,7 @@ gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
 gem 'procto'
 gem 'puma'
-gem 'rails', '~> 6.0.3'
+gem 'rails', '~> 6.0.4.7'
 
 group :test do
   gem 'json_spec'

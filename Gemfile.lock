@@ -314,7 +314,7 @@ DEPENDENCIES
   private_attr
   procto
   puma
-  rails (~> 6.0.3)
+  rails (~> 6.0.4.7)
   rails-controller-testing
   rspec-rails
   rspec_junit_formatter
@@ -329,4 +329,4 @@ RUBY VERSION
    ruby 2.7.4p191
 
 BUNDLED WITH
-   2.2.30
+   2.3.9
