@@ -150,8 +150,10 @@ describe SubjectAPI do
       let(:version) { create(:schema_version) }
       let(:subject_name) { version.subject.name }
       let(:schema) { version.schema }
+
       let(:expected) do
         {
+          id: version.schema_id,
           name: subject_name,
           version: version.version,
           schema: schema.json
@@ -161,6 +163,7 @@ describe SubjectAPI do
       it "returns the schema" do
         get("/subjects/#{subject_name}/versions/#{version.version}")
         expect(response).to be_ok
+        expect(JSON.parse(response.body)['id']).to eq(version.schema_id)
         expect(response.body).to be_json_eql(expected)
       end
 
