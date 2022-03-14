@@ -1,6 +1,6 @@
 # To build run: docker build -t avro-schema-registry .
 
-FROM ruby:2.7.4
+FROM ruby:2.7.4 as builder
 
 RUN mkdir /app
 WORKDIR /app
@@ -12,14 +12,20 @@ WORKDIR /app
 COPY Gemfile Gemfile.lock ./
 RUN gem install bundler --no-document && bundle install --jobs 20 --retry 5
 
+
+FROM ruby:2.7.4-alpine3.14 as production
+
+COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 COPY . /app
+
+WORKDIR /app
 
 # Run the app as a non-root user. The source code will be read-only,
 # but the process will complain if it can't write to tmp or log (even
 # though we're writing the logs to STDOUT).
 RUN mkdir /app/tmp /app/log
-RUN groupadd --system avro && \
-    useradd --no-log-init --system --create-home --gid avro avro && \
+RUN addgroup --system avro && \
+    adduser --system -G avro avro && \
     chown -R avro:avro /app/tmp /app/log
 USER avro
 
