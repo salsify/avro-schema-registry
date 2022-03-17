@@ -18,6 +18,8 @@ module AvroSchemaRegistry
 
     # Rollout Rails 6 with the class autoloader first
     config.autoloader = :classic
+    config.active_record.dump_schema_after_migration = false
+    config.hosts = nil
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
