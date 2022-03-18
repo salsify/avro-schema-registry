@@ -3,11 +3,13 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # Do not dump schema automatically after migrations
-  config.active_record.dump_schema_after_migration = false
+  # Allow additional hosts to connect. Provide hostnames as a comma-separated list.
+  ENV.fetch('PERMITTED_HOSTS', nil).tap do |permitted_hosts|
+    config.hosts = permitted_hosts.split(',').map(&:strip).reject(&:blank?) if permitted_hosts
+  end
 
-  # Allow all hosts to connect
-  config.hosts = nil
+  # Do not dump the schema if the environment has DO_NOT_DUMP_SCHEMA set to any value.
+  config.active_record.dump_schema_after_migration = !ENV.key?('DO_NOT_DUMP_SCHEMA')
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
