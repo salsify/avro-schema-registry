@@ -4,7 +4,9 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Allow additional hosts to connect. Provide hostnames as a comma-separated list.
-  ENV.fetch('PERMITTED_HOSTS', nil).tap do |permitted_hosts|
+  # TODO: Rails 7 supports RAILS_DEVELOPMENT_HOSTS out of the box. Delete this
+  # entire section when the schema registry is ported to Rails 7.
+  ENV.fetch('RAILS_DEVELOPMENT_HOSTS', nil).tap do |permitted_hosts|
     config.hosts = permitted_hosts.split(',').map(&:strip).reject(&:blank?) if permitted_hosts
   end
 
