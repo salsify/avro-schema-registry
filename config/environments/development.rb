@@ -11,7 +11,7 @@ Rails.application.configure do
   end
 
   # Do not dump the schema if the environment has DO_NOT_DUMP_SCHEMA set to any value.
-  config.active_record.dump_schema_after_migration = !ENV.key?('DO_NOT_DUMP_SCHEMA')
+  config.active_record.dump_schema_after_migration = ENV.fetch('DUMP_SCHEMA_AFTER_MIGRATION', 'true') == 'true'
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
