@@ -11,7 +11,7 @@ gem 'grape'
 gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
 gem 'procto'
-gem 'puma'
+gem 'puma', '>= 5.6.7'
 gem 'rails', '~> 6.0.3'
 
 group :test do
