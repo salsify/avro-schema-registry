@@ -11,4 +11,5 @@ updates:
       interval: daily
       time: "10:00"
     versioning-strategy: lockfile-only
-    open-pull-requests-limit: 5
+    # Setting to 0 enables security PRs only
+    open-pull-requests-limit: 0
