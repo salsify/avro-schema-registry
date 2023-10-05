@@ -140,7 +140,7 @@ GEM
       ruby2_keywords (~> 0.0.1)
     mustermann-grape (1.0.2)
       mustermann (>= 1.0.0)
-    newrelic_rpm (6.11.0.365)
+    newrelic_rpm (9.5.0)
     nio4r (2.5.9)
     nokogiri (1.14.4)
       mini_portile2 (~> 2.8.0)
