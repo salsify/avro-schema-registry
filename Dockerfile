@@ -10,7 +10,7 @@ WORKDIR /app
 # will be cached unless changes to one of those two files
 # are made.
 COPY Gemfile Gemfile.lock ./
-RUN gem install bundler --no-document && bundle install --jobs 20 --retry 5
+RUN gem install bundler -v 2.4.22 --no-document && bundle install --jobs 20 --retry 5
 
 COPY . /app
 
