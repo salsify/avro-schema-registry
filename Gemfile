@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ruby '2.7.8'
+ruby '3.3.0'
 
 source 'https://rubygems.org'
 
@@ -10,9 +10,8 @@ gem 'bootsnap', require: false
 gem 'grape'
 gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
-gem 'procto'
 gem 'puma', '>= 5.6.7'
-gem 'rails', '~> 6.0.3'
+gem 'rails', '~> 6.1.0'
 
 group :test do
   gem 'json_spec'
@@ -30,11 +29,8 @@ group :development do
   gem 'annotate'
   gem 'avro_turf', '>= 0.8.0', require: false
   gem 'heroku_rails_deploy', '>= 0.4.1', require: false
+  gem 'listen'
   gem 'overcommit'
-  gem 'spring'
-  gem 'spring-commands-rspec'
-  gem 'spring-commands-rubocop'
-  gem 'spring-watcher-listen'
 end
 
 group :development, :production do

@@ -17,7 +17,8 @@ class SubjectAPI < Grape::API
     incompatible_avro_schema!
   end
 
-  rescue_from :all do
+  rescue_from :all do |e|
+    Rails.logger.debug e.backtrace
     server_error!
   end
 
@@ -105,7 +106,7 @@ class SubjectAPI < Grape::API
       error!({ message: 'Schema registration is disabled' }, 503) if Rails.configuration.x.disable_schema_registration
 
       new_schema_options = declared(params).slice(:with_compatibility, :after_compatibility).symbolize_keys
-      schema = Schemas::RegisterNewVersion.call(params[:name], params[:schema], new_schema_options)
+      schema = Schemas::RegisterNewVersion.call(params[:name], params[:schema], **new_schema_options)
       status 200
       { id: schema.id }
     end

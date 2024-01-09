@@ -146,7 +146,7 @@ Accept: application/vnd.schemaregistry.v1+json, application/vnd.schemaregistry+j
 
 ## Setup
 
-The application is written using Ruby 2.7.8. Start the service using the following
+The application is written using Ruby 3.3.0. Start the service using the following
 steps:
 
 ```bash
