@@ -3,7 +3,7 @@
 class SubjectAPI < Grape::API
   include BaseAPI
 
-  INTEGER_FINGERPRINT_REGEXP = /^[0-9]+$/.freeze
+  INTEGER_FINGERPRINT_REGEXP = /^[0-9]+$/
 
   rescue_from ActiveRecord::RecordNotFound do
     subject_not_found!
