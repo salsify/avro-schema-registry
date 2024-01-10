@@ -30,10 +30,6 @@ group :development do
   gem 'avro_turf', '>= 0.8.0', require: false
   gem 'heroku_rails_deploy', '>= 0.4.1', require: false
   gem 'overcommit'
-  gem 'spring'
-  gem 'spring-commands-rspec'
-  gem 'spring-commands-rubocop'
-  gem 'spring-watcher-listen'
 end
 
 group :development, :production do
