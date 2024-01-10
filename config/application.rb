@@ -8,16 +8,15 @@ require 'active_record/railtie'
 require 'action_controller/railtie'
 require 'action_view/railtie'
 
+require 'active_support/core_ext/integer/time'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
 module AvroSchemaRegistry
   class Application < Rails::Application
-    config.load_defaults 6.0
-
-    # Rollout Rails 6 with the class autoloader first
-    config.autoloader = :classic
+    config.load_defaults 6.1
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -30,10 +29,6 @@ module AvroSchemaRegistry
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
-
-    # Grape support
-    config.paths.add(File.join('app', 'api'), glob: File.join('**', '*.rb'))
-    config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
 
     config.x.disable_password = ENV['DISABLE_PASSWORD'] == 'true'
     config.x.app_password = ENV['SCHEMA_REGISTRY_PASSWORD'] || 'avro'

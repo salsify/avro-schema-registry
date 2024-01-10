@@ -11,7 +11,7 @@ gem 'grape'
 gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
 gem 'puma', '>= 5.6.7'
-gem 'rails', '~> 6.0.3'
+gem 'rails', '~> 6.1.0'
 
 group :test do
   gem 'json_spec'
