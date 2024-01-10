@@ -13,7 +13,7 @@
 class Subject < ApplicationRecord
   include ImmutableModel
 
-  NAME_REGEXP = /[a-zA-Z_][\w.\-]*/.freeze
+  NAME_REGEXP = /[a-zA-Z_][\w.-]*/
 
   has_one :config # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :versions, class_name: 'SchemaVersion', inverse_of: :subject # rubocop:disable Rails/HasManyOrHasOneDependent

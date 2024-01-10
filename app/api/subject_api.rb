@@ -3,7 +3,7 @@
 class SubjectAPI < Grape::API
   include BaseAPI
 
-  INTEGER_FINGERPRINT_REGEXP = /^[0-9]+$/.freeze
+  INTEGER_FINGERPRINT_REGEXP = /^[0-9]+$/
 
   rescue_from ActiveRecord::RecordNotFound do
     subject_not_found!
@@ -105,7 +105,7 @@ class SubjectAPI < Grape::API
       error!({ message: 'Schema registration is disabled' }, 503) if Rails.configuration.x.disable_schema_registration
 
       new_schema_options = declared(params).slice(:with_compatibility, :after_compatibility).symbolize_keys
-      schema = Schemas::RegisterNewVersion.call(params[:name], params[:schema], new_schema_options)
+      schema = Schemas::RegisterNewVersion.call(params[:name], params[:schema], **new_schema_options)
       status 200
       { id: schema.id }
     end
