@@ -54,13 +54,30 @@ describe Schema do
     let(:fingerprint_v1) { Schemas::FingerprintGenerator.generate_v1(json) }
     let(:fingerprint_v2) { Schemas::FingerprintGenerator.generate_v2(json) }
 
+    # `Schema` is an immutable model, so we need raw SQL
+    def update_schema_fingerprints(schema:, fingerprint:, fingerprint2:)
+      params = [
+        'UPDATE schemas SET fingerprint = ?, fingerprint2 = ? WHERE id = ?',
+        fingerprint,
+        fingerprint2,
+        schema.id
+      ]
+      params = ActiveRecord::Base.sanitize_sql(params)
+      ActiveRecord::Base.connection.execute(params)
+    end
+
     before do
-      # rubocop:disable Rails/SkipsModelValidations
-      schema1.update_columns(fingerprint: fingerprint_v1,
-                             fingerprint2: Schemas::FingerprintGenerator.generate_v2(schema1.json))
-      schema2.update_columns(fingerprint: Schemas::FingerprintGenerator.generate_v1(schema2.json),
-                             fingerprint2: fingerprint_v2)
-      # rubocop:enable Rails/SkipsModelValidations
+      update_schema_fingerprints(
+        schema: schema1,
+        fingerprint: fingerprint_v1,
+        fingerprint2: Schemas::FingerprintGenerator.generate_v2(schema1.json)
+      )
+
+      update_schema_fingerprints(
+        schema: schema2,
+        fingerprint: Schemas::FingerprintGenerator.generate_v1(schema2.json),
+        fingerprint2: fingerprint_v2
+      )
     end
 
     context "when fingerprint_version is '1'" do
