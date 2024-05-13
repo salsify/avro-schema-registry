@@ -1,6 +1,6 @@
 # To build run: docker build -t avro-schema-registry .
 
-FROM ruby:3.2.2
+FROM ruby:3.3.1
 
 RUN mkdir /app
 WORKDIR /app
