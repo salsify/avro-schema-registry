@@ -166,7 +166,7 @@ GEM
       net-protocol
     newrelic_rpm (9.6.0)
       base64
-    nio4r (2.7.0)
+    nio4r (2.7.3)
     nokogiri (1.16.5)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
@@ -180,7 +180,7 @@ GEM
       racc
     pg (1.5.4)
     private_attr (2.0.0)
-    puma (6.4.2)
+    puma (6.4.3)
       nio4r (~> 2.0)
     racc (1.8.0)
     rack (2.2.9)
