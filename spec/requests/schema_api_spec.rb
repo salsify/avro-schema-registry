@@ -36,7 +36,7 @@ describe SchemaAPI do
     end
 
     context "when the schema is not found" do
-      let(:schema_id) { -1 }
+      let(:schema_id) { create(:schema).id + 1 }
       let(:expected) do
         {
           error_code: 40403,

@@ -35,8 +35,8 @@ shared_examples_for "content type" do |verb|
   it "accepts json requests" do
     send(verb, path, params: _params,
          headers: {
-           'ACCEPT' => Grape::ContentTypes::CONTENT_TYPES[:json],
-           'CONTENT_TYPE' => Grape::ContentTypes::CONTENT_TYPES[:json]
+           'ACCEPT' => 'application/json',
+           'CONTENT_TYPE' => 'application/json'
          })
     expect(response).to be_ok
     expect(response.body).to be_json_eql(expected)

@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
-ruby '3.3.1'
+ruby '3.3.6'
 
 source 'https://rubygems.org'
 
 gem 'avro', '~> 1.10.0'
 gem 'avro-resolution_canonical_form', '>= 0.2.0'
 gem 'bootsnap', require: false
+gem 'drb' # TODO: Remove with rails 7.1
 gem 'grape'
+gem 'mutex_m' # TODO: Remove with rails 7.1
 gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
 gem 'puma', '>= 5.6.7'
