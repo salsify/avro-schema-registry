@@ -4,10 +4,10 @@ default: &default
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("DB_POOL", 4) %>
-  port: <%= ENV["DB_PORT"] %>
-  host: <%= ENV["DB_HOST"] %>
-  username: <%= ENV["DB_USER"] %>
-  password: <%= ENV["DB_PASSWORD"] %>
+  port: <%= ENV.fetch("DB_PORT", 5432) %>
+  host: <%= ENV.fetch("DB_HOST", 'docker.local.host') %>
+  username: <%= ENV.fetch("DB_USER", 'postgres') %>
+  password: <%= ENV.fetch("DB_PASSWORD", 'password') %>
   variables:
     lock_timeout: <%= ENV.fetch('DB_LOCK_TIMEOUT', 0) %>
     statement_timeout: <%= ENV.fetch('DB_STATEMENT_TIMEOUT', 0) %>
