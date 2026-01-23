@@ -8,7 +8,7 @@ shared_examples_for "content type" do |verb|
   let(:_params) { defined?(params) ? params : nil }
 
   it "returns a schema registry v1 response" do
-    send(verb, path, params: _params)
+    send(verb, path, params: _params, headers: { 'ACCEPT' => '*/*' })
     expect(response.headers['Content-Type']).to eq(BaseAPI::SCHEMA_REGISTRY_V1_CONTENT_TYPE)
   end
 
