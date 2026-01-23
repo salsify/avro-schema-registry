@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: ruby:3.4.3
+      - image: ruby:3.4.8
       - image: cimg/postgres:14.7
         environment:
           POSTGRES_USER: "ubuntu"
@@ -24,8 +24,9 @@ jobs:
       - run:
           name: Install Gems
           command: |
-            if ! bundle check --path=vendor/bundle; then
-              bundle install --path=vendor/bundle --jobs=4 --retry=3
+            bundle config set path 'vendor/bundle'
+            if ! bundle check; then
+              bundle install --jobs=4 --retry=3
               bundle clean
             fi
       - save_cache:
