@@ -7,7 +7,7 @@ source 'https://rubygems.org'
 gem 'avro', '~> 1.10.0'
 gem 'avro-resolution_canonical_form', '>= 0.2.0'
 gem 'bootsnap', require: false
-gem 'grape'
+gem 'grape', '~> 2.2.0' # newer versions result in content-type issues
 gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
 gem 'puma', '>= 5.6.7'
