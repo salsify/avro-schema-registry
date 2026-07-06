@@ -24,3 +24,6 @@ production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
 
+staging:
+  <<: *default
+  url: <%= ENV['DATABASE_URL_IAM'] || ENV['DATABASE_URL'] %>
