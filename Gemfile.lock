@@ -372,7 +372,7 @@ DEPENDENCIES
   simplecov
 
 RUBY VERSION
-  ruby 3.4.8
+  ruby 3.4.10
 
 BUNDLED WITH
-  4.0.4
+  4.0.17
