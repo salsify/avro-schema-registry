@@ -34,7 +34,7 @@ class Config < ApplicationRecord
   end
 
   def update_compatibility!(compatibility)
-    update!(compatibility: compatibility)
+    update!(compatibility:)
   rescue ActiveRecord::RecordInvalid
     if errors.key?(:compatibility)
       raise Compatibility::InvalidCompatibilityLevelError.new(compatibility)

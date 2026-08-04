@@ -26,7 +26,7 @@ module Helpers
       if version == LATEST_VERSION
         relation.for_subject_name(subject_name).latest
       else
-        relation.where(version: version).for_subject_name(subject_name)
+        relation.where(version:).for_subject_name(subject_name)
       end.first
     end
 
