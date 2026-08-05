@@ -13,7 +13,7 @@ class ConfigAPI < Grape::API
 
   helpers do
     def find_subject!(name)
-      Subject.eager_load(:config).find_by!(name: name)
+      Subject.eager_load(:config).find_by!(name:)
     rescue ActiveRecord::RecordNotFound
       subject_not_found!
     end

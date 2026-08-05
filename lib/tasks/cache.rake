@@ -10,7 +10,7 @@ if Rails.env.development?
 
     logger = Logger.new($stdout)
     logger.level = Logger::ERROR
-    client = AvroTurf::ConfluentSchemaRegistry.new(ENV['registry_url'], logger: logger)
+    client = AvroTurf::ConfluentSchemaRegistry.new(ENV['registry_url'], logger:)
 
     client.subjects.each do |subject|
 

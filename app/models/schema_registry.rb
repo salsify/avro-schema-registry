@@ -17,7 +17,7 @@ module SchemaRegistry
   end
 
   def compatible!(new_json, version:, compatibility: nil)
-    raise IncompatibleAvroSchemaError unless compatible?(new_json, version: version, compatibility: compatibility)
+    raise IncompatibleAvroSchemaError unless compatible?(new_json, version:, compatibility:)
   end
 
   private

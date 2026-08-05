@@ -56,8 +56,8 @@ describe SubjectAPI do
       # This is only being tested for one representative route under
       # /subjects/:name
       shared_examples_for "a supported subject name" do |desc, name|
-        let(:subject) { create(:subject, name: name) }
-        let!(:schema_version) { create(:version, subject: subject) }
+        let(:subject) { create(:subject, name:) }
+        let!(:schema_version) { create(:version, subject:) }
 
         it "supports #{desc}" do
           get("/subjects/#{subject.name}/versions")
@@ -497,7 +497,7 @@ describe SubjectAPI do
         it "creates the config for the subject", :aggregate_failures do
           expect do
             post("/subjects/#{subject_name}/versions",
-                 params: { schema: json, after_compatibility: after_compatibility })
+                 params: { schema: json, after_compatibility: })
           end.to change(Config, :count).by(1)
           expect(Subject.find_by(name: subject_name).config.compatibility).to eq(after_compatibility)
         end
@@ -608,7 +608,7 @@ describe SubjectAPI do
                 expect do
                   expect do
                     post("/subjects/#{schema_subject.name}/versions",
-                         params: { schema: json, with_compatibility: 'NONE', after_compatibility: after_compatibility })
+                         params: { schema: json, with_compatibility: 'NONE', after_compatibility: })
                   end.to change(Schema, :count).by(1)
                 end.to change(SchemaVersion, :count).by(1)
               end.to change(Config, :count).by(1)
@@ -622,7 +622,7 @@ describe SubjectAPI do
               it "updates the config for the subject" do
                 expect do
                   post("/subjects/#{schema_subject.name}/versions",
-                       params: { schema: json, with_compatibility: 'NONE', after_compatibility: after_compatibility })
+                       params: { schema: json, with_compatibility: 'NONE', after_compatibility: })
                 end.not_to change(Config, :count)
                 expect(config.reload.compatibility).to eq(after_compatibility)
               end
@@ -732,7 +732,7 @@ describe SubjectAPI do
           first_time = true
           allow(Schema).to receive(:find_by).with(fingerprint2: fingerprint) do
             if first_time
-              @schema = Schema.create!(json: json)
+              @schema = Schema.create!(json:)
               first_time = false
               nil
             else

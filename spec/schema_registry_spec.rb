@@ -13,7 +13,7 @@ describe SchemaRegistry do
   end
   let(:old_json) { json_hash.to_json }
   let(:schema) { create(:schema, json: old_json) }
-  let(:version) { create(:schema_version, schema: schema) }
+  let(:version) { create(:schema_version, schema:) }
   let(:new_json) { build(:schema).json }
   let(:backward_json) do
     # BACKWARD compatible - can read old schema
@@ -42,20 +42,20 @@ describe SchemaRegistry do
   let(:new_schema) { Avro::Schema.parse(new_json) }
 
   before do
-    create(:config, subject_id: version.subject_id, compatibility: compatibility) if compatibility
+    create(:config, subject_id: version.subject_id, compatibility:) if compatibility
   end
 
   describe ".compatible?" do
     let(:compatibility) { 'FULL_TRANSITIVE' }
 
-    subject(:check) { described_class.compatible?(new_json, version: version) }
+    subject(:check) { described_class.compatible?(new_json, version:) }
 
     before do
       allow(Avro::SchemaCompatibility).to receive(:can_read?).and_call_original
     end
 
     it "allows compatibility to be specified" do
-      described_class.compatible?(new_json, version: version, compatibility: 'BACKWARD')
+      described_class.compatible?(new_json, version:, compatibility: 'BACKWARD')
       expect(Avro::SchemaCompatibility).to have_received(:can_read?).with(new_schema, old_schema)
     end
 
@@ -87,11 +87,11 @@ describe SchemaRegistry do
       end
 
       it "returns false for a forward compatible schema" do
-        expect(described_class.compatible?(forward_json, version: version)).to eq(false)
+        expect(described_class.compatible?(forward_json, version:)).to eq(false)
       end
 
       it "returns true for a backward compatible schema" do
-        expect(described_class.compatible?(backward_json, version: version)).to eq(true)
+        expect(described_class.compatible?(backward_json, version:)).to eq(true)
       end
     end
 
@@ -104,11 +104,11 @@ describe SchemaRegistry do
       end
 
       it "returns true for a forward compatible schema" do
-        expect(described_class.compatible?(forward_json, version: version)).to eq(true)
+        expect(described_class.compatible?(forward_json, version:)).to eq(true)
       end
 
       it "returns false for a backward compatible schema" do
-        expect(described_class.compatible?(backward_json, version: version)).to eq(false)
+        expect(described_class.compatible?(backward_json, version:)).to eq(false)
       end
     end
 
@@ -136,15 +136,15 @@ describe SchemaRegistry do
       end
 
       it "returns false for a forward compatible schema" do
-        expect(described_class.compatible?(forward_json, version: version)).to eq(false)
+        expect(described_class.compatible?(forward_json, version:)).to eq(false)
       end
 
       it "returns false for a backward compatible schema" do
-        expect(described_class.compatible?(backward_json, version: version)).to eq(false)
+        expect(described_class.compatible?(backward_json, version:)).to eq(false)
       end
 
       it "returns true for a fully compatible schema" do
-        expect(described_class.compatible?(full_json, version: version)).to eq(true)
+        expect(described_class.compatible?(full_json, version:)).to eq(true)
       end
     end
 
@@ -255,11 +255,11 @@ describe SchemaRegistry do
   end
 
   describe ".compatible!" do
-    subject(:check) { described_class.compatible!(new_json, version: version) }
+    subject(:check) { described_class.compatible!(new_json, version:) }
 
     before do
       allow(described_class).to receive(:compatible?)
-        .with(new_json, version: version, compatibility: compatibility).and_return(compatible)
+        .with(new_json, version:, compatibility:).and_return(compatible)
     end
 
     context "when the compatibility level is specified" do
@@ -268,7 +268,7 @@ describe SchemaRegistry do
 
       it "checks compatibility using the specified level" do
         expect do
-          described_class.compatible!(new_json, version: version, compatibility: compatibility)
+          described_class.compatible!(new_json, version:, compatibility:)
         end.not_to raise_error
       end
     end

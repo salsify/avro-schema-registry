@@ -23,7 +23,7 @@ class SchemaVersion < ApplicationRecord
   scope :latest_for_subject_name,
         ->(subject_name) { for_subject_name(subject_name).latest }
   scope :for_schema,
-        ->(schema_id) { where(schema_id: schema_id) }
+        ->(schema_id) { where(schema_id:) }
   scope :for_schema_fingerprint, ->(fingerprint) { joins(:schema).merge(Schema.with_fingerprint(fingerprint)) }
   scope :for_schema_json, ->(json) { joins(:schema).merge(Schema.with_json(json)) }
 end

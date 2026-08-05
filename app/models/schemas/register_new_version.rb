@@ -56,7 +56,7 @@ module Schemas
 
     def create_new_schema
       create_version_with_optional_new_subject do
-        self.schema = Schema.create!(json: json)
+        self.schema = Schema.create!(json:)
       end
     end
 
@@ -84,7 +84,7 @@ module Schemas
     end
 
     def new_schema_version_for_subject!(schema_id, previous_version)
-      SchemaVersion.create!(schema_id: schema_id,
+      SchemaVersion.create!(schema_id:,
                             subject_id: previous_version.subject_id,
                             version: previous_version.version + 1)
 
@@ -92,7 +92,7 @@ module Schemas
 
     def new_subject!(schema_id)
       subject = Subject.create!(name: subject_name)
-      subject.versions.create!(schema_id: schema_id)
+      subject.versions.create!(schema_id:)
       subject
     end
 
