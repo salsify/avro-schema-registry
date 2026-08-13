@@ -74,9 +74,9 @@ GEM
       minitest (>= 5.1, < 6)
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
-    annotate (3.2.0)
-      activerecord (>= 3.2, < 8.0)
-      rake (>= 10.4, < 14.0)
+    annotaterb (4.24.0)
+      activerecord (>= 6.0.0)
+      activesupport (>= 6.0.0)
     ast (2.4.3)
     avro (1.10.2)
       multi_json (~> 1)
@@ -360,7 +360,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  annotate
+  annotaterb
   avro (~> 1.10.0)
   avro-resolution_canonical_form (>= 0.2.0)
   avro_turf (>= 0.8.0)

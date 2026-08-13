@@ -4,12 +4,17 @@
 #
 # Table name: schemas
 #
-#  id           :integer          not null, primary key
+#  id           :bigint           not null, primary key
 #  fingerprint  :string           not null
 #  json         :text             not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  fingerprint2 :string
+#
+# Indexes
+#
+#  index_schemas_on_fingerprint   (fingerprint)
+#  index_schemas_on_fingerprint2  (fingerprint2) UNIQUE
 #
 
 class Schema < ApplicationRecord
