@@ -4,11 +4,15 @@
 #
 # Table name: configs
 #
-#  id            :integer          not null, primary key
+#  id            :bigint           not null, primary key
 #  compatibility :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  subject_id    :integer
+#  subject_id    :bigint
+#
+# Indexes
+#
+#  index_configs_on_subject_id  (subject_id) UNIQUE
 #
 
 class Config < ApplicationRecord

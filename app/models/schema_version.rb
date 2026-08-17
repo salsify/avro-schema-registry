@@ -4,10 +4,14 @@
 #
 # Table name: schema_versions
 #
-#  id         :integer          not null, primary key
+#  id         :bigint           not null, primary key
 #  version    :integer          default(1)
-#  subject_id :integer          not null
-#  schema_id  :integer          not null
+#  subject_id :bigint           not null
+#  schema_id  :bigint           not null
+#
+# Indexes
+#
+#  index_schema_versions_on_subject_id_and_version  (subject_id,version) UNIQUE
 #
 
 class SchemaVersion < ApplicationRecord
