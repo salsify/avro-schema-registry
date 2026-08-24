@@ -11,7 +11,7 @@ gem 'grape', '~> 2.2.0' # newer versions result in content-type issues
 gem 'pg'
 gem 'private_attr', require: 'private_attr/everywhere'
 gem 'puma', '>= 5.6.7'
-gem 'rails', '~> 7.2.2'
+gem 'rails', '~> 8.0.5'
 
 group :test do
   gem 'json_spec'
